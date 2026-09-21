@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
@@ -29,6 +29,21 @@ export default function Home() {
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const pausedRef = useRef(false);
+  const portraitInnerRef = useRef<HTMLDivElement>(null);
+
+  function handlePortraitMove(event: MouseEvent<HTMLDivElement>) {
+    if (reducedMotion) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+    const el = portraitInnerRef.current;
+    if (el) el.style.transform = `translate3d(${(x * 12).toFixed(1)}px, ${(y * 10).toFixed(1)}px, 0) scale(1.06)`;
+  }
+
+  function resetPortraitMove() {
+    const el = portraitInnerRef.current;
+    if (el) el.style.transform = "translate3d(0, 0, 0) scale(1.06)";
+  }
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -153,9 +168,13 @@ export default function Home() {
           <p className="kicker"><span className="kicker-dot" /> {slide.eyebrow}</p>
           <h1 key={heroSlide} className="hero-title">
             {slide.titleLines.map((line, index) => (
-              <span key={line} className={index === slide.highlight ? "hero-title-accent" : undefined} style={{ animationDelay: `${index * 90}ms` }}>
-                {line}
-                {index < slide.titleLines.length - 1 && <br />}
+              <span className="hero-line-mask" key={line}>
+                <span
+                  className={index === slide.highlight ? "hero-line-inner hero-title-accent" : "hero-line-inner"}
+                  style={{ animationDelay: `${index * 110}ms` }}
+                >
+                  {line}
+                </span>
               </span>
             ))}
           </h1>
@@ -165,16 +184,24 @@ export default function Home() {
             <a className="text-link" href="#proyectos">Ver proyectos <ChevronRight size={16} /></a>
           </div>
         </div>
-        <div key={`portrait-${heroSlide}`} className={`hero-portrait ${slide.image ? "hero-portrait-image" : "hero-portrait-service"}`}>
-          {slide.image ? (
-            <Image src="/imagenes/NicoRielo.png" alt="Nico Rielo, CEO de 40 Comunicación Digital" fill priority sizes="(max-width: 900px) 90vw, 48vw" />
-          ) : (
-            <div className="service-hero-art">
-              <span>40</span>
-              <strong>{slide.eyebrow.split(" · ")[1]}</strong>
-              <small>Una mirada integral para que su presencia digital haga su trabajo.</small>
-            </div>
-          )}
+        <div
+          key={`portrait-${heroSlide}`}
+          className={`hero-portrait ${slide.image ? "hero-portrait-image" : "hero-portrait-service"}`}
+          onMouseMove={handlePortraitMove}
+          onMouseLeave={resetPortraitMove}
+        >
+          <div className="hero-portrait-inner" ref={portraitInnerRef}>
+            {slide.image ? (
+              <Image src="/imagenes/NicoRielo.png" alt="Nico Rielo, CEO de 40 Comunicación Digital" fill priority sizes="(max-width: 900px) 90vw, 48vw" />
+            ) : (
+              <div className="service-hero-art">
+                <span>40</span>
+                <strong>{slide.eyebrow.split(" · ")[1]}</strong>
+                <small>Una mirada integral para que su presencia digital haga su trabajo.</small>
+              </div>
+            )}
+          </div>
+          <span className="portrait-wipe" aria-hidden="true" />
           <div className="portrait-note"><span>0{heroSlide + 1}</span><strong>{slide.label}<br />{slide.note}</strong></div>
           <div className="portrait-brand">40<span>CD</span></div>
         </div>
@@ -240,6 +267,12 @@ export default function Home() {
             </ul>
           </div>
         </div>
+      </section>
+
+      <section className="section-wrap breakthrough" aria-hidden="true">
+        <Reveal className="breakthrough-frame">
+          <Image src="/imagenes/breakthrough-patagonia.jpg" alt="" fill sizes="(max-width: 1200px) 100vw, 1200px" />
+        </Reveal>
       </section>
 
       <section className="projects" id="proyectos">
@@ -316,6 +349,8 @@ export default function Home() {
       </section>
 
       <section className="statement">
+        <Image src="/imagenes/statement-city.jpg" alt="" fill sizes="100vw" className="statement-bg-img" />
+        <span className="statement-overlay" aria-hidden="true" />
         <span className="statement-ghost" aria-hidden="true">40</span>
         <Reveal className="statement-inner">
           <h2>Es hora de<br /><em>golpear la mesa</em></h2>
