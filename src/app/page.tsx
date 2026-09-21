@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowUpRight, ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { ArrowUp, ArrowUpRight, BarChart3, ChevronLeft, ChevronRight, MessageCircle, Menu, Target, Wrench, X } from "lucide-react";
 import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -25,11 +25,13 @@ export default function Home() {
   const [counterFlicker, setCounterFlicker] = useState(false);
   const [activeClient, setActiveClient] = useState(0);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const pausedRef = useRef(false);
   const portraitInnerRef = useRef<HTMLDivElement>(null);
+  const proofRef = useRef<HTMLElement>(null);
 
   function handlePortraitMove(event: MouseEvent<HTMLDivElement>) {
     if (reducedMotion) return;
@@ -87,6 +89,14 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const node = proofRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => setShowScrollTop(entry.boundingClientRect.top < 0), { threshold: 0 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   function scrollTrackTo(index: number, behavior: ScrollBehavior) {
     const track = trackRef.current;
     const card = cardRefs.current[index];
@@ -129,6 +139,7 @@ export default function Home() {
   }
 
   const slide = heroSlides[heroSlide];
+  const pillarIcons = [Target, Wrench, MessageCircle, BarChart3];
 
   return (
     <main>
@@ -151,19 +162,6 @@ export default function Home() {
 
       <section className="hero section-wrap" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
         <span className="hero-ghost" aria-hidden="true">40</span>
-        <div className="hero-progress" role="group" aria-label="Seleccionar slide del hero">
-          {heroSlides.map((item, index) => (
-            <button
-              key={item.eyebrow}
-              className={index === heroSlide ? "active" : ""}
-              aria-label={`Mostrar ${item.eyebrow}`}
-              aria-current={index === heroSlide}
-              onClick={() => setHeroSlide(index)}
-            >
-              <span />
-            </button>
-          ))}
-        </div>
         <div className="hero-copy">
           <p className="kicker"><span className="kicker-dot" /> {slide.eyebrow}</p>
           <h1 key={heroSlide} className="hero-title">
@@ -202,12 +200,25 @@ export default function Home() {
             )}
           </div>
           <span className="portrait-wipe" aria-hidden="true" />
-          <div className="portrait-note"><span>0{heroSlide + 1}</span><strong>{slide.label}<br />{slide.note}</strong></div>
           <div className="portrait-brand">40<span>CD</span></div>
+          <div className="hero-progress" role="group" aria-label="Seleccionar slide del hero">
+            {heroSlides.map((item, index) => (
+              <button
+                key={item.eyebrow}
+                className={index === heroSlide ? "active" : ""}
+                aria-label={`Mostrar ${item.eyebrow}`}
+                aria-current={index === heroSlide}
+                onClick={() => setHeroSlide(index)}
+              >
+                <span />
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="proof-strip">
+      <section className="proof-strip" ref={proofRef}>
+        <span className="proof-lines" aria-hidden="true" />
         <div className="section-wrap proof-inner">
           <span>Una presencia digital</span>
           <strong key={proofPhrase} className="proof-phrase">{rotatingProof[proofPhrase]}</strong>
@@ -215,20 +226,23 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-wrap manifesto" id="nosotros-filosofia">
-        <Reveal className="section-topline"><span className="kicker-dot" />La filosofía</Reveal>
-        <div className="manifesto-grid">
-          <Reveal as="div"><h2>Si a usted<br />le va bien,<br /><em>a nosotros</em><br />nos va bien</h2></Reveal>
-          <Reveal as="div" delay={80} className="manifesto-body">
-            <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes. Jugamos a largo plazo con el fin de potenciar los proyectos de quienes confían en nosotros.</p>
-            <p>El conocimiento técnico y del negocio lo tiene usted. Nosotros lo ayudamos a desarrollarlo y potenciarlo con las últimas herramientas digitales.</p>
-            <a className="circle-link" href="#contacto" aria-label="Conocer más sobre 40 Comunicación Digital"><ArrowUpRight size={21} /></a>
-          </Reveal>
+      <section className="manifesto" id="nosotros-filosofia">
+        <span className="manifesto-ghost" aria-hidden="true">40</span>
+        <div className="section-wrap manifesto-inner">
+          <Reveal className="section-topline">La filosofía</Reveal>
+          <div className="manifesto-grid">
+            <Reveal as="div"><h2>Si a usted<br />le va bien,<br /><em>a nosotros</em><br />nos va bien</h2></Reveal>
+            <Reveal as="div" delay={80} className="manifesto-body">
+              <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes. Jugamos a largo plazo con el fin de potenciar los proyectos de quienes confían en nosotros.</p>
+              <p>El conocimiento técnico y del negocio lo tiene usted. Nosotros lo ayudamos a desarrollarlo y potenciarlo con las últimas herramientas digitales.</p>
+              <a className="circle-link" href="#contacto" aria-label="Conocer más sobre 40 Comunicación Digital"><ArrowUpRight size={21} /></a>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       <section className="services section-wrap" id="servicios">
-        <Reveal className="section-topline"><span className="kicker-dot" />Lo que hacemos</Reveal>
+        <Reveal className="section-topline">Lo que hacemos</Reveal>
         <Reveal as="div" delay={60} className="services-heading">
           <h2>Todo lo que su marca<br /><em>necesita para avanzar</em></h2>
           <p>Una mirada integral: estrategia, creatividad y tecnología en el mismo equipo.</p>
@@ -254,30 +268,32 @@ export default function Home() {
           </div>
         </div>
         <div className="section-wrap why-inner">
-          <Reveal className="section-topline on-dark"><span className="kicker-dot" />Por qué 40CD</Reveal>
-          <div className="why-grid">
-            <Reveal as="div"><h2 id="why-heading">Jugamos<br />a largo<br /><em>plazo</em></h2></Reveal>
-            <ul className="pillars">
-              {pillars.map((pillar, index) => (
-                <Reveal as="li" key={pillar.title} delay={index * 80} className="pillar">
+          <Reveal className="section-topline on-dark">Por qué 40CD</Reveal>
+          <Reveal as="div" delay={40} className="why-heading">
+            <h2 id="why-heading">Jugamos a largo <em>plazo</em></h2>
+          </Reveal>
+          <div className="pillars-grid">
+            {pillars.map((pillar, index) => {
+              const Icon = pillarIcons[index % pillarIcons.length];
+              return (
+                <Reveal as="article" key={pillar.title} delay={index * 90} className="pillar-card">
+                  <div className="pillar-card-top">
+                    <span className="pillar-icon"><Icon size={20} /></span>
+                    <span className="pillar-index">{String(index + 1).padStart(2, "0")}</span>
+                  </div>
                   <h3>{pillar.title}</h3>
                   <p>{pillar.description}</p>
+                  <ArrowUpRight className="pillar-arrow" size={18} />
                 </Reveal>
-              ))}
-            </ul>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      <section className="section-wrap breakthrough" aria-hidden="true">
-        <Reveal className="breakthrough-frame">
-          <Image src="/imagenes/breakthrough-patagonia.jpg" alt="" fill sizes="(max-width: 1200px) 100vw, 1200px" />
-        </Reveal>
-      </section>
-
       <section className="projects" id="proyectos">
         <div className="section-wrap projects-head">
-          <Reveal className="section-topline"><span className="kicker-dot" />Proyectos en los que apostamos</Reveal>
+          <Reveal className="section-topline">Proyectos en los que apostamos</Reveal>
           <Reveal as="div" delay={60}>
             <h2>Trabajo que<br /><em>habla por sí solo</em></h2>
             <p>Marcas, instituciones y productos digitales reales que acompañamos en el camino.</p>
@@ -300,8 +316,14 @@ export default function Home() {
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}
-                className={`project-card tone-${clientTones[index % clientTones.length]}`}
+                className={client.image ? "project-card project-card-media" : `project-card tone-${clientTones[index % clientTones.length]}`}
               >
+                {client.image && (
+                  <>
+                    <Image src={client.image} alt="" fill sizes="(max-width: 800px) 82vw, 360px" className="project-card-bg" />
+                    <span className="project-card-scrim" aria-hidden="true" />
+                  </>
+                )}
                 <div className="project-card-top">
                   <span className="project-symbol">{String(index + 1).padStart(2, "0")}</span>
                   {client.featured && <span className="project-badge">Caso insignia</span>}
@@ -341,7 +363,7 @@ export default function Home() {
           <Image src="/imagenes/Nico_perfil.png" alt="Nicolás Rielo" fill sizes="(max-width: 800px) 90vw, 40vw" />
         </Reveal>
         <Reveal as="div" delay={80} className="about-copy">
-          <div className="section-topline"><span className="kicker-dot" />Quiénes somos</div>
+          <div className="section-topline">Quiénes somos</div>
           <h2>Detrás de cada<br /><em>buena idea</em></h2>
           <p>Nicolás Rielo fundó 40CD para hacer algo simple y difícil: entender de verdad qué hace valioso a un negocio, y encontrar la forma más clara de contarlo.</p>
           <a className="text-link" href="#contacto">Conversemos sobre su proyecto <ArrowUpRight size={16} /></a>
@@ -362,7 +384,7 @@ export default function Home() {
       <section className="contact-section" id="contacto">
         <div className="section-wrap contact-grid">
           <Reveal as="div">
-            <div className="section-topline"><span className="kicker-dot" />Contacto</div>
+            <div className="section-topline">Contacto</div>
             <h2>Hablemos<br /><em>de su proyecto</em></h2>
             <p>Cuéntenos su proyecto. Sin compromiso, sin vueltas. Si podemos ayudarlo a crecer, lo vamos a decir con claridad.</p>
             <div className="contact-details">
@@ -409,6 +431,16 @@ export default function Home() {
           <a href="#inicio" aria-label="Volver al inicio"><ArrowUpRight size={18} /></a>
         </div>
       </footer>
+
+      <button
+        className={showScrollTop ? "scroll-top is-visible" : "scroll-top"}
+        aria-label="Volver arriba"
+        aria-hidden={!showScrollTop}
+        tabIndex={showScrollTop ? 0 : -1}
+        onClick={() => window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" })}
+      >
+        <ArrowUp size={18} />
+      </button>
     </main>
   );
 }
