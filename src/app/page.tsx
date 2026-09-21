@@ -39,22 +39,25 @@ import {
 
 const serviceIcons = [Code2, PenTool, Search, Mic, Video, Newspaper, Palette, Megaphone, Terminal, Smartphone, BarChart3, Compass];
 const pillarIcons = [Target, Wrench, MessageCircle, BarChart3];
+const pillarImages = [
+  "/imagenes/pillar-apuesta.jpg",
+  "/imagenes/pillar-tecnico.jpg",
+  "/imagenes/pillar-comunicacion.jpg",
+  "/imagenes/pillar-resultados.jpg",
+];
 
-const techyLines = [
-  { left: 4, top: 8, height: 42, delay: 0, duration: 5200 },
-  { left: 11, top: 40, height: 30, delay: 900, duration: 4600 },
-  { left: 18, top: 12, height: 55, delay: 1800, duration: 5800 },
-  { left: 25, top: 55, height: 24, delay: 400, duration: 4200 },
-  { left: 33, top: 5, height: 36, delay: 2400, duration: 5000 },
-  { left: 41, top: 30, height: 48, delay: 1200, duration: 6000 },
-  { left: 49, top: 15, height: 28, delay: 3000, duration: 4400 },
-  { left: 57, top: 48, height: 40, delay: 600, duration: 5400 },
-  { left: 65, top: 8, height: 32, delay: 2100, duration: 4800 },
-  { left: 72, top: 35, height: 50, delay: 300, duration: 5600 },
-  { left: 80, top: 18, height: 26, delay: 1500, duration: 4300 },
-  { left: 87, top: 45, height: 38, delay: 2700, duration: 5200 },
-  { left: 94, top: 10, height: 44, delay: 900, duration: 5900 },
-  { left: 60, top: 60, height: 22, delay: 1900, duration: 4100 },
+const nodeGroups = [
+  { left: 3, top: 12, delay: 0, duration: 6200, points: [[8, 42], [34, 12], [54, 46]] },
+  { left: 13, top: 56, delay: 700, duration: 5200, points: [[6, 10], [40, 30]] },
+  { left: 23, top: 18, delay: 1500, duration: 5800, points: [[10, 45], [36, 8], [58, 38]] },
+  { left: 32, top: 62, delay: 300, duration: 4800, points: [[5, 15], [30, 42]] },
+  { left: 41, top: 8, delay: 2200, duration: 6400, points: [[12, 30], [38, 55], [60, 20]] },
+  { left: 50, top: 46, delay: 1000, duration: 5000, points: [[8, 8], [32, 34]] },
+  { left: 59, top: 20, delay: 2800, duration: 5600, points: [[10, 50], [35, 14], [58, 42]] },
+  { left: 68, top: 58, delay: 500, duration: 4600, points: [[6, 20], [30, 46]] },
+  { left: 77, top: 12, delay: 1900, duration: 6100, points: [[9, 42], [33, 10], [56, 38]] },
+  { left: 87, top: 42, delay: 900, duration: 5300, points: [[7, 12], [28, 36]] },
+  { left: 94, top: 20, delay: 2400, duration: 4900, points: [[6, 34], [26, 10]] },
 ];
 
 export default function Home() {
@@ -72,6 +75,7 @@ export default function Home() {
 
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const cloneRef = useRef<HTMLElement | null>(null);
   const pausedRef = useRef(false);
   const portraitInnerRef = useRef<HTMLDivElement>(null);
   const proofRef = useRef<HTMLElement>(null);
@@ -115,21 +119,31 @@ export default function Home() {
   }, [reducedMotion]);
 
   useEffect(() => {
-    const root = trackRef.current;
-    if (!root) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = cardRefs.current.findIndex((el) => el === entry.target);
-            if (index !== -1) setActiveClient(index);
+    const track = trackRef.current;
+    if (!track) return;
+    let frame = 0;
+    function updateActiveFromScroll() {
+      if (frame) window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const target = track!.scrollLeft + track!.offsetLeft;
+        let nearest = 0;
+        let nearestDistance = Infinity;
+        cardRefs.current.forEach((el, index) => {
+          if (!el) return;
+          const distance = Math.abs(el.offsetLeft - target);
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearest = index;
           }
         });
-      },
-      { root, threshold: 0.6 }
-    );
-    cardRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+        setActiveClient(nearest);
+      });
+    }
+    track.addEventListener("scroll", updateActiveFromScroll, { passive: true });
+    return () => {
+      track.removeEventListener("scroll", updateActiveFromScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   useEffect(() => {
@@ -151,7 +165,7 @@ export default function Home() {
 
   function scrollTrackTo(index: number, behavior: ScrollBehavior) {
     const track = trackRef.current;
-    const card = cardRefs.current[index];
+    const card = index === clients.length ? cloneRef.current : cardRefs.current[index];
     if (!track || !card) return;
     track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior });
   }
@@ -160,8 +174,18 @@ export default function Home() {
     if (reducedMotion) return;
     const timer = window.setInterval(() => {
       if (pausedRef.current) return;
-      const next = (activeClient + 1) % clients.length;
-      scrollTrackTo(next, "smooth");
+      const track = trackRef.current;
+      if (!track) return;
+      const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
+      if (atEnd) {
+        scrollTrackTo(clients.length, "smooth");
+        window.setTimeout(() => {
+          scrollTrackTo(0, "auto");
+          setActiveClient(0);
+        }, 700);
+        return;
+      }
+      scrollTrackTo(activeClient + 1, "smooth");
     }, 4500);
     return () => window.clearInterval(timer);
   }, [activeClient, reducedMotion]);
@@ -192,6 +216,38 @@ export default function Home() {
 
   const slide = heroSlides[heroSlide];
 
+  function renderProjectCard(client: (typeof clients)[number], index: number, isClone = false) {
+    const logo = placeholderLogos[index % placeholderLogos.length];
+    return (
+      <article
+        key={isClone ? "clone-first" : client.name}
+        ref={(el) => {
+          if (isClone) cloneRef.current = el;
+          else cardRefs.current[index] = el;
+        }}
+        className="project-card project-card-media"
+        aria-hidden={isClone ? true : undefined}
+        tabIndex={isClone ? -1 : undefined}
+      >
+        <Image src={client.image} alt="" fill sizes="(max-width: 800px) 82vw, 360px" className="project-card-bg" />
+        <span className="project-card-scrim" aria-hidden="true" />
+        <div className="project-card-top">
+          <span className="project-symbol">{String(index + 1).padStart(2, "0")}</span>
+          <span className="project-logo" aria-hidden="true" title={`${logo.name} (logo provisorio)`}>{logo.mark}</span>
+        </div>
+        {client.featured && <span className="project-badge">Caso insignia</span>}
+        <div className="project-info">
+          <span className="project-tag">{client.tag}</span>
+          <h3>{client.name}</h3>
+          <p>{client.description}</p>
+        </div>
+        <a className="project-link" href={client.url} target="_blank" rel="noreferrer" tabIndex={isClone ? -1 : undefined}>
+          {client.urlLabel} <ArrowUpRight size={15} />
+        </a>
+      </article>
+    );
+  }
+
   return (
     <main>
       <header className="site-header">
@@ -213,8 +269,13 @@ export default function Home() {
 
       <section className="hero section-wrap" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
         <span className="hero-ghost" aria-hidden="true">40</span>
+        <div className="hero-rings" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
         <div className="hero-copy">
-          <p className="kicker"><span className="kicker-dot" /> {slide.eyebrow}</p>
           <h1 key={heroSlide} className="hero-title">
             {slide.titleLines.map((line, index) => (
               <span className="hero-line-mask" key={line}>
@@ -243,7 +304,6 @@ export default function Home() {
             <Image src={slide.image} alt={slide.imageAlt} fill priority sizes="(max-width: 900px) 90vw, 48vw" />
           </div>
           <span className="portrait-wipe" aria-hidden="true" />
-          <div className="portrait-brand">40<span>CD</span></div>
           <div className="hero-progress" role="group" aria-label="Seleccionar slide del hero">
             {heroSlides.map((item, index) => (
               <button
@@ -262,18 +322,47 @@ export default function Home() {
 
       <section className="proof-strip" ref={proofRef}>
         <div className="proof-lines" aria-hidden="true">
-          {techyLines.map((line, index) => (
-            <span
+          <svg width="0" height="0" style={{ position: "absolute" }}>
+            <defs>
+              <linearGradient id="nodeGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" style={{ stopColor: "var(--ember)" }} />
+                <stop offset="100%" style={{ stopColor: "var(--iron)" }} />
+              </linearGradient>
+            </defs>
+          </svg>
+          {nodeGroups.map((group, index) => (
+            <svg
               key={index}
-              className="tline"
+              className="node-group"
+              width="64"
+              height="64"
+              viewBox="0 0 64 64"
               style={{
-                left: `${line.left}%`,
-                top: `${line.top}%`,
-                height: `${line.height}%`,
-                animationDelay: `${line.delay}ms`,
-                animationDuration: `${line.duration}ms`,
+                left: `${group.left}%`,
+                top: `${group.top}%`,
+                animationDelay: `${group.delay}ms`,
+                animationDuration: `${group.duration}ms`,
               }}
-            />
+            >
+              {group.points.length > 1 && (
+                <polyline
+                  points={group.points.map((point) => point.join(",")).join(" ")}
+                  fill="none"
+                  stroke="url(#nodeGradient)"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                />
+              )}
+              {group.points.map((point, pointIndex) => (
+                <circle
+                  key={pointIndex}
+                  cx={point[0]}
+                  cy={point[1]}
+                  r={pointIndex === 0 ? 3.2 : 2.2}
+                  fill={pointIndex === 0 ? "var(--ember)" : "var(--iron)"}
+                />
+              ))}
+            </svg>
           ))}
         </div>
         <div className="section-wrap proof-inner">
@@ -285,7 +374,7 @@ export default function Home() {
 
       <section className="logos-marquee" aria-label="Marcas que confían en nosotros">
         <div className={reducedMotion ? "logos-track is-paused" : "logos-track"}>
-          {[...placeholderLogos, ...placeholderLogos].map((logo, index) => (
+          {[...placeholderLogos, ...placeholderLogos, ...placeholderLogos, ...placeholderLogos, ...placeholderLogos, ...placeholderLogos].map((logo, index) => (
             <span className="logo-item" key={`${logo.name}-${index}`} title={logo.name}>
               {logo.mark}
             </span>
@@ -337,24 +426,30 @@ export default function Home() {
           </div>
         </div>
         <div className="section-wrap why-inner">
-          <Reveal as="div" delay={40} className="why-heading">
-            <h2 id="why-heading">Jugamos a largo <em>plazo</em></h2>
-          </Reveal>
-          <div className="pillars-grid">
-            {pillars.map((pillar, index) => {
-              const Icon = pillarIcons[index % pillarIcons.length];
-              return (
-                <Reveal as="article" key={pillar.title} delay={index * 90} className="pillar-card">
-                  <div className="pillar-card-top">
-                    <span className="pillar-icon"><Icon size={20} /></span>
-                    <span className="pillar-index">{String(index + 1).padStart(2, "0")}</span>
-                  </div>
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.description}</p>
-                  <ArrowUpRight className="pillar-arrow" size={18} />
-                </Reveal>
-              );
-            })}
+          <div className="why-grid">
+            <Reveal as="div" delay={40} className="why-heading">
+              <h2 id="why-heading">Jugamos<br /><em>a largo plazo</em></h2>
+            </Reveal>
+            <div className="pillars-grid">
+              {pillars.map((pillar, index) => {
+                const Icon = pillarIcons[index % pillarIcons.length];
+                return (
+                  <Reveal as="article" key={pillar.title} delay={index * 90} className="pillar-card">
+                    <Image src={pillarImages[index % pillarImages.length]} alt="" fill sizes="(max-width: 800px) 90vw, 320px" className="pillar-card-bg" />
+                    <span className="pillar-card-scrim" aria-hidden="true" />
+                    <div className="pillar-card-top">
+                      <span className="pillar-icon"><Icon size={20} /></span>
+                      <span className="pillar-index">{String(index + 1).padStart(2, "0")}</span>
+                    </div>
+                    <div className="pillar-card-body">
+                      <h3>{pillar.title}</h3>
+                      <p>{pillar.description}</p>
+                    </div>
+                    <span className="pillar-arrow"><ArrowUpRight size={18} /></span>
+                  </Reveal>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -377,34 +472,8 @@ export default function Home() {
             onTouchStart={() => (pausedRef.current = true)}
             onTouchEnd={() => (pausedRef.current = false)}
           >
-            {clients.map((client, index) => {
-              const logo = placeholderLogos[index % placeholderLogos.length];
-              return (
-                <article
-                  key={client.name}
-                  ref={(el) => {
-                    cardRefs.current[index] = el;
-                  }}
-                  className="project-card project-card-media"
-                >
-                  <Image src={client.image} alt="" fill sizes="(max-width: 800px) 82vw, 360px" className="project-card-bg" />
-                  <span className="project-card-scrim" aria-hidden="true" />
-                  <div className="project-card-top">
-                    <span className="project-symbol">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="project-logo" aria-hidden="true" title={`${logo.name} (logo provisorio)`}>{logo.mark}</span>
-                  </div>
-                  {client.featured && <span className="project-badge">Caso insignia</span>}
-                  <div className="project-info">
-                    <span className="project-tag">{client.tag}</span>
-                    <h3>{client.name}</h3>
-                    <p>{client.description}</p>
-                  </div>
-                  <a className="project-link" href={client.url} target="_blank" rel="noreferrer">
-                    {client.urlLabel} <ArrowUpRight size={15} />
-                  </a>
-                </article>
-              );
-            })}
+            {clients.map((client, index) => renderProjectCard(client, index))}
+            {renderProjectCard(clients[0], 0, true)}
           </div>
         </div>
         <div className="project-controls section-wrap">
