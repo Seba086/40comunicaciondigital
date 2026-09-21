@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>40 Comunicación Digital | Agencia de Comunicación Digital | Tandil</title>
+<meta name="description" content="40 Comunicación Digital: diseño web, contenido, SEO, branding, producción audiovisual, podcasting, campañas ADS y desarrollo de software. Construimos tu presencia digital en Tandil y Argentina.">
+<meta name="keywords" content="agencia comunicación digital, diseño web Tandil, SEO, branding, producción audiovisual, podcasting, campañas ADS, desarrollo web, apps mobile, Tandil, Buenos Aires">
+<meta name="author" content="40 Comunicación Digital">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="40 Comunicación Digital">
+<meta property="og:description" content="Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<link rel="canonical" href="https://40comunicaciondigital.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<!-- Schema.org structured data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "40 Comunicación Digital",
+  "description": "Agencia de comunicación digital especializada en diseño web, SEO, branding, producción audiovisual, podcasting, campañas ADS y desarrollo de software.",
+  "telephone": "+5492494673903",
+  "email": "nicolas.rielo@40comunicaciondigital.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tandil",
+    "addressRegion": "Buenos Aires",
+    "addressCountry": "AR"
+  },
+  "url": "https://40comunicaciondigital.com",
+  "serviceType": ["Diseño Web", "SEO", "Branding", "Producción Audiovisual", "Campañas ADS", "Desarrollo de Software"]
+}
+</script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#0A0A08;
+  --white:#F5F2EB;
+  --gray1:#1A1A18;
+  --gray2:#2E2E2B;
+  --gray3:#6B6860;
+  --gray4:#B8B5AE;
+  --border:rgba(245,242,235,0.12);
+  --border-dark:rgba(10,10,8,0.15);
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;
+  padding:5rem 7vw;position:relative;overflow:hidden;
+}
+.hero-giant{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(8rem,26vw,28rem);
+  line-height:0.82;
+  color:rgba(245,242,235,0.035);
+  position:absolute;right:-3vw;top:50%;
+  transform:translateY(-50%);
+  user-select:none;letter-spacing:-0.02em;
+  pointer-events:none;
+}
+.logo-wrap{margin-bottom:3.5rem}
+.logo-wrap img{width:clamp(110px,16vw,200px);filter:invert(1)}
+.hero-eyebrow{
+  font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--gray3);margin-bottom:1.75rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.hero-eyebrow::before{content:'';width:2rem;height:1px;background:var(--gray3)}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.2rem,8.5vw,8.5rem);
+  line-height:0.88;letter-spacing:-0.01em;
+  max-width:16ch;margin-bottom:2.5rem;
+}
+.hero h1 u{text-decoration:none;border-bottom:3px solid var(--white)}
+.hero-desc{
+  font-size:clamp(0.93rem,1.4vw,1.08rem);line-height:1.75;
+  color:var(--gray4);max-width:52ch;
+  margin-bottom:3.5rem;font-weight:300;
+}
+.hero-cta{
+  display:inline-block;
+  background:var(--white);color:var(--black);
+  padding:1rem 2.5rem;
+  font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;
+  font-family:'DM Sans',sans-serif;font-weight:500;
+  border:none;cursor:pointer;text-decoration:none;
+  transition:opacity 0.2s;
+}
+.hero-cta:hover{opacity:0.75}
+.scroll-hint{
+  position:absolute;bottom:2.5rem;left:7vw;
+  font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--gray3);display:flex;align-items:center;gap:0.75rem;
+}
+.scroll-hint::after{content:'';width:3rem;height:1px;background:var(--gray3);animation:scrollpulse 2s ease-in-out infinite}
+@keyframes scrollpulse{0%,100%{opacity:0.3;width:1rem}50%{opacity:1;width:3rem}}
+
+/* ── TICKER ── */
+.ticker{
+  background:var(--white);color:var(--black);
+  padding:0.9rem 0;overflow:hidden;
+}
+.ticker-inner{
+  display:flex;
+  animation:ticker 32s linear infinite;
+  width:max-content;
+}
+.ticker-item{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:0.14em;
+  white-space:nowrap;padding:0 2.25rem;
+  border-right:1px solid rgba(10,10,8,0.12);
+  color:var(--black);
+}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTIONS ── */
+.section{padding:8rem 7vw}
+.section-label{
+  font-size:0.63rem;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--gray3);margin-bottom:3rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.section-label::before{content:'';width:1.5rem;height:1px;background:var(--gray3)}
+
+/* ── MANIFESTO ── */
+.manifesto{background:var(--white);color:var(--black);padding:8rem 7vw}
+.manifesto .section-label,.manifesto .section-label::before{color:var(--gray3);background:var(--gray3)}
+.manifesto-quote{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.2rem,5.5vw,5.2rem);
+  line-height:1.02;max-width:22ch;
+  margin-bottom:4.5rem;
+  letter-spacing:0.01em;color:var(--black);
+}
+.manifesto-body{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;max-width:860px;
+}
+.manifesto-body p{
+  font-size:1rem;line-height:1.8;
+  color:#4A4845;font-weight:300;
+}
+.manifesto-body p strong{font-weight:500;color:var(--black)}
+@media(max-width:640px){
+  .manifesto-body{grid-template-columns:1fr;gap:2rem}
+}
+
+/* ── SERVICES ── */
+.services-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,5.5vw,5rem);
+  line-height:0.93;margin-bottom:4.5rem;
+  max-width:20ch;
+}
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  border:1px solid var(--border);
+}
+.svc{
+  padding:2.5rem 2rem;
+  border:1px solid var(--border);
+  position:relative;overflow:hidden;
+  transition:background 0.3s;
+  cursor:default;
+}
+.svc:hover{background:rgba(245,242,235,0.05)}
+.svc:hover .svc-n{opacity:0}
+.svc-n{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:5rem;line-height:1;
+  color:rgba(245,242,235,0.05);
+  position:absolute;bottom:0.5rem;right:1rem;
+  user-select:none;transition:opacity 0.3s;
+}
+.svc-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--white);margin-bottom:1.25rem;opacity:0.35;
+}
+.svc h3{
+  font-size:0.93rem;font-weight:500;
+  margin-bottom:0.65rem;letter-spacing:0.01em;color:var(--white);
+}
+.svc p{font-size:0.8rem;line-height:1.7;color:var(--gray3);font-weight:300}
+
+/* ── WHY ── */
+.why{
+  background:var(--gray1);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.why-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6rem;align-items:start;
+}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr;gap:3rem}}
+.why h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.5rem,5.5vw,4.8rem);
+  line-height:0.93;color:var(--white);
+}
+.pillars{display:flex;flex-direction:column;gap:2rem}
+.pillar{border-top:1px solid var(--border);padding-top:1.5rem}
+.pillar h4{font-size:0.9rem;font-weight:500;margin-bottom:0.5rem;color:var(--white)}
+.pillar p{font-size:0.82rem;line-height:1.7;color:var(--gray3);font-weight:300}
+
+/* ── STATEMENT ── */
+.statement{
+  padding:9rem 7vw;
+  border-top:1px solid var(--border);
+  text-align:center;position:relative;overflow:hidden;
+}
+.statement-bg{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(10rem,22vw,22rem);
+  color:rgba(245,242,235,0.025);
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;user-select:none;pointer-events:none;
+  letter-spacing:-0.02em;
+}
+.statement h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,8.5vw,8.5rem);
+  line-height:0.88;margin-bottom:2rem;
+  position:relative;
+}
+.statement p{
+  font-size:1rem;color:var(--gray4);
+  max-width:48ch;margin:0 auto 3.5rem;
+  font-weight:300;line-height:1.75;
+  position:relative;
+}
+
+/* ── CONTACT ── */
+.contact{background:var(--white);color:var(--black);padding:8rem 7vw}
+.contact .section-label{color:var(--gray3)}
+.contact .section-label::before{background:var(--gray3)}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+@media(max-width:800px){.contact-layout{grid-template-columns:1fr;gap:3rem}}
+.contact h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.8rem,5.5vw,5rem);
+  line-height:0.93;margin-bottom:1.25rem;color:var(--black);
+}
+.contact-sub{
+  font-size:0.97rem;color:#4A4845;
+  line-height:1.75;font-weight:300;margin-bottom:3rem;
+}
+.contact-info{display:flex;flex-direction:column;gap:1.5rem}
+.contact-info-item{
+  display:flex;flex-direction:column;gap:0.2rem;
+  border-top:1px solid var(--border-dark);padding-top:1.25rem;
+}
+.contact-info-item span{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gray3)}
+.contact-info-item a{
+  font-size:0.95rem;font-weight:400;color:var(--black);
+  text-decoration:none;transition:opacity 0.2s;
+}
+.contact-info-item a:hover{opacity:0.5}
+
+.contact-form{display:flex;flex-direction:column;gap:0.85rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.85rem}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+.contact-form input,
+.contact-form textarea,
+.contact-form select{
+  width:100%;padding:0.85rem 1rem;
+  border:1px solid rgba(10,10,8,0.18);
+  background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:0.88rem;
+  color:var(--black);outline:none;
+  transition:border-color 0.2s;
+  border-radius:0;-webkit-appearance:none;appearance:none;
+}
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form select:focus{border-color:var(--black)}
+.contact-form textarea{resize:vertical;min-height:130px}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder{color:#AAAAAA}
+.contact-form select{color:var(--black);background:transparent}
+.contact-form select option{color:var(--black);background:var(--white)}
+.contact-btn{
+  align-self:flex-start;
+  background:var(--black);color:var(--white);
+  padding:1rem 2.25rem;
+  font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;
+  font-family:'DM Sans',sans-serif;font-weight:500;
+  border:none;cursor:pointer;transition:opacity 0.2s;
+}
+.contact-btn:hover{opacity:0.7}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--black);
+  padding:3rem 7vw;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1.5rem;
+}
+.footer-logo img{width:72px;filter:invert(1);opacity:0.5}
+.footer-meta p{
+  font-size:0.72rem;color:var(--gray3);
+  letter-spacing:0.05em;line-height:2;
+}
+.footer-meta a{color:var(--gray3);text-decoration:none}
+.footer-meta a:hover{color:var(--gray4)}
+
+/* ── CLIENTS ── */
+.clients{
+  background:var(--white);color:var(--black);
+  padding:8rem 7vw;
+}
+.clients .section-label{color:var(--gray3)}
+.clients .section-label::before{background:var(--gray3)}
+.clients-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,5.5vw,5rem);
+  line-height:0.93;margin-bottom:5rem;
+  color:var(--black);
+}
+.clients-list{display:flex;flex-direction:column}
+.client-item{
+  display:grid;
+  grid-template-columns:3rem 1fr 2fr;
+  gap:2.5rem;align-items:start;
+  border-top:1px solid var(--border-dark);
+  padding:2.5rem 0;
+  transition:background 0.2s;
+}
+.client-item:last-child{border-bottom:1px solid var(--border-dark)}
+.client-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1rem;letter-spacing:0.1em;
+  color:var(--gray3);padding-top:0.15rem;
+}
+.client-header{display:flex;flex-direction:column;gap:0.4rem}
+.client-name{
+  font-size:1rem;font-weight:500;
+  color:var(--black);letter-spacing:0.01em;
+}
+.client-tag{
+  font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--gray3);
+}
+.client-link{
+  font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gray3);text-decoration:none;
+  display:inline-flex;align-items:center;gap:0.4rem;
+  margin-top:0.75rem;transition:color 0.2s;
+}
+.client-link:hover{color:var(--black)}
+.client-link::after{content:'↗';font-size:0.8rem}
+.client-desc{
+  font-size:0.88rem;line-height:1.75;
+  color:#4A4845;font-weight:300;
+  padding-top:0.15rem;
+}
+@media(max-width:700px){
+  .client-item{grid-template-columns:2rem 1fr;gap:1.5rem}
+  .client-desc{grid-column:1/-1;padding-top:0}
+}
+@media(max-width:640px){
+  .clients{padding:5rem 6vw}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .hero{padding:4rem 6vw}
+  .section{padding:5rem 6vw}
+  .manifesto{padding:5rem 6vw}
+  .contact{padding:5rem 6vw}
+  footer{padding:2.5rem 6vw;flex-direction:column;align-items:flex-start}
+  .statement{padding:6rem 6vw}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="inicio" aria-label="40 Comunicación Digital">
+  <div class="hero-giant" aria-hidden="true">40</div>
+  <div class="logo-wrap">
+    <img src="40CD_Logo_B_N.png" alt="40 Comunicación Digital — Agencia de Comunicación Digital en Tandil" width="200" height="200">
+  </div>
+  <div class="hero-eyebrow">Agencia de comunicación digital · Tandil, Argentina</div>
+  <h1>Diseñamos tu<br>presencia<br><u>digital.</u></h1>
+  <p class="hero-desc">Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. La batalla es en la web y en las redes. Para eso estamos nosotros.</p>
+  <a href="#contacto" class="hero-cta">Cantar las 40 →</a>
+  <div class="scroll-hint" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- ══ TICKER ══ -->
+<div class="ticker" aria-hidden="true" role="presentation">
+  <div class="ticker-inner">
+    <span class="ticker-item">Diseño Web</span>
+    <span class="ticker-item">SEO &amp; Posicionamiento</span>
+    <span class="ticker-item">Producción Audiovisual</span>
+    <span class="ticker-item">Branding</span>
+    <span class="ticker-item">Campañas ADS</span>
+    <span class="ticker-item">Podcasting</span>
+    <span class="ticker-item">Desarrollo de Software</span>
+    <span class="ticker-item">Apps Mobile</span>
+    <span class="ticker-item">Prensa Digital</span>
+    <span class="ticker-item">Consultoría Digital</span>
+    <span class="ticker-item">Diseño Web</span>
+    <span class="ticker-item">SEO &amp; Posicionamiento</span>
+    <span class="ticker-item">Producción Audiovisual</span>
+    <span class="ticker-item">Branding</span>
+    <span class="ticker-item">Campañas ADS</span>
+    <span class="ticker-item">Podcasting</span>
+    <span class="ticker-item">Desarrollo de Software</span>
+    <span class="ticker-item">Apps Mobile</span>
+    <span class="ticker-item">Prensa Digital</span>
+    <span class="ticker-item">Consultoría Digital</span>
+  </div>
+</div>
+
+<!-- ══ MANIFIESTO ══ -->
+<section class="manifesto" id="nosotros" aria-labelledby="manifesto-heading">
+  <div class="section-label">Nuestra filosofía</div>
+  <p class="manifesto-quote" id="manifesto-heading">
+    Si a usted le va bien,<br>a nosotros nos va bien.
+  </p>
+  <div class="manifesto-body">
+    <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes. Jugamos a largo plazo con el fin de potenciar los proyectos de quienes confían en nosotros.</p>
+    <p>Entendemos que la comunicación es una responsabilidad: el conocimiento técnico y del negocio lo tiene usted. Nosotros simplemente lo ayudamos a desarrollarlo y potenciarlo con las <strong>últimas herramientas digitales.</strong></p>
+  </div>
+</section>
+
+<!-- ══ SERVICIOS ══ -->
+<section class="section" id="servicios" aria-labelledby="services-heading">
+  <div class="section-label">Lo que hacemos</div>
+  <h2 class="services-title" id="services-heading">Presencia digital,<br>de principio<br>a fin.</h2>
+  <div class="services-grid">
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">01</div>
+      <div class="svc-dot"></div>
+      <h3>Diseño y Desarrollo Web</h3>
+      <p>Sitios que representan su negocio con la seriedad que merece. Desde la arquitectura de información hasta el código: experiencias digitales que convierten visitantes en clientes.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">02</div>
+      <div class="svc-dot"></div>
+      <h3>Creación de Contenido</h3>
+      <p>Texto, audio y video estratégico para todas las plataformas. Notas, guiones, reels, newsletters y posteos: el mensaje correcto, en el formato correcto, en el lugar correcto.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">03</div>
+      <div class="svc-dot"></div>
+      <h3>SEO y Posicionamiento</h3>
+      <p>Google, Instagram, YouTube. Trabajamos para que quienes lo buscan —y quienes todavía no saben que lo necesitan— lo encuentren a usted primero.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">04</div>
+      <div class="svc-dot"></div>
+      <h3>Podcasting y YouTube</h3>
+      <p>Gestión integral de canales: producción, edición, publicación y crecimiento de audiencia. Su voz, con alcance real y comunidad que crece.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">05</div>
+      <div class="svc-dot"></div>
+      <h3>Producción Audiovisual</h3>
+      <p>Filmación, edición y postproducción profesional. Corporativo, publicitario o editorial: traducimos su identidad en imágenes que impactan y quedan.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">06</div>
+      <div class="svc-dot"></div>
+      <h3>Prensa y Comunicación</h3>
+      <p>Gacetillas, gestión de medios y relaciones institucionales. Lo ponemos en los lugares donde su industria presta atención.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">07</div>
+      <div class="svc-dot"></div>
+      <h3>Branding y Marketing Digital</h3>
+      <p>Identidad visual, tono de marca, estrategia y gestión de redes. Construimos marcas que se recuerdan y comunidades que convierten.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">08</div>
+      <div class="svc-dot"></div>
+      <h3>Campañas ADS</h3>
+      <p>Meta Ads, Google Ads, YouTube Ads. Cada peso invertido tiene que trabajar. Campañas con objetivo claro y medición real.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">09</div>
+      <div class="svc-dot"></div>
+      <h3>Desarrollo de Software Web</h3>
+      <p>Plataformas e-learning, e-commerce, intranets y sistemas a medida. La infraestructura digital que su negocio necesita para escalar sin límites.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">10</div>
+      <div class="svc-dot"></div>
+      <h3>Aplicaciones Mobile</h3>
+      <p>Apps iOS y Android pensadas desde el usuario. Diseño, desarrollo y lanzamiento: su negocio en el bolsillo de sus clientes.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">11</div>
+      <div class="svc-dot"></div>
+      <h3>Analítica y Estrategia</h3>
+      <p>No alcanza con estar: hay que medir. Configuramos dashboards, analizamos datos y tomamos decisiones basadas en resultados reales.</p>
+    </article>
+
+    <article class="svc">
+      <div class="svc-n" aria-hidden="true">12</div>
+      <div class="svc-dot"></div>
+      <h3>Consultoría Digital</h3>
+      <p>Para quienes necesitan un diagnóstico antes de actuar. Auditamos su presencia digital y trazamos la hoja de ruta más eficiente para crecer.</p>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══ POR QUÉ 40CD ══ -->
+<section class="section why" aria-labelledby="why-heading">
+  <div class="section-label">Por qué 40CD</div>
+  <div class="why-grid">
+    <div>
+      <h2 id="why-heading">Jugamos<br>a largo<br>plazo.</h2>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <h4>Apostamos por su negocio</h4>
+        <p>No vendemos servicios sueltos. Entendemos su industria, su objetivo y diseñamos la estrategia digital que lo lleva ahí.</p>
+      </div>
+      <div class="pillar">
+        <h4>Conocimiento técnico real</h4>
+        <p>Cada servicio está respaldado por profesionales especializados. Sin intermediarios ni promesas vacías.</p>
+      </div>
+      <div class="pillar">
+        <h4>Comunicación como responsabilidad</h4>
+        <p>Lo que se dice, cómo se dice y dónde se dice importa. Tratamos su marca con el cuidado que se merece.</p>
+      </div>
+      <div class="pillar">
+        <h4>Resultados medibles</h4>
+        <p>Visibilidad, autoridad, conversiones. Cada acción tiene un objetivo claro y métricas para evaluarlo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CLIENTES ══ -->
+<section class="clients" id="clientes" aria-labelledby="clients-heading">
+  <div class="section-label">Con quiénes trabajamos</div>
+  <h2 class="clients-title" id="clients-heading">Proyectos<br>en los que<br>apostamos.</h2>
+  <div class="clients-list">
+
+    <div class="client-item">
+      <div class="client-num">01</div>
+      <div class="client-header">
+        <span class="client-name">Facultad de Ciencias Económicas — UNICEN</span>
+        <span class="client-tag">Prensa · Comunicación institucional</span>
+        <a class="client-link" href="https://www.econ.unicen.edu.ar/" target="_blank" rel="noopener">econ.unicen.edu.ar</a>
+      </div>
+      <p class="client-desc">La Facultad de Ciencias Económicas de la Universidad Nacional del Centro de la Provincia de Buenos Aires es una institución de referencia en Tandil y la región. Con carreras de grado y posgrado en administración, economía y contabilidad, forma profesionales comprometidos con la comunidad académica y científica. Para 40CD, generamos el contenido de prensa y comunicación institucional de su blog, traduciendo la actividad universitaria en información clara y relevante para su comunidad.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">02</div>
+      <div class="client-header">
+        <span class="client-name">Colegio de Escribanos de la Prov. de Bs. As. — Delegación Tandil</span>
+        <span class="client-tag">Comunicación institucional · Redes sociales</span>
+        <a class="client-link" href="https://www.colescba.org.ar/portal/" target="_blank" rel="noopener">colescba.org.ar</a>
+      </div>
+      <p class="client-desc">El Colegio de Escribanos de la Provincia de Buenos Aires es el organismo que nuclea, regula y representa a los escribanos bonaerenses, garantizando la seguridad jurídica de los actos notariales. Su delegación en Tandil acompaña a los escribanos de la región en el ejercicio de la profesión y en su vínculo con la ciudadanía. 40CD gestiona su comunicación institucional en redes sociales, acercando la actividad notarial a la comunidad con claridad y profesionalismo.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">03</div>
+      <div class="client-header">
+        <span class="client-name">Patín Reparage</span>
+        <span class="client-tag">SEO · Posicionamiento en buscadores</span>
+        <a class="client-link" href="https://patinreparage.com/" target="_blank" rel="noopener">patinreparage.com</a>
+      </div>
+      <p class="client-desc">Patín Reparage es un taller especializado en la reparación profesional de patinetes eléctricos y la venta de repuestos, ruedas, frenos, cojinetes y accesorios, pensado por y para usuarios de movilidad urbana. Con años de trayectoria y miles de reparaciones realizadas, es hoy una referencia en su rubro en España. 40CD trabaja en su posicionamiento SEO para que quienes buscan una solución para su patinete encuentren a Patín Reparage primero.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">04</div>
+      <div class="client-header">
+        <span class="client-name">Editeca</span>
+        <span class="client-tag">SEO · Posicionamiento en buscadores</span>
+        <a class="client-link" href="https://editeca.com/" target="_blank" rel="noopener">editeca.com</a>
+      </div>
+      <p class="client-desc">Editeca es una plataforma de formación especializada en BIM (Building Information Modeling), transformación digital y nuevas tecnologías aplicadas a la arquitectura y la construcción, con presencia en más de 20 países de habla hispana. Referente en la formación online del sector AECO, ofrece másters y cursos certificados para profesionales que quieren mantenerse a la vanguardia. 40CD gestiona su estrategia de posicionamiento SEO para seguir creciendo su audiencia a escala internacional.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">05</div>
+      <div class="client-header">
+        <span class="client-name">Sofise</span>
+        <span class="client-tag">SEO · Posicionamiento en buscadores</span>
+        <a class="client-link" href="https://sofise.es/" target="_blank" rel="noopener">sofise.es</a>
+      </div>
+      <p class="client-desc">Sofise es una correduría de seguros especializada en coberturas para arquitectos y el sector de la construcción, con soluciones a medida y asesoramiento profesional para proteger proyectos y actividad profesional. Un servicio de nicho con alto valor para un sector muy específico. 40CD trabaja en su posicionamiento SEO para conectar a Sofise con los profesionales que necesitan exactamente lo que ofrecen.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">06</div>
+      <div class="client-header">
+        <span class="client-name">Calpech</span>
+        <span class="client-tag">SEO · Posicionamiento en buscadores</span>
+        <a class="client-link" href="https://www.calpech.com/" target="_blank" rel="noopener">calpech.com</a>
+      </div>
+      <p class="client-desc">Calpech es una empresa especializada en soluciones avanzadas para la optimización de biogás, con tecnología orientada a la eliminación de H2S y la mejora del rendimiento en plantas de biogás. Un actor técnico y de alto impacto en el sector de la energía renovable. 40CD acompaña su presencia digital con una estrategia SEO orientada a captar clientes en un mercado de alta especialización.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">07</div>
+      <div class="client-header">
+        <span class="client-name">Controla Tus Horas</span>
+        <span class="client-tag">SEO · Posicionamiento en buscadores</span>
+        <a class="client-link" href="https://www.controlatushoras.com/" target="_blank" rel="noopener">controlatushoras.com</a>
+      </div>
+      <p class="client-desc">Controla Tus Horas es un software de control horario orientado a empresas, que permite gestionar el registro de jornada laboral de forma simple y en cumplimiento con la normativa vigente. Una herramienta práctica para equipos de todos los tamaños. 40CD trabaja en su estrategia SEO para posicionarlo frente a empresas que buscan una solución de este tipo en buscadores.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">08</div>
+      <div class="client-header">
+        <span class="client-name">David Casero</span>
+        <span class="client-tag">YouTube · Contenido · Edición de video</span>
+        <a class="client-link" href="https://www.youtube.com/@davidcaseroventashighticket" target="_blank" rel="noopener">YouTube — David Casero</a>
+      </div>
+      <p class="client-desc">David Casero es consultor de ventas y creador de contenido en YouTube, especializado en ayudar a infoproductores, agencias y formadores a escalar sus negocios digitales a través de sistemas comerciales que convierten, equipos entrenados y estructuras comerciales sólidas. Con más de un millón de euros cerrados en ventas y una audiencia en crecimiento, su canal es referencia para quienes quieren vender en el mundo online. 40CD trabaja en su posicionamiento en plataformas, la creación de contenido y la edición de sus videos.</p>
+    </div>
+
+    <div class="client-item">
+      <div class="client-num">09</div>
+      <div class="client-header">
+        <span class="client-name">Alerta Comunidad</span>
+        <span class="client-tag">Plataformas · Contenido · Edición de video</span>
+        <a class="client-link" href="https://alertacomunidad.com/" target="_blank" rel="noopener">alertacomunidad.com</a>
+      </div>
+      <p class="client-desc">Alerta Comunidad es una plataforma colaborativa que conecta a vecinos para mejorar la seguridad del barrio, permitiendo enviar y recibir alertas en tiempo real sobre robos, emergencias, accidentes o situaciones sospechosas. Una herramienta simple y de alto impacto social para crear barrios más seguros y conectados. 40CD acompaña su crecimiento con posicionamiento en plataformas, creación de contenido y edición de videos.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ STATEMENT ══ -->
+<section class="statement" aria-label="Propuesta de valor">
+  <div class="statement-bg" aria-hidden="true">40</div>
+  <h2>Es hora de<br>golpear la<br>mesa.</h2>
+  <p>Hoy la batalla es en la web y en las redes. Si usted es bueno en lo que hace, le falta una sola cosa: que lo vean. Para eso estamos nosotros.</p>
+  <a href="#contacto" class="hero-cta">Es hora de cantar las 40 →</a>
+</section>
+
+<!-- ══ CONTACTO ══ -->
+<section class="contact" id="contacto" aria-labelledby="contact-heading">
+  <div class="section-label">Contacto</div>
+  <div class="contact-layout">
+
+    <div>
+      <h2 id="contact-heading">Hablemos.</h2>
+      <p class="contact-sub">Cuéntenos su proyecto. Sin compromiso, sin vueltas. Si podemos ayudarlo a crecer, lo vamos a decir con la misma claridad.</p>
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <span>WhatsApp / Teléfono</span>
+          <a href="https://wa.me/5492494673903" target="_blank" rel="noopener">+54 9 249 467-3903</a>
+        </div>
+        <div class="contact-info-item">
+          <span>Email</span>
+          <a href="mailto:nicolas.rielo@40comunicaciondigital.com">nicolas.rielo@40comunicaciondigital.com</a>
+        </div>
+        <div class="contact-info-item">
+          <span>Ubicación</span>
+          <a href="#">Tandil, Buenos Aires, Argentina</a>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" action="#" method="post" aria-label="Formulario de contacto">
+      <div class="form-row">
+        <input type="text" name="nombre" placeholder="Nombre" required aria-label="Nombre">
+        <input type="email" name="email" placeholder="Email" required aria-label="Email">
+      </div>
+      <input type="text" name="empresa" placeholder="Empresa o proyecto (opcional)" aria-label="Empresa o proyecto">
+      <select name="servicio" aria-label="Servicio de interés">
+        <option value="" disabled selected>¿Qué necesita?</option>
+        <option value="web">Diseño y Desarrollo Web</option>
+        <option value="contenido">Creación de Contenido</option>
+        <option value="seo">SEO y Posicionamiento</option>
+        <option value="podcast">Podcasting y YouTube</option>
+        <option value="audiovisual">Producción Audiovisual</option>
+        <option value="prensa">Prensa y Comunicación</option>
+        <option value="branding">Branding y Marketing Digital</option>
+        <option value="ads">Campañas ADS</option>
+        <option value="software">Desarrollo de Software Web</option>
+        <option value="mobile">Aplicaciones Mobile</option>
+        <option value="consultoria">Consultoría Digital</option>
+        <option value="varios">Más de uno / No sé por dónde empezar</option>
+      </select>
+      <textarea name="mensaje" placeholder="Cuéntenos su proyecto..." aria-label="Mensaje"></textarea>
+      <button type="submit" class="contact-btn">Enviar mensaje →</button>
+    </form>
+
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">
+    <img src="40CD_Logo_B_N.png" alt="40 Comunicación Digital" width="72" height="72">
+  </div>
+  <div class="footer-meta">
+    <p>Tandil · Buenos Aires · Argentina</p>
+    <p><a href="mailto:nicolas.rielo@40comunicaciondigital.com">nicolas.rielo@40comunicaciondigital.com</a></p>
+    <p><a href="https://wa.me/5492494673903">+54 9 249 467-3903</a></p>
+    <p>© 2025 40 Comunicación Digital. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>
