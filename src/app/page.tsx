@@ -72,23 +72,26 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  function scrollTrackTo(index: number, behavior: ScrollBehavior) {
+    const track = trackRef.current;
+    const card = cardRefs.current[index];
+    if (!track || !card) return;
+    track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior });
+  }
+
   useEffect(() => {
     if (reducedMotion) return;
     const timer = window.setInterval(() => {
       if (pausedRef.current) return;
       const next = (activeClient + 1) % clients.length;
-      cardRefs.current[next]?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+      scrollTrackTo(next, "smooth");
     }, 4500);
     return () => window.clearInterval(timer);
   }, [activeClient, reducedMotion]);
 
   function goToClient(index: number) {
     const wrapped = (index + clients.length) % clients.length;
-    cardRefs.current[wrapped]?.scrollIntoView({
-      behavior: reducedMotion ? "auto" : "smooth",
-      block: "nearest",
-      inline: "start",
-    });
+    scrollTrackTo(wrapped, reducedMotion ? "auto" : "smooth");
   }
 
   async function submitContact(event: FormEvent<HTMLFormElement>) {
@@ -115,18 +118,20 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a className="brand" href="#inicio" aria-label="40 Comunicación Digital, inicio">
-          <Image src="/imagenes/40CD%20Logo%20B%26N-transparente.png" alt="40 Comunicación Digital" width={52} height={52} priority />
-        </a>
-        <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Navegación principal">
-          <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
-          <a href="#proyectos" onClick={() => setMenuOpen(false)}>Proyectos</a>
-          <a href="#nosotros" onClick={() => setMenuOpen(false)}>Nosotros</a>
-          <a className="nav-cta" href="#contacto" onClick={() => setMenuOpen(false)}>Hablemos <ArrowUpRight size={15} /></a>
-        </nav>
-        <button className="menu-toggle" aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="section-wrap header-inner">
+          <a className="brand" href="#inicio" aria-label="40 Comunicación Digital, inicio">
+            <Image src="/imagenes/40CD%20Logo%20B%26N-transparente.png" alt="40 Comunicación Digital" width={52} height={52} priority />
+          </a>
+          <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Navegación principal">
+            <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
+            <a href="#proyectos" onClick={() => setMenuOpen(false)}>Proyectos</a>
+            <a href="#nosotros" onClick={() => setMenuOpen(false)}>Nosotros</a>
+            <a className="nav-cta" href="#contacto" onClick={() => setMenuOpen(false)}>Hablemos <ArrowUpRight size={15} /></a>
+          </nav>
+          <button className="menu-toggle" aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </header>
 
       <section className="hero section-wrap" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
@@ -184,9 +189,9 @@ export default function Home() {
       </section>
 
       <section className="section-wrap manifesto" id="nosotros-filosofia">
-        <Reveal className="section-topline"><span>01</span><span>La filosofía</span></Reveal>
+        <Reveal className="section-topline"><span className="kicker-dot" />La filosofía</Reveal>
         <div className="manifesto-grid">
-          <Reveal as="div"><h2>Si a usted<br />le va bien,<br /><em>a nosotros</em><br />nos va bien.</h2></Reveal>
+          <Reveal as="div"><h2>Si a usted<br />le va bien,<br /><em>a nosotros</em><br />nos va bien</h2></Reveal>
           <Reveal as="div" delay={80} className="manifesto-body">
             <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes. Jugamos a largo plazo con el fin de potenciar los proyectos de quienes confían en nosotros.</p>
             <p>El conocimiento técnico y del negocio lo tiene usted. Nosotros lo ayudamos a desarrollarlo y potenciarlo con las últimas herramientas digitales.</p>
@@ -196,9 +201,9 @@ export default function Home() {
       </section>
 
       <section className="services section-wrap" id="servicios">
-        <Reveal className="section-topline"><span>02</span><span>Lo que hacemos</span></Reveal>
+        <Reveal className="section-topline"><span className="kicker-dot" />Lo que hacemos</Reveal>
         <Reveal as="div" delay={60} className="services-heading">
-          <h2>Todo lo que su marca<br /><em>necesita para avanzar.</em></h2>
+          <h2>Todo lo que su marca<br /><em>necesita para avanzar</em></h2>
           <p>Una mirada integral: estrategia, creatividad y tecnología en el mismo equipo.</p>
         </Reveal>
         <div className="services-grid">
@@ -222,9 +227,9 @@ export default function Home() {
           </div>
         </div>
         <div className="section-wrap why-inner">
-          <Reveal className="section-topline on-dark"><span>03</span><span>Por qué 40CD</span></Reveal>
+          <Reveal className="section-topline on-dark"><span className="kicker-dot" />Por qué 40CD</Reveal>
           <div className="why-grid">
-            <Reveal as="div"><h2 id="why-heading">Jugamos<br />a largo<br /><em>plazo.</em></h2></Reveal>
+            <Reveal as="div"><h2 id="why-heading">Jugamos<br />a largo<br /><em>plazo</em></h2></Reveal>
             <ul className="pillars">
               {pillars.map((pillar, index) => (
                 <Reveal as="li" key={pillar.title} delay={index * 80} className="pillar">
@@ -239,9 +244,9 @@ export default function Home() {
 
       <section className="projects" id="proyectos">
         <div className="section-wrap projects-head">
-          <Reveal className="section-topline"><span>04</span><span>Proyectos en los que apostamos</span></Reveal>
+          <Reveal className="section-topline"><span className="kicker-dot" />Proyectos en los que apostamos</Reveal>
           <Reveal as="div" delay={60}>
-            <h2>Trabajo que<br /><em>habla por sí solo.</em></h2>
+            <h2>Trabajo que<br /><em>habla por sí solo</em></h2>
             <p>Marcas, instituciones y productos digitales reales que acompañamos en el camino.</p>
           </Reveal>
         </div>
@@ -303,8 +308,8 @@ export default function Home() {
           <Image src="/imagenes/Nico_perfil.png" alt="Nicolás Rielo" fill sizes="(max-width: 800px) 90vw, 40vw" />
         </Reveal>
         <Reveal as="div" delay={80} className="about-copy">
-          <div className="section-topline"><span>05</span><span>Quiénes somos</span></div>
-          <h2>Detrás de cada<br /><em>buena idea.</em></h2>
+          <div className="section-topline"><span className="kicker-dot" />Quiénes somos</div>
+          <h2>Detrás de cada<br /><em>buena idea</em></h2>
           <p>Nicolás Rielo fundó 40CD para hacer algo simple y difícil: entender de verdad qué hace valioso a un negocio, y encontrar la forma más clara de contarlo.</p>
           <a className="text-link" href="#contacto">Conversemos sobre su proyecto <ArrowUpRight size={16} /></a>
         </Reveal>
@@ -313,7 +318,7 @@ export default function Home() {
       <section className="statement">
         <span className="statement-ghost" aria-hidden="true">40</span>
         <Reveal className="statement-inner">
-          <h2>Es hora de<br /><em>golpear la mesa.</em></h2>
+          <h2>Es hora de<br /><em>golpear la mesa</em></h2>
           <p>Hoy la batalla es en la web y en las redes. Si usted es bueno en lo que hace, le falta una sola cosa: que lo vean.</p>
           <a className="button button-light" href="#contacto">Cantar las 40 <ArrowUpRight size={17} /></a>
         </Reveal>
@@ -322,8 +327,8 @@ export default function Home() {
       <section className="contact-section" id="contacto">
         <div className="section-wrap contact-grid">
           <Reveal as="div">
-            <div className="section-topline"><span>06</span><span>Contacto</span></div>
-            <h2>Hablemos<br /><em>de su proyecto.</em></h2>
+            <div className="section-topline"><span className="kicker-dot" />Contacto</div>
+            <h2>Hablemos<br /><em>de su proyecto</em></h2>
             <p>Cuéntenos su proyecto. Sin compromiso, sin vueltas. Si podemos ayudarlo a crecer, lo vamos a decir con claridad.</p>
             <div className="contact-details">
               <a href="mailto:nicolas.rielo@40comunicaciondigital.com">nicolas.rielo@40comunicaciondigital.com</a>

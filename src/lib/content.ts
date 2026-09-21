@@ -1,7 +1,7 @@
 export const heroSlides = [
   {
     eyebrow: "Agencia de comunicación digital · Tandil, Argentina",
-    titleLines: ["Su negocio", "merece", "ser visto."],
+    titleLines: ["Su negocio", "merece", "ser visto"],
     highlight: 1,
     intro:
       "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.",
@@ -11,7 +11,7 @@ export const heroSlides = [
   },
   {
     eyebrow: "Servicio 01 · Diseño y desarrollo web",
-    titleLines: ["Su negocio", "empieza", "en la web."],
+    titleLines: ["Su negocio", "empieza", "en la web"],
     highlight: 1,
     intro:
       "Sitios que representan su negocio con la seriedad que merece, desde la arquitectura hasta el código.",
@@ -21,7 +21,7 @@ export const heroSlides = [
   },
   {
     eyebrow: "Servicio 02 · Contenido estratégico",
-    titleLines: ["Su historia", "tiene", "algo que decir."],
+    titleLines: ["Su historia", "tiene", "algo que decir"],
     highlight: 1,
     intro:
       "Texto, audio y video estratégico para encontrar el mensaje correcto, en el formato correcto.",
@@ -31,7 +31,7 @@ export const heroSlides = [
   },
   {
     eyebrow: "Servicio 03 · SEO y posicionamiento",
-    titleLines: ["Hacerlo bien", "también es", "aparecer."],
+    titleLines: ["Hacerlo bien", "también es", "aparecer"],
     highlight: 1,
     intro:
       "Trabajamos para que quienes lo buscan, y quienes todavía no saben que lo necesitan, lo encuentren primero.",
