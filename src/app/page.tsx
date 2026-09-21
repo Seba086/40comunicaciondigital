@@ -268,7 +268,6 @@ export default function Home() {
       </header>
 
       <section className="hero section-wrap" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
-        <span className="hero-ghost" aria-hidden="true">40</span>
         <div className="hero-rings" aria-hidden="true">
           <span />
           <span />
@@ -318,6 +317,9 @@ export default function Home() {
             ))}
           </div>
         </div>
+        <div className="hero-loadbar" aria-hidden="true">
+          <span key={heroSlide} className="hero-loadbar-fill" />
+        </div>
       </section>
 
       <section className="proof-strip" ref={proofRef}>
@@ -337,12 +339,7 @@ export default function Home() {
               width="64"
               height="64"
               viewBox="0 0 64 64"
-              style={{
-                left: `${group.left}%`,
-                top: `${group.top}%`,
-                animationDelay: `${group.delay}ms`,
-                animationDuration: `${group.duration}ms`,
-              }}
+              style={{ left: `${group.left}%`, top: `${group.top}%` }}
             >
               {group.points.length > 1 && (
                 <polyline
@@ -351,6 +348,10 @@ export default function Home() {
                   stroke="url(#nodeGradient)"
                   strokeWidth="1.4"
                   strokeLinecap="round"
+                  strokeLinejoin="round"
+                  pathLength={100}
+                  className="node-line"
+                  style={{ animationDelay: `${group.delay}ms`, animationDuration: `${group.duration}ms` }}
                 />
               )}
               {group.points.map((point, pointIndex) => (
@@ -360,6 +361,11 @@ export default function Home() {
                   cy={point[1]}
                   r={pointIndex === 0 ? 3.2 : 2.2}
                   fill={pointIndex === 0 ? "var(--ember)" : "var(--iron)"}
+                  className="node-dot"
+                  style={{
+                    animationDelay: `${group.delay + pointIndex * Math.round(group.duration * 0.2)}ms`,
+                    animationDuration: `${group.duration}ms`,
+                  }}
                 />
               ))}
             </svg>
@@ -386,11 +392,14 @@ export default function Home() {
         <span className="manifesto-ghost" aria-hidden="true">40</span>
         <div className="section-wrap manifesto-inner">
           <div className="manifesto-grid">
-            <Reveal as="div"><h2>Si a usted<br />le va bien,<br /><em>a nosotros</em><br />nos va bien</h2></Reveal>
+            <Reveal as="div"><h2><em>Si a usted<br />le va bien,</em><br />a nosotros<br />también</h2></Reveal>
             <Reveal as="div" delay={80} className="manifesto-body">
               <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes. Jugamos a largo plazo con el fin de potenciar los proyectos de quienes confían en nosotros.</p>
               <p>El conocimiento técnico y del negocio lo tiene usted. Nosotros lo ayudamos a desarrollarlo y potenciarlo con las últimas herramientas digitales.</p>
-              <a className="circle-link" href="#contacto" aria-label="Conocer más sobre 40 Comunicación Digital"><ArrowUpRight size={21} /></a>
+              <a className="circle-link" href="#contacto" aria-label="Conocer más sobre 40 Comunicación Digital">
+                <span className="circle-link-ping" aria-hidden="true" />
+                <ArrowUpRight size={21} />
+              </a>
             </Reveal>
           </div>
         </div>

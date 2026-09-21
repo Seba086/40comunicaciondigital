@@ -47,9 +47,8 @@ h1, h2 { color: var(--ink); font-weight: 600; letter-spacing: -0.04em; }
 .menu-toggle { display: none; border: 0; background: transparent; color: var(--ink); padding: 12px; }
 
 /* ── Hero ── */
-.hero { min-height: 650px; display: grid; grid-template-columns: 0.95fr 1.05fr; align-items: center; gap: 54px; padding-block: 72px 86px; position: relative; }
-.hero-ghost { position: absolute; top: 50%; right: -2vw; transform: translateY(-52%); font-size: clamp(220px, 26vw, 460px); font-weight: 700; line-height: 0.8; color: var(--ink); opacity: 0.03; letter-spacing: -0.04em; pointer-events: none; user-select: none; z-index: 0; }
-.hero-rings { position: absolute; top: 50%; right: -6vw; transform: translateY(-50%); width: clamp(320px, 40vw, 620px); aspect-ratio: 1; z-index: 0; pointer-events: none; }
+.hero { min-height: 650px; display: grid; grid-template-columns: 0.95fr 1.05fr; align-items: center; gap: 54px; padding-block: 72px 86px; position: relative; overflow: hidden; }
+.hero-rings { position: absolute; top: 50%; right: 0; transform: translate(42%, -50%); width: clamp(480px, 62vw, 920px); aspect-ratio: 1; z-index: 0; pointer-events: none; }
 .hero-rings span { position: absolute; inset: 0; margin: auto; border: 1px solid rgba(255, 90, 0, 0.16); border-radius: 50%; animation: rings-pulse 9s var(--ease-out) infinite; }
 .hero-rings span:nth-child(1) { width: 30%; height: 30%; animation-delay: 0s; }
 .hero-rings span:nth-child(2) { width: 55%; height: 55%; animation-delay: 1.2s; border-color: rgba(255, 90, 0, 0.12); }
@@ -81,15 +80,23 @@ h1 span, h2 em { color: var(--ember); font-style: normal; }
 .hero-portrait-inner { position: absolute; inset: 0; transform: scale(1.06); transition: transform 400ms var(--ease-out); will-change: transform; }
 .hero-portrait img { object-fit: cover; object-position: center top; filter: saturate(.85); }
 .portrait-wipe { position: absolute; inset: -6% -10%; background: var(--ink); transform-origin: right center; transform: scaleX(1) skewX(-9deg); animation: wipe-reveal 820ms var(--ease-out) both; animation-delay: 90ms; pointer-events: none; }
-.hero-progress { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); display: flex; gap: 8px; z-index: 2; }
-.hero-progress button { width: 34px; height: 4px; padding: 0; border: 0; border-radius: 100px; background: rgba(255, 255, 255, 0.35); cursor: pointer; overflow: hidden; }
+.hero-progress { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; z-index: 2; }
+.hero-progress button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.4); cursor: pointer; overflow: hidden; flex-shrink: 0; transition: width 280ms var(--ease-out), border-radius 280ms var(--ease-out); }
 .hero-progress button span { display: block; width: 0; height: 100%; background: var(--ember); }
+.hero-progress button.active { width: 30px; height: 6px; border-radius: 100px; }
 .hero-progress button.active span { width: 100%; transition: width 6s linear; }
+
+/* ── Hero loading bar ── */
+.hero-loadbar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(9, 9, 11, 0.08); z-index: 1; overflow: hidden; }
+.hero-loadbar-fill { display: block; height: 100%; width: 0%; background: var(--ember); animation: loadbar-fill 6s linear both; }
+@keyframes loadbar-fill { from { width: 0%; } to { width: 100%; } }
 
 /* ── Proof strip: node-graph techy background ── */
 .proof-strip { background: var(--ink); color: var(--snow); position: relative; z-index: 1; overflow: hidden; }
 .proof-lines { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.node-group { position: absolute; opacity: 0; animation-name: node-pulse; animation-timing-function: var(--ease-out); animation-iteration-count: infinite; }
+.node-group { position: absolute; }
+.node-line { stroke-dasharray: 100; stroke-dashoffset: 100; opacity: 0; animation-name: line-draw; animation-timing-function: var(--ease-out); animation-iteration-count: infinite; }
+.node-dot { opacity: 0; transform-box: fill-box; transform-origin: center; animation-name: node-pulse; animation-timing-function: var(--ease-out); animation-iteration-count: infinite; }
 .proof-inner { position: relative; z-index: 1; min-height: 116px; display: flex; align-items: center; gap: 16px; font-size: clamp(18px, 2.4vw, 28px); flex-wrap: wrap; }
 .proof-inner strong { color: var(--ember); font: 400 italic clamp(23px, 3.2vw, 38px)/1.1 Georgia, serif; }
 .proof-phrase { animation: phrase-in 500ms var(--ease-out) both; }
@@ -103,7 +110,8 @@ h1 span, h2 em { color: var(--ember); font-style: normal; }
 @keyframes line-reveal { to { transform: translateY(0); } }
 @keyframes wipe-reveal { to { transform: scaleX(0) skewX(-9deg); } }
 @keyframes ticker-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes node-pulse { 0% { opacity: 0; transform: scale(0.85); } 15% { opacity: 1; transform: scale(1); } 55% { opacity: 1; transform: scale(1); } 85% { opacity: 0; transform: scale(1.06); } 100% { opacity: 0; transform: scale(1.06); } }
+@keyframes node-pulse { 0% { opacity: 0; transform: scale(0.5); } 10% { opacity: 1; transform: scale(1.2); } 20% { transform: scale(1); } 78% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1); } }
+@keyframes line-draw { 0% { stroke-dashoffset: 100; opacity: 0; } 8% { opacity: 1; } 50% { stroke-dashoffset: 0; opacity: 1; } 78% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
 @keyframes rings-pulse { 0% { opacity: 0; transform: scale(0.9); } 12% { opacity: 1; } 50% { opacity: 0.7; transform: scale(1); } 88% { opacity: 0; } 100% { opacity: 0; transform: scale(1.04); } }
 @keyframes logos-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes why-gradient-drift { 0%, 100% { opacity: 0.55; transform: translate(0, 0); } 50% { opacity: 0.85; transform: translate(-4%, -4%); } }
@@ -124,8 +132,10 @@ h1 span, h2 em { color: var(--ember); font-style: normal; }
 .manifesto h2, .services h2, .projects h2, .about-band h2, .contact-section h2 { font-size: clamp(40px, 5.2vw, 66px); line-height: 1.08; }
 .manifesto-body { max-width: 430px; display: flex; flex-direction: column; gap: 25px; padding-top: 12px; color: var(--steel); font-size: 18px; line-height: 1.6; }
 .manifesto-body strong { color: var(--ink); font-weight: 500; }
-.circle-link { display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: var(--ember); border-radius: 50%; color: var(--snow); margin-top: 10px; transition: transform 180ms var(--ease-out), background-color 180ms ease-out; }
+.circle-link { position: relative; display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: var(--ember); border-radius: 50%; color: var(--snow); margin-top: 10px; transition: transform 180ms var(--ease-out), background-color 180ms ease-out; }
 .circle-link:hover { transform: rotate(45deg); background: var(--ink); }
+.circle-link-ping { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--ember); opacity: 0; pointer-events: none; animation: circle-ping 2.8s var(--ease-out) infinite; }
+@keyframes circle-ping { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.9); opacity: 0; } }
 
 .services { padding-top: 110px; position: relative; background-image: radial-gradient(var(--mist) 1px, transparent 1px); background-size: 26px 26px; background-position: -13px -13px; }
 .services-heading { display: flex; flex-direction: column; gap: 16px; margin-bottom: 56px; }
@@ -238,7 +248,7 @@ h1 span, h2 em { color: var(--ember); font-style: normal; }
 .footer p + p { margin-top: 5px; }
 
 /* ── Scroll to top ── */
-.scroll-top { position: fixed; left: 24px; bottom: 24px; z-index: 40; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); border: 1px solid var(--iron); color: var(--snow); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), background-color 180ms ease-out, border-color 180ms ease-out; }
+.scroll-top { position: fixed; right: 29px; bottom: 96px; z-index: 40; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); border: 1px solid var(--iron); color: var(--snow); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), background-color 180ms ease-out, border-color 180ms ease-out; }
 .scroll-top.is-visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 .scroll-top:hover { background: var(--ember); border-color: var(--ember); }
 
@@ -296,5 +306,6 @@ h1 span, h2 em { color: var(--ember); font-style: normal; }
   .hero-progress button.active span { transition: none; width: 100%; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-top, .pillar-card, .pillar-arrow, .whatsapp-button, .whatsapp-tip { transition: none; }
-  .node-group, .hero-rings span { animation: none; opacity: 0; }
+  .node-line, .node-dot, .hero-rings span, .circle-link-ping { animation: none; opacity: 0; }
+  .hero-loadbar-fill { animation: none; width: 100%; }
 }
