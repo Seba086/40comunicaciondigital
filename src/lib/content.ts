@@ -5,7 +5,8 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.",
-    image: true,
+    image: "/imagenes/NicoRielo.png",
+    imageAlt: "Nico Rielo, CEO de 40 Comunicación Digital",
   },
   {
     eyebrow: "Servicio 01 · Diseño y desarrollo web",
@@ -13,7 +14,8 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Sitios que representan su negocio con la seriedad que merece, desde la arquitectura hasta el código.",
-    image: false,
+    image: "/imagenes/hero-service-web.jpg",
+    imageAlt: "Diseño y desarrollo web",
   },
   {
     eyebrow: "Servicio 02 · Contenido estratégico",
@@ -21,7 +23,8 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Texto, audio y video estratégico para encontrar el mensaje correcto, en el formato correcto.",
-    image: false,
+    image: "/imagenes/hero-service-content.jpg",
+    imageAlt: "Contenido estratégico",
   },
   {
     eyebrow: "Servicio 03 · SEO y posicionamiento",
@@ -29,7 +32,8 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Trabajamos para que quienes lo buscan, y quienes todavía no saben que lo necesitan, lo encuentren primero.",
-    image: false,
+    image: "/imagenes/hero-service-seo.jpg",
+    imageAlt: "SEO y posicionamiento",
   },
 ] as const;
 
@@ -151,8 +155,6 @@ export const pillars = [
   },
 ] as const;
 
-export type ClientTone = "snow" | "subtle" | "ink" | "slate";
-
 export const clients = [
   {
     name: "Facultad de Ciencias Económicas — UNICEN",
@@ -182,7 +184,7 @@ export const clients = [
     description:
       "Taller especializado en reparación profesional de patinetes eléctricos y venta de repuestos, referencia en movilidad urbana en España. 40CD trabaja su posicionamiento SEO para que quienes buscan una solución lo encuentren primero.",
     featured: false,
-    image: undefined,
+    image: "/imagenes/client-patin.jpg",
   },
   {
     name: "Editeca",
@@ -192,7 +194,7 @@ export const clients = [
     description:
       "Plataforma de formación especializada en BIM y transformación digital para arquitectura y construcción, con presencia en más de 20 países. 40CD gestiona su estrategia de posicionamiento SEO a escala internacional.",
     featured: false,
-    image: undefined,
+    image: "/imagenes/client-editeca.jpg",
   },
   {
     name: "Sofise",
@@ -212,7 +214,7 @@ export const clients = [
     description:
       "Soluciones avanzadas para la optimización de biogás, con tecnología orientada a la eliminación de H2S. 40CD acompaña su presencia digital con una estrategia SEO orientada a un mercado de alta especialización.",
     featured: false,
-    image: undefined,
+    image: "/imagenes/client-calpech.jpg",
   },
   {
     name: "Controla Tus Horas",
@@ -232,7 +234,7 @@ export const clients = [
     description:
       "Consultor de ventas y creador de contenido especializado en escalar negocios digitales de infoproductores y agencias. 40CD trabaja su posicionamiento en plataformas, la creación de contenido y la edición de sus videos.",
     featured: false,
-    image: undefined,
+    image: "/imagenes/client-davidcasero.jpg",
   },
   {
     name: "Alerta Comunidad",
@@ -245,5 +247,3 @@ export const clients = [
     image: "/imagenes/client-alerta-comunidad.jpg",
   },
 ] as const;
-
-export const clientTones: ClientTone[] = ["snow", "ink", "subtle", "slate"];
