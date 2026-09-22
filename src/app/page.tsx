@@ -24,7 +24,7 @@ import {
   Wrench,
   X,
 } from "lucide-react";
-import { FormEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, MouseEvent, PointerEvent, useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { placeholderLogos } from "@/components/PlaceholderLogos";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -102,8 +102,6 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
   const [proofPhrase, setProofPhrase] = useState(0);
-  const [counter, setCounter] = useState(0);
-  const [counterFlicker, setCounterFlicker] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showWhatsappTip, setShowWhatsappTip] = useState(false);
@@ -112,6 +110,10 @@ export default function Home() {
   const portraitInnerRef = useRef<HTMLDivElement>(null);
   const proofRef = useRef<HTMLElement>(null);
   const statementGhostRef = useRef<HTMLSpanElement>(null);
+  const projectTrackRef = useRef<HTMLDivElement>(null);
+  const projectOffsetRef = useRef(0);
+  const projectPausedRef = useRef(false);
+  const projectDragRef = useRef({ dragging: false, startX: 0, startOffset: 0, moved: 0, pointerId: -1 });
 
   function handlePortraitMove(event: MouseEvent<HTMLDivElement>) {
     if (reducedMotion) return;
@@ -136,19 +138,7 @@ export default function Home() {
   useEffect(() => {
     if (reducedMotion) return;
     const phraseTimer = window.setInterval(() => setProofPhrase((current) => (current + 1) % rotatingProof.length), 3000);
-    let current = 0;
-    const countTimer = window.setInterval(() => {
-      current = Math.min(40, current + 2);
-      setCounter(current);
-      if (current === 40) {
-        window.clearInterval(countTimer);
-        setCounterFlicker(true);
-      }
-    }, 55);
-    return () => {
-      window.clearInterval(phraseTimer);
-      window.clearInterval(countTimer);
-    };
+    return () => window.clearInterval(phraseTimer);
   }, [reducedMotion]);
 
   useEffect(() => {
@@ -214,6 +204,73 @@ export default function Home() {
     event.currentTarget.style.setProperty("--spot-y", "-20%");
   }
 
+  useEffect(() => {
+    const track = projectTrackRef.current;
+    if (!track) return;
+    let frame = 0;
+    let last = performance.now();
+    const speed = 42;
+    function loop(now: number) {
+      const dt = now - last;
+      last = now;
+      if (!reducedMotion && !projectDragRef.current.dragging && !projectPausedRef.current) {
+        projectOffsetRef.current -= (speed * dt) / 1000;
+      }
+      const halfWidth = track!.scrollWidth / 2;
+      if (halfWidth > 0) {
+        if (projectOffsetRef.current <= -halfWidth) projectOffsetRef.current += halfWidth;
+        if (projectOffsetRef.current > 0) projectOffsetRef.current -= halfWidth;
+      }
+      track!.style.transform = `translateX(${projectOffsetRef.current}px)`;
+      frame = requestAnimationFrame(loop);
+    }
+    frame = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(frame);
+  }, [reducedMotion]);
+
+  function handleProjectPointerDown(event: PointerEvent<HTMLDivElement>) {
+    projectDragRef.current = { dragging: true, startX: event.clientX, startOffset: projectOffsetRef.current, moved: 0, pointerId: event.pointerId };
+  }
+
+  function handleProjectPointerMove(event: PointerEvent<HTMLDivElement>) {
+    const drag = projectDragRef.current;
+    if (!drag.dragging) return;
+    const dx = event.clientX - drag.startX;
+    projectDragRef.current.moved = Math.abs(dx);
+    // Only claim pointer capture once we've confirmed this is a real drag, not a click/tap —
+    // capturing immediately on pointerdown would retarget the eventual click to the track,
+    // breaking normal link clicks inside the cards.
+    if (projectDragRef.current.moved > 6) {
+      const track = projectTrackRef.current;
+      if (track && !track.classList.contains("is-dragging")) {
+        track.setPointerCapture(event.pointerId);
+        track.classList.add("is-dragging");
+      }
+      projectOffsetRef.current = drag.startOffset + dx;
+    }
+  }
+
+  function handleProjectPointerUp(event: PointerEvent<HTMLDivElement>) {
+    const drag = projectDragRef.current;
+    if (!drag.dragging) return;
+    const track = projectTrackRef.current;
+    projectDragRef.current.dragging = false;
+    track?.classList.remove("is-dragging");
+    try {
+      track?.releasePointerCapture(event.pointerId);
+    } catch {
+      // ignore
+    }
+  }
+
+  function handleProjectClickCapture(event: React.MouseEvent<HTMLDivElement>) {
+    if (projectDragRef.current.moved > 6) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    projectDragRef.current.moved = 0;
+  }
+
   async function submitContact(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus("loading");
@@ -236,13 +293,19 @@ export default function Home() {
   const slide = heroSlides[heroSlide];
 
   function renderProjectCard(client: (typeof clients)[number], index: number, keySuffix: string) {
-    const logo = placeholderLogos[index % placeholderLogos.length];
+    const placeholder = placeholderLogos[index % placeholderLogos.length];
     return (
       <article key={`${client.name}-${keySuffix}`} className="project-card project-card-media" aria-hidden={keySuffix === "b" ? true : undefined}>
         <Image src={client.image} alt="" fill sizes="(max-width: 800px) 82vw, 360px" className="project-card-bg" />
         <span className="project-card-scrim" aria-hidden="true" />
         <div className="project-card-top">
-          <span className="project-logo" aria-hidden="true" title={`${logo.name} (logo provisorio)`}>{logo.mark}</span>
+          {client.logo ? (
+            <span className="project-logo project-logo-real">
+              <Image src={client.logo} alt={client.name} width={112} height={32} />
+            </span>
+          ) : (
+            <span className="project-logo" aria-hidden="true" title={`${placeholder.name} (logo provisorio)`}>{placeholder.mark}</span>
+          )}
         </div>
         {client.featured && <span className="project-badge">Caso insignia</span>}
         <div className="project-info">
@@ -262,7 +325,7 @@ export default function Home() {
       <header className={headerShrunk ? "site-header is-shrunk" : "site-header"}>
         <div className="section-wrap header-inner">
           <a className="brand" href="#inicio" aria-label="40 Comunicación Digital, inicio">
-            <Image src="/imagenes/40CD%20Logo%20B%26N-transparente.avif" alt="40 Comunicación Digital" width={58} height={58} priority />
+            <Image src="/imagenes/40CD%20Logo%20B%26N-transparente.avif" alt="40 Comunicación Digital" width={73} height={73} priority />
           </a>
           <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Navegación principal">
             <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
@@ -323,21 +386,21 @@ export default function Home() {
             </div>
             <span className="hero-portrait-overlay" aria-hidden="true" />
             <span className="portrait-wipe" aria-hidden="true" />
-            <button
-              className="hero-arrow hero-arrow-prev"
-              aria-label="Slide anterior"
-              onClick={() => setHeroSlide((heroSlide - 1 + heroSlides.length) % heroSlides.length)}
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              className="hero-arrow hero-arrow-next"
-              aria-label="Slide siguiente"
-              onClick={() => setHeroSlide((heroSlide + 1) % heroSlides.length)}
-            >
-              <ChevronRight size={20} />
-            </button>
           </div>
+          <button
+            className="hero-arrow hero-arrow-prev"
+            aria-label="Slide anterior"
+            onClick={() => setHeroSlide((heroSlide - 1 + heroSlides.length) % heroSlides.length)}
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            className="hero-arrow hero-arrow-next"
+            aria-label="Slide siguiente"
+            onClick={() => setHeroSlide((heroSlide + 1) % heroSlides.length)}
+          >
+            <ChevronRight size={20} />
+          </button>
         </div>
         <div className="hero-loadbar" aria-hidden="true">
           <span key={heroSlide} className="hero-loadbar-fill" />
@@ -396,7 +459,9 @@ export default function Home() {
         <div className="section-wrap proof-inner">
           <span>Una presencia digital</span>
           <strong key={proofPhrase} className="proof-phrase">{rotatingProof[proofPhrase]}</strong>
-          <span className={counterFlicker && !reducedMotion ? "proof-mark is-flickering" : "proof-mark"}>{reducedMotion ? 40 : counter}</span>
+          <span className="proof-mark" aria-hidden="true">
+            <Image src="/imagenes/40CD%20Logo%20W-transparente.avif" alt="" width={420} height={420} />
+          </span>
         </div>
       </section>
 
@@ -503,7 +568,17 @@ export default function Home() {
           </Reveal>
         </div>
         <div className="project-window">
-          <div className={reducedMotion ? "project-track is-paused" : "project-track"}>
+          <div
+            className="project-track"
+            ref={projectTrackRef}
+            onPointerDown={handleProjectPointerDown}
+            onPointerMove={handleProjectPointerMove}
+            onPointerUp={handleProjectPointerUp}
+            onPointerCancel={handleProjectPointerUp}
+            onClickCapture={handleProjectClickCapture}
+            onMouseEnter={() => (projectPausedRef.current = true)}
+            onMouseLeave={() => (projectPausedRef.current = false)}
+          >
             {clients.map((client, index) => renderProjectCard(client, index, "a"))}
             {clients.map((client, index) => renderProjectCard(client, index, "b"))}
           </div>
@@ -513,6 +588,7 @@ export default function Home() {
       <section className="about-band" id="nosotros">
         <Reveal as="div" className="about-image">
           <Image src="/imagenes/footer-img.avif" alt="Detrás de cada buena idea: el equipo de 40 Comunicación Digital planificando una estrategia" fill sizes="(max-width: 800px) 100vw, 50vw" />
+          <span className="about-image-overlay" aria-hidden="true" />
         </Reveal>
         <div className="section-wrap about-copy-wrap">
           <Reveal as="div" delay={80} className="about-copy">
