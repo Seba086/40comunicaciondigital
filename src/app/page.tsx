@@ -40,10 +40,10 @@ import {
 const serviceIcons = [Code2, PenTool, Search, Mic, Video, Newspaper, Palette, Megaphone, Terminal, Smartphone, BarChart3, Compass];
 const pillarIcons = [Target, Wrench, MessageCircle, BarChart3];
 const pillarImages = [
-  "/imagenes/pillar-apuesta.jpg",
-  "/imagenes/pillar-tecnico.jpg",
-  "/imagenes/pillar-comunicacion.jpg",
-  "/imagenes/pillar-resultados.jpg",
+  "/imagenes/pillar-apuesta.avif",
+  "/imagenes/pillar-tecnico.avif",
+  "/imagenes/pillar-comunicacion.avif",
+  "/imagenes/pillar-resultados.avif",
 ];
 
 const nodeGroups = [
@@ -60,6 +60,48 @@ const nodeGroups = [
   { left: 94, top: 20, delay: 2400, duration: 4900, points: [[6, 34], [26, 10]] },
 ];
 
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "#",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4.2" />
+        <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    name: "Facebook",
+    href: "#",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14.5 21v-7.8h2.6l.4-3h-3V8.2c0-.87.24-1.46 1.5-1.46h1.6V4.1c-.28-.04-1.23-.12-2.34-.12-2.3 0-3.88 1.4-3.88 3.98v2.24H9v3h2.38V21z" />
+      </svg>
+    ),
+  },
+  {
+    name: "LinkedIn",
+    href: "#",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="3" />
+        <line x1="7.5" y1="10" x2="7.5" y2="16.5" />
+        <circle cx="7.5" cy="7" r="0.35" fill="currentColor" stroke="none" />
+        <path d="M11.5 16.5V10" />
+        <path d="M11.5 12.8c0-1.55 1.2-2.8 2.6-2.8s2.4 1 2.4 2.9v3.6" />
+      </svg>
+    ),
+  },
+];
+
+const mockups = [
+  { className: "mockup-phone mockup-a", speed: 0.14 },
+  { className: "mockup-laptop mockup-b", speed: -0.1 },
+  { className: "mockup-phone mockup-c", speed: 0.2 },
+];
+
 export default function Home() {
   const reducedMotion = useReducedMotion();
 
@@ -72,6 +114,7 @@ export default function Home() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showWhatsappTip, setShowWhatsappTip] = useState(false);
+  const [headerShrunk, setHeaderShrunk] = useState(false);
 
   const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
@@ -79,6 +122,8 @@ export default function Home() {
   const pausedRef = useRef(false);
   const portraitInnerRef = useRef<HTMLDivElement>(null);
   const proofRef = useRef<HTMLElement>(null);
+  const statementGhostRef = useRef<HTMLSpanElement>(null);
+  const mockupRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   function handlePortraitMove(event: MouseEvent<HTMLDivElement>) {
     if (reducedMotion) return;
@@ -98,7 +143,7 @@ export default function Home() {
     if (reducedMotion) return;
     const timer = window.setInterval(() => setHeroSlide((current) => (current + 1) % heroSlides.length), 6000);
     return () => window.clearInterval(timer);
-  }, [reducedMotion]);
+  }, [heroSlide, reducedMotion]);
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -162,6 +207,76 @@ export default function Home() {
       window.clearTimeout(hideTimer);
     };
   }, []);
+
+  useEffect(() => {
+    function onScroll() {
+      const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = pageHeight > 0 ? window.scrollY / pageHeight : 0;
+      setHeaderShrunk(progress > 0.05);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    const ghost = statementGhostRef.current;
+    if (!ghost) return;
+    let frame = 0;
+    function onScroll() {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const rect = ghost!.parentElement!.getBoundingClientRect();
+        const offset = rect.top * 0.18;
+        ghost!.style.transform = `translate(-50%, calc(-50% + ${offset.toFixed(1)}px))`;
+      });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    let frame = 0;
+    function onScroll() {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        mockupRefs.current.forEach((el, index) => {
+          if (!el) return;
+          const speed = mockups[index]?.speed ?? 0.1;
+          const rect = el.getBoundingClientRect();
+          const centerOffset = rect.top + rect.height / 2 - window.innerHeight / 2;
+          el.style.transform = `translateY(${(-centerOffset * speed).toFixed(1)}px)`;
+        });
+      });
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [reducedMotion]);
+
+  function handleWhySpotlight(event: MouseEvent<HTMLElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    event.currentTarget.style.setProperty("--spot-x", `${x}%`);
+    event.currentTarget.style.setProperty("--spot-y", `${y}%`);
+  }
+
+  function resetWhySpotlight(event: MouseEvent<HTMLElement>) {
+    event.currentTarget.style.setProperty("--spot-x", "50%");
+    event.currentTarget.style.setProperty("--spot-y", "-20%");
+  }
 
   function scrollTrackTo(index: number, behavior: ScrollBehavior) {
     const track = trackRef.current;
@@ -250,10 +365,10 @@ export default function Home() {
 
   return (
     <main>
-      <header className="site-header">
+      <header className={headerShrunk ? "site-header is-shrunk" : "site-header"}>
         <div className="section-wrap header-inner">
           <a className="brand" href="#inicio" aria-label="40 Comunicación Digital, inicio">
-            <Image src="/imagenes/40CD%20Logo%20B%26N-transparente.png" alt="40 Comunicación Digital" width={52} height={52} priority />
+            <Image src="/imagenes/40CD%20Logo%20B%26N-transparente.avif" alt="40 Comunicación Digital" width={58} height={58} priority />
           </a>
           <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Navegación principal">
             <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
@@ -268,11 +383,14 @@ export default function Home() {
       </header>
 
       <section className="hero section-wrap" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
-        <div className="hero-rings" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
+        <span className="hero-bg-gradient" aria-hidden="true" />
+        <div className="hero-rings-clip" aria-hidden="true">
+          <div className="hero-rings">
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
         <div className="hero-copy">
           <h1 key={heroSlide} className="hero-title">
@@ -302,6 +420,7 @@ export default function Home() {
           <div className="hero-portrait-inner" ref={portraitInnerRef}>
             <Image src={slide.image} alt={slide.imageAlt} fill priority sizes="(max-width: 900px) 90vw, 48vw" />
           </div>
+          <span className="hero-portrait-overlay" aria-hidden="true" />
           <span className="portrait-wipe" aria-hidden="true" />
           <div className="hero-progress" role="group" aria-label="Seleccionar slide del hero">
             {heroSlides.map((item, index) => (
@@ -406,6 +525,17 @@ export default function Home() {
       </section>
 
       <section className="services section-wrap" id="servicios">
+        <div className="services-mockups" aria-hidden="true">
+          {mockups.map((mockup, index) => (
+            <div
+              key={mockup.className}
+              className={`mockup ${mockup.className}`}
+              ref={(el) => {
+                mockupRefs.current[index] = el;
+              }}
+            />
+          ))}
+        </div>
         <Reveal as="div" delay={60} className="services-heading">
           <h2>Todo lo que su marca<br /><em>necesita para avanzar</em></h2>
           <p>Una mirada integral: estrategia, creatividad y tecnología en el mismo equipo.</p>
@@ -425,8 +555,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="why-section" aria-labelledby="why-heading">
+      <section
+        className="why-section"
+        aria-labelledby="why-heading"
+        onMouseMove={handleWhySpotlight}
+        onMouseLeave={resetWhySpotlight}
+      >
         <span className="why-gradient" aria-hidden="true" />
+        <span className="why-texture" aria-hidden="true" />
         <div className="ticker" aria-hidden="true">
           <div className={reducedMotion ? "ticker-track is-paused" : "ticker-track"}>
             {[...tickerItems, ...tickerItems].map((item, index) => (
@@ -486,16 +622,6 @@ export default function Home() {
           </div>
         </div>
         <div className="project-controls section-wrap">
-          <div className="project-dots">
-            {clients.map((client, index) => (
-              <button
-                key={client.name}
-                className={index === activeClient ? "active" : ""}
-                aria-label={`Ver ${client.name}`}
-                onClick={() => goToClient(index)}
-              />
-            ))}
-          </div>
           <div className="project-arrows">
             <button aria-label="Proyecto anterior" onClick={() => goToClient(activeClient - 1)}><ChevronLeft size={16} /></button>
             <button aria-label="Proyecto siguiente" onClick={() => goToClient(activeClient + 1)}><ChevronRight size={16} /></button>
@@ -505,7 +631,7 @@ export default function Home() {
 
       <section className="about-band" id="nosotros">
         <Reveal as="div" className="about-image">
-          <Image src="/imagenes/footer-img.png" alt="Detrás de cada buena idea: el equipo de 40 Comunicación Digital planificando una estrategia" fill sizes="(max-width: 800px) 100vw, 50vw" />
+          <Image src="/imagenes/footer-img.avif" alt="Detrás de cada buena idea: el equipo de 40 Comunicación Digital planificando una estrategia" fill sizes="(max-width: 800px) 100vw, 50vw" />
         </Reveal>
         <div className="section-wrap about-copy-wrap">
           <Reveal as="div" delay={80} className="about-copy">
@@ -517,9 +643,8 @@ export default function Home() {
       </section>
 
       <section className="statement">
-        <Image src="/imagenes/statement-city.jpg" alt="" fill sizes="100vw" className="statement-bg-img" />
         <span className="statement-overlay" aria-hidden="true" />
-        <span className="statement-ghost" aria-hidden="true">40</span>
+        <span className="statement-ghost" ref={statementGhostRef} aria-hidden="true">40</span>
         <Reveal className="statement-inner">
           <h2>Es hora de<br /><em>golpear la mesa</em></h2>
           <p>Hoy la batalla es en la web y en las redes. Si usted es bueno en lo que hace, le falta una sola cosa: que lo vean.</p>
@@ -568,7 +693,7 @@ export default function Home() {
 
       <footer className="footer">
         <div className="section-wrap footer-inner">
-          <Image src="/imagenes/40CD%20Logo%20W-transparente.png" alt="40 Comunicación Digital" width={56} height={56} />
+          <Image src="/imagenes/40CD%20Logo%20W-transparente.avif" alt="40 Comunicación Digital" width={56} height={56} />
           <div>
             <p>© 2026 40 Comunicación Digital</p>
             <p>Diseñamos presencia. Construimos futuro.</p>
@@ -598,6 +723,14 @@ export default function Home() {
         >
           <MessageCircle size={26} fill="currentColor" strokeWidth={0} />
         </a>
+      </div>
+
+      <div className="social-rail" aria-label="Redes sociales">
+        {socialLinks.map((social) => (
+          <a key={social.name} className="social-icon" href={social.href} aria-label={social.name}>
+            {social.icon}
+          </a>
+        ))}
       </div>
     </main>
   );

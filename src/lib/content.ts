@@ -5,7 +5,7 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.",
-    image: "/imagenes/NicoRielo.png",
+    image: "/imagenes/NicoRielo.avif",
     imageAlt: "Nico Rielo, CEO de 40 Comunicación Digital",
   },
   {
@@ -14,7 +14,7 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Sitios que representan su negocio con la seriedad que merece, desde la arquitectura hasta el código.",
-    image: "/imagenes/hero-service-web.jpg",
+    image: "/imagenes/hero-service-web.avif",
     imageAlt: "Diseño y desarrollo web",
   },
   {
@@ -23,7 +23,7 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Texto, audio y video estratégico para encontrar el mensaje correcto, en el formato correcto.",
-    image: "/imagenes/hero-service-content.jpg",
+    image: "/imagenes/hero-service-content.avif",
     imageAlt: "Contenido estratégico",
   },
   {
@@ -32,7 +32,7 @@ export const heroSlides = [
     highlight: 1,
     intro:
       "Trabajamos para que quienes lo buscan, y quienes todavía no saben que lo necesitan, lo encuentren primero.",
-    image: "/imagenes/hero-service-seo.jpg",
+    image: "/imagenes/hero-service-seo.avif",
     imageAlt: "SEO y posicionamiento",
   },
 ] as const;
@@ -164,7 +164,7 @@ export const clients = [
     description:
       "La Facultad de Ciencias Económicas de la Universidad Nacional del Centro de la Provincia de Buenos Aires es una institución de referencia en Tandil y la región. Para 40CD, generamos el contenido de prensa y comunicación institucional de su blog, traduciendo la actividad universitaria en información clara y relevante.",
     featured: true,
-    image: "/imagenes/economicas-bg.webp",
+    image: "/imagenes/economicas-bg.avif",
   },
   {
     name: "Colegio de Escribanos de la Pcia. de Bs. As. — Delegación Tandil",
@@ -174,7 +174,7 @@ export const clients = [
     description:
       "El organismo que nuclea, regula y representa a los escribanos bonaerenses. 40CD gestiona su comunicación institucional en redes sociales, acercando la actividad notarial a la comunidad con claridad y profesionalismo.",
     featured: false,
-    image: "/imagenes/client-colegio-escribanos.jpg",
+    image: "/imagenes/client-colegio-escribanos.avif",
   },
   {
     name: "Patín Reparage",
@@ -184,7 +184,7 @@ export const clients = [
     description:
       "Taller especializado en reparación profesional de patinetes eléctricos y venta de repuestos, referencia en movilidad urbana en España. 40CD trabaja su posicionamiento SEO para que quienes buscan una solución lo encuentren primero.",
     featured: false,
-    image: "/imagenes/client-patin.jpg",
+    image: "/imagenes/client-patin.avif",
   },
   {
     name: "Editeca",
@@ -194,7 +194,7 @@ export const clients = [
     description:
       "Plataforma de formación especializada en BIM y transformación digital para arquitectura y construcción, con presencia en más de 20 países. 40CD gestiona su estrategia de posicionamiento SEO a escala internacional.",
     featured: false,
-    image: "/imagenes/client-editeca.jpg",
+    image: "/imagenes/client-editeca.avif",
   },
   {
     name: "Sofise",
@@ -204,7 +204,7 @@ export const clients = [
     description:
       "Correduría de seguros especializada en coberturas para arquitectos y el sector de la construcción. 40CD trabaja su posicionamiento SEO para conectar a Sofise con los profesionales que necesitan exactamente lo que ofrecen.",
     featured: false,
-    image: "/imagenes/client-sofise.jpg",
+    image: "/imagenes/client-sofise.avif",
   },
   {
     name: "Calpech",
@@ -214,7 +214,7 @@ export const clients = [
     description:
       "Soluciones avanzadas para la optimización de biogás, con tecnología orientada a la eliminación de H2S. 40CD acompaña su presencia digital con una estrategia SEO orientada a un mercado de alta especialización.",
     featured: false,
-    image: "/imagenes/client-calpech.jpg",
+    image: "/imagenes/client-calpech.avif",
   },
   {
     name: "Controla Tus Horas",
@@ -224,7 +224,7 @@ export const clients = [
     description:
       "Software de control horario para empresas, que permite gestionar el registro de jornada laboral en cumplimiento con la normativa vigente. 40CD trabaja su estrategia SEO frente a empresas que buscan este tipo de solución.",
     featured: false,
-    image: "/imagenes/client-controla-horas.jpg",
+    image: "/imagenes/client-controla-horas.avif",
   },
   {
     name: "David Casero",
@@ -234,7 +234,7 @@ export const clients = [
     description:
       "Consultor de ventas y creador de contenido especializado en escalar negocios digitales de infoproductores y agencias. 40CD trabaja su posicionamiento en plataformas, la creación de contenido y la edición de sus videos.",
     featured: false,
-    image: "/imagenes/client-davidcasero.jpg",
+    image: "/imagenes/client-davidcasero.avif",
   },
   {
     name: "Alerta Comunidad",
@@ -244,6 +244,6 @@ export const clients = [
     description:
       "Plataforma colaborativa que conecta vecinos para mejorar la seguridad del barrio, con alertas en tiempo real. 40CD acompaña su crecimiento con posicionamiento en plataformas, contenido y edición de videos.",
     featured: false,
-    image: "/imagenes/client-alerta-comunidad.jpg",
+    image: "/imagenes/client-alerta-comunidad.avif",
   },
 ] as const;
