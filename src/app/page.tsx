@@ -242,7 +242,6 @@ export default function Home() {
         <Image src={client.image} alt="" fill sizes="(max-width: 800px) 82vw, 360px" className="project-card-bg" />
         <span className="project-card-scrim" aria-hidden="true" />
         <div className="project-card-top">
-          <span className="project-symbol">{String(index + 1).padStart(2, "0")}</span>
           <span className="project-logo" aria-hidden="true" title={`${logo.name} (logo provisorio)`}>{logo.mark}</span>
         </div>
         {client.featured && <span className="project-badge">Caso insignia</span>}
@@ -281,14 +280,12 @@ export default function Home() {
         <span className="hero-bg-gradient" aria-hidden="true" />
         <div className="hero-rings-clip" aria-hidden="true">
           <div className="hero-rings hero-rings-right">
-            <span className="hero-ring-dot" />
             <span />
             <span />
             <span />
             <span />
           </div>
           <div className="hero-rings hero-rings-left">
-            <span className="hero-ring-dot" />
             <span />
             <span />
             <span />
@@ -297,13 +294,14 @@ export default function Home() {
         <div className="hero-inner section-wrap">
           <div className="hero-copy">
             <h1 key={heroSlide} className="hero-title">
-              {slide.titleLines.map((line, index) => (
-                <span className="hero-line-mask" key={line}>
-                  <span
-                    className={index === slide.highlight ? "hero-line-inner hero-title-accent" : "hero-line-inner"}
-                    style={{ animationDelay: `${index * 110}ms` }}
-                  >
-                    {line}
+              {slide.titleLines.map((segments, index) => (
+                <span className="hero-line-mask" key={index}>
+                  <span className="hero-line-inner" style={{ animationDelay: `${index * 110}ms` }}>
+                    {segments.map((segment, segIndex) => (
+                      <span key={segIndex} className={segment.accent ? "hero-title-accent" : undefined}>
+                        {segment.text}
+                      </span>
+                    ))}
                   </span>
                 </span>
               ))}
@@ -414,9 +412,12 @@ export default function Home() {
 
       <section className="manifesto" id="nosotros-filosofia">
         <span className="manifesto-ghost" aria-hidden="true">40</span>
+        <div className="manifesto-client" aria-hidden="true">
+          <Image src="/imagenes/happy-client.avif" alt="" width={620} height={696} />
+        </div>
         <div className="section-wrap manifesto-inner">
           <div className="manifesto-grid">
-            <Reveal as="div"><h2><em>Si a usted<br />le va bien,</em><br />a nosotros<br />también</h2></Reveal>
+            <Reveal as="div" className="manifesto-title"><h2><em>Si a usted<br />le va bien,</em><br />a nosotros<br />también</h2></Reveal>
             <Reveal as="div" delay={80} className="manifesto-body">
               <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes. Jugamos a largo plazo con el fin de potenciar los proyectos de quienes confían en nosotros.</p>
               <p>El conocimiento técnico y del negocio lo tiene usted. Nosotros lo ayudamos a desarrollarlo y potenciarlo con las últimas herramientas digitales.</p>

@@ -1,8 +1,19 @@
-export const heroSlides = [
+type TitleSegment = { text: string; accent?: boolean };
+
+export const heroSlides: {
+  eyebrow: string;
+  titleLines: TitleSegment[][];
+  intro: string;
+  image: string;
+  imageAlt: string;
+}[] = [
   {
     eyebrow: "Agencia de comunicación digital · Tandil, Argentina",
-    titleLines: ["Su negocio", "merece", "ser visto"],
-    highlight: 1,
+    titleLines: [
+      [{ text: "Su negocio" }],
+      [{ text: "merece" }],
+      [{ text: "ser visto", accent: true }],
+    ],
     intro:
       "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.",
     image: "/imagenes/NicoRielo.avif",
@@ -10,8 +21,11 @@ export const heroSlides = [
   },
   {
     eyebrow: "Servicio 01 · Diseño y desarrollo web",
-    titleLines: ["Su negocio", "empieza", "en la web"],
-    highlight: 1,
+    titleLines: [
+      [{ text: "Su " }, { text: "negocio", accent: true }],
+      [{ text: "empieza" }],
+      [{ text: "en la " }, { text: "web", accent: true }],
+    ],
     intro:
       "Sitios que representan su negocio con la seriedad que merece, desde la arquitectura hasta el código.",
     image: "/imagenes/hero-service-web.avif",
@@ -19,8 +33,11 @@ export const heroSlides = [
   },
   {
     eyebrow: "Servicio 02 · Contenido estratégico",
-    titleLines: ["Su historia", "tiene", "algo que decir"],
-    highlight: 1,
+    titleLines: [
+      [{ text: "Su historia" }],
+      [{ text: "tiene", accent: true }],
+      [{ text: "algo que decir" }],
+    ],
     intro:
       "Texto, audio y video estratégico para encontrar el mensaje correcto, en el formato correcto.",
     image: "/imagenes/hero-service-content.avif",
@@ -28,14 +45,17 @@ export const heroSlides = [
   },
   {
     eyebrow: "Servicio 03 · SEO y posicionamiento",
-    titleLines: ["Hacerlo bien", "también es", "aparecer"],
-    highlight: 1,
+    titleLines: [
+      [{ text: "Hacerlo " }, { text: "bien", accent: true }],
+      [{ text: "también es" }],
+      [{ text: "aparecer", accent: true }],
+    ],
     intro:
       "Trabajamos para que quienes lo buscan, y quienes todavía no saben que lo necesitan, lo encuentren primero.",
     image: "/imagenes/hero-service-seo.avif",
     imageAlt: "SEO y posicionamiento",
   },
-] as const;
+];
 
 export const rotatingProof = [
   "de principio a fin.",
