@@ -43,7 +43,7 @@ const pillarImages = [
   "/imagenes/pillar-apuesta.avif",
   "/imagenes/pillar-tecnico.avif",
   "/imagenes/pillar-comunicacion.avif",
-  "/imagenes/pillar-resultados.avif",
+  "/imagenes/hero-service-seo.avif",
 ];
 
 const nodeGroups = [
@@ -96,12 +96,6 @@ const socialLinks = [
   },
 ];
 
-const mockups = [
-  { className: "mockup-phone mockup-a", speed: 0.14 },
-  { className: "mockup-laptop mockup-b", speed: -0.1 },
-  { className: "mockup-phone mockup-c", speed: 0.2 },
-];
-
 export default function Home() {
   const reducedMotion = useReducedMotion();
 
@@ -110,20 +104,14 @@ export default function Home() {
   const [proofPhrase, setProofPhrase] = useState(0);
   const [counter, setCounter] = useState(0);
   const [counterFlicker, setCounterFlicker] = useState(false);
-  const [activeClient, setActiveClient] = useState(0);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showWhatsappTip, setShowWhatsappTip] = useState(false);
   const [headerShrunk, setHeaderShrunk] = useState(false);
 
-  const trackRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<(HTMLElement | null)[]>([]);
-  const cloneRef = useRef<HTMLElement | null>(null);
-  const pausedRef = useRef(false);
   const portraitInnerRef = useRef<HTMLDivElement>(null);
   const proofRef = useRef<HTMLElement>(null);
   const statementGhostRef = useRef<HTMLSpanElement>(null);
-  const mockupRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   function handlePortraitMove(event: MouseEvent<HTMLDivElement>) {
     if (reducedMotion) return;
@@ -162,34 +150,6 @@ export default function Home() {
       window.clearInterval(countTimer);
     };
   }, [reducedMotion]);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    let frame = 0;
-    function updateActiveFromScroll() {
-      if (frame) window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        const target = track!.scrollLeft + track!.offsetLeft;
-        let nearest = 0;
-        let nearestDistance = Infinity;
-        cardRefs.current.forEach((el, index) => {
-          if (!el) return;
-          const distance = Math.abs(el.offsetLeft - target);
-          if (distance < nearestDistance) {
-            nearestDistance = distance;
-            nearest = index;
-          }
-        });
-        setActiveClient(nearest);
-      });
-    }
-    track.addEventListener("scroll", updateActiveFromScroll, { passive: true });
-    return () => {
-      track.removeEventListener("scroll", updateActiveFromScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
 
   useEffect(() => {
     const node = proofRef.current;
@@ -241,30 +201,6 @@ export default function Home() {
     };
   }, [reducedMotion]);
 
-  useEffect(() => {
-    if (reducedMotion) return;
-    let frame = 0;
-    function onScroll() {
-      if (frame) return;
-      frame = window.requestAnimationFrame(() => {
-        frame = 0;
-        mockupRefs.current.forEach((el, index) => {
-          if (!el) return;
-          const speed = mockups[index]?.speed ?? 0.1;
-          const rect = el.getBoundingClientRect();
-          const centerOffset = rect.top + rect.height / 2 - window.innerHeight / 2;
-          el.style.transform = `translateY(${(-centerOffset * speed).toFixed(1)}px)`;
-        });
-      });
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, [reducedMotion]);
-
   function handleWhySpotlight(event: MouseEvent<HTMLElement>) {
     const rect = event.currentTarget.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
@@ -276,38 +212,6 @@ export default function Home() {
   function resetWhySpotlight(event: MouseEvent<HTMLElement>) {
     event.currentTarget.style.setProperty("--spot-x", "50%");
     event.currentTarget.style.setProperty("--spot-y", "-20%");
-  }
-
-  function scrollTrackTo(index: number, behavior: ScrollBehavior) {
-    const track = trackRef.current;
-    const card = index === clients.length ? cloneRef.current : cardRefs.current[index];
-    if (!track || !card) return;
-    track.scrollTo({ left: card.offsetLeft - track.offsetLeft, behavior });
-  }
-
-  useEffect(() => {
-    if (reducedMotion) return;
-    const timer = window.setInterval(() => {
-      if (pausedRef.current) return;
-      const track = trackRef.current;
-      if (!track) return;
-      const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-      if (atEnd) {
-        scrollTrackTo(clients.length, "smooth");
-        window.setTimeout(() => {
-          scrollTrackTo(0, "auto");
-          setActiveClient(0);
-        }, 700);
-        return;
-      }
-      scrollTrackTo(activeClient + 1, "smooth");
-    }, 4500);
-    return () => window.clearInterval(timer);
-  }, [activeClient, reducedMotion]);
-
-  function goToClient(index: number) {
-    const wrapped = (index + clients.length) % clients.length;
-    scrollTrackTo(wrapped, reducedMotion ? "auto" : "smooth");
   }
 
   async function submitContact(event: FormEvent<HTMLFormElement>) {
@@ -331,19 +235,10 @@ export default function Home() {
 
   const slide = heroSlides[heroSlide];
 
-  function renderProjectCard(client: (typeof clients)[number], index: number, isClone = false) {
+  function renderProjectCard(client: (typeof clients)[number], index: number, keySuffix: string) {
     const logo = placeholderLogos[index % placeholderLogos.length];
     return (
-      <article
-        key={isClone ? "clone-first" : client.name}
-        ref={(el) => {
-          if (isClone) cloneRef.current = el;
-          else cardRefs.current[index] = el;
-        }}
-        className="project-card project-card-media"
-        aria-hidden={isClone ? true : undefined}
-        tabIndex={isClone ? -1 : undefined}
-      >
+      <article key={`${client.name}-${keySuffix}`} className="project-card project-card-media" aria-hidden={keySuffix === "b" ? true : undefined}>
         <Image src={client.image} alt="" fill sizes="(max-width: 800px) 82vw, 360px" className="project-card-bg" />
         <span className="project-card-scrim" aria-hidden="true" />
         <div className="project-card-top">
@@ -356,7 +251,7 @@ export default function Home() {
           <h3>{client.name}</h3>
           <p>{client.description}</p>
         </div>
-        <a className="project-link" href={client.url} target="_blank" rel="noreferrer" tabIndex={isClone ? -1 : undefined}>
+        <a className="project-link" href={client.url} target="_blank" rel="noreferrer" tabIndex={keySuffix === "b" ? -1 : undefined}>
           {client.urlLabel} <ArrowUpRight size={15} />
         </a>
       </article>
@@ -382,58 +277,68 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="hero section-wrap" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
+      <section className="hero" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
         <span className="hero-bg-gradient" aria-hidden="true" />
         <div className="hero-rings-clip" aria-hidden="true">
-          <div className="hero-rings">
+          <div className="hero-rings hero-rings-right">
+            <span className="hero-ring-dot" />
             <span />
             <span />
             <span />
             <span />
           </div>
+          <div className="hero-rings hero-rings-left">
+            <span className="hero-ring-dot" />
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
-        <div className="hero-copy">
-          <h1 key={heroSlide} className="hero-title">
-            {slide.titleLines.map((line, index) => (
-              <span className="hero-line-mask" key={line}>
-                <span
-                  className={index === slide.highlight ? "hero-line-inner hero-title-accent" : "hero-line-inner"}
-                  style={{ animationDelay: `${index * 110}ms` }}
-                >
-                  {line}
+        <div className="hero-inner section-wrap">
+          <div className="hero-copy">
+            <h1 key={heroSlide} className="hero-title">
+              {slide.titleLines.map((line, index) => (
+                <span className="hero-line-mask" key={line}>
+                  <span
+                    className={index === slide.highlight ? "hero-line-inner hero-title-accent" : "hero-line-inner"}
+                    style={{ animationDelay: `${index * 110}ms` }}
+                  >
+                    {line}
+                  </span>
                 </span>
-              </span>
-            ))}
-          </h1>
-          <p key={`intro-${heroSlide}`} className="hero-intro hero-copy-enter">{slide.intro}</p>
-          <div className="hero-actions hero-actions-enter">
-            <a className="button button-dark" href="#contacto">Cantar las 40 <ArrowUpRight size={17} /></a>
-            <a className="text-link" href="#proyectos">Ver proyectos <ChevronRight size={16} /></a>
+              ))}
+            </h1>
+            <p key={`intro-${heroSlide}`} className="hero-intro hero-copy-enter">{slide.intro}</p>
+            <div className="hero-actions hero-actions-enter">
+              <a className="button button-dark" href="#contacto">Cantar las 40 <ArrowUpRight size={17} /></a>
+              <a className="text-link" href="#proyectos">Ver proyectos <ChevronRight size={16} /></a>
+            </div>
           </div>
-        </div>
-        <div
-          key={`portrait-${heroSlide}`}
-          className="hero-portrait"
-          onMouseMove={handlePortraitMove}
-          onMouseLeave={resetPortraitMove}
-        >
-          <div className="hero-portrait-inner" ref={portraitInnerRef}>
-            <Image src={slide.image} alt={slide.imageAlt} fill priority sizes="(max-width: 900px) 90vw, 48vw" />
-          </div>
-          <span className="hero-portrait-overlay" aria-hidden="true" />
-          <span className="portrait-wipe" aria-hidden="true" />
-          <div className="hero-progress" role="group" aria-label="Seleccionar slide del hero">
-            {heroSlides.map((item, index) => (
-              <button
-                key={item.eyebrow}
-                className={index === heroSlide ? "active" : ""}
-                aria-label={`Mostrar ${item.eyebrow}`}
-                aria-current={index === heroSlide}
-                onClick={() => setHeroSlide(index)}
-              >
-                <span />
-              </button>
-            ))}
+          <div
+            key={`portrait-${heroSlide}`}
+            className="hero-portrait"
+            onMouseMove={handlePortraitMove}
+            onMouseLeave={resetPortraitMove}
+          >
+            <div className="hero-portrait-inner" ref={portraitInnerRef}>
+              <Image src={slide.image} alt={slide.imageAlt} fill priority sizes="(max-width: 900px) 90vw, 48vw" />
+            </div>
+            <span className="hero-portrait-overlay" aria-hidden="true" />
+            <span className="portrait-wipe" aria-hidden="true" />
+            <button
+              className="hero-arrow hero-arrow-prev"
+              aria-label="Slide anterior"
+              onClick={() => setHeroSlide((heroSlide - 1 + heroSlides.length) % heroSlides.length)}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              className="hero-arrow hero-arrow-next"
+              aria-label="Slide siguiente"
+              onClick={() => setHeroSlide((heroSlide + 1) % heroSlides.length)}
+            >
+              <ChevronRight size={20} />
+            </button>
           </div>
         </div>
         <div className="hero-loadbar" aria-hidden="true">
@@ -525,17 +430,7 @@ export default function Home() {
       </section>
 
       <section className="services section-wrap" id="servicios">
-        <div className="services-mockups" aria-hidden="true">
-          {mockups.map((mockup, index) => (
-            <div
-              key={mockup.className}
-              className={`mockup ${mockup.className}`}
-              ref={(el) => {
-                mockupRefs.current[index] = el;
-              }}
-            />
-          ))}
-        </div>
+        <span className="services-collage" aria-hidden="true" />
         <Reveal as="div" delay={60} className="services-heading">
           <h2>Todo lo que su marca<br /><em>necesita para avanzar</em></h2>
           <p>Una mirada integral: estrategia, creatividad y tecnología en el mismo equipo.</p>
@@ -607,24 +502,9 @@ export default function Home() {
           </Reveal>
         </div>
         <div className="project-window">
-          <div
-            className="project-track"
-            ref={trackRef}
-            onMouseEnter={() => (pausedRef.current = true)}
-            onMouseLeave={() => (pausedRef.current = false)}
-            onFocus={() => (pausedRef.current = true)}
-            onBlur={() => (pausedRef.current = false)}
-            onTouchStart={() => (pausedRef.current = true)}
-            onTouchEnd={() => (pausedRef.current = false)}
-          >
-            {clients.map((client, index) => renderProjectCard(client, index))}
-            {renderProjectCard(clients[0], 0, true)}
-          </div>
-        </div>
-        <div className="project-controls section-wrap">
-          <div className="project-arrows">
-            <button aria-label="Proyecto anterior" onClick={() => goToClient(activeClient - 1)}><ChevronLeft size={16} /></button>
-            <button aria-label="Proyecto siguiente" onClick={() => goToClient(activeClient + 1)}><ChevronRight size={16} /></button>
+          <div className={reducedMotion ? "project-track is-paused" : "project-track"}>
+            {clients.map((client, index) => renderProjectCard(client, index, "a"))}
+            {clients.map((client, index) => renderProjectCard(client, index, "b"))}
           </div>
         </div>
       </section>
