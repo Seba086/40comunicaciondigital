@@ -39,6 +39,7 @@ import {
 
 const serviceIcons = [Code2, PenTool, Search, Mic, Video, Newspaper, Palette, Megaphone, Terminal, Smartphone, BarChart3, Compass];
 const pillarIcons = [Target, Wrench, MessageCircle, BarChart3];
+const marqueeLogos = clients.filter((client) => client.logo);
 const pillarImages = [
   "/imagenes/pillar-apuesta.avif",
   "/imagenes/pillar-tecnico.avif",
@@ -467,9 +468,9 @@ export default function Home() {
 
       <section className="logos-marquee" aria-label="Marcas que confían en nosotros">
         <div className={reducedMotion ? "logos-track is-paused" : "logos-track"}>
-          {[...placeholderLogos, ...placeholderLogos, ...placeholderLogos, ...placeholderLogos, ...placeholderLogos, ...placeholderLogos].map((logo, index) => (
-            <span className="logo-item" key={`${logo.name}-${index}`} title={logo.name}>
-              {logo.mark}
+          {[...marqueeLogos, ...marqueeLogos, ...marqueeLogos, ...marqueeLogos].map((client, index) => (
+            <span className="logo-item" key={`${client.name}-${index}`} title={client.name}>
+              <Image src={client.logo!} alt={client.name} width={120} height={35} />
             </span>
           ))}
         </div>

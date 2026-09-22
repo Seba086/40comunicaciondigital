@@ -240,7 +240,7 @@ export const clients = [
       "Soluciones avanzadas para la optimización de biogás, con tecnología orientada a la eliminación de H2S. 40CD acompaña su presencia digital con una estrategia SEO orientada a un mercado de alta especialización.",
     featured: false,
     image: "/imagenes/client-calpech.avif",
-    logo: null,
+    logo: "/imagenes/carousel/calpech.webp",
   },
   {
     name: "Controla Tus Horas",
