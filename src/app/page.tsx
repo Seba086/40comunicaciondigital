@@ -510,7 +510,6 @@ export default function Home() {
             return (
               <Reveal as="article" key={service.number} delay={(index % 3) * 70} className="service-card">
                 <span className="service-icon"><Icon size={18} /></span>
-                <span className="service-number">{service.number}</span>
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
               </Reveal>

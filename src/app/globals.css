@@ -175,7 +175,6 @@ h2 em { color: var(--ember); font-style: normal; }
 .service-card { position: relative; min-height: 210px; padding: 26px; border-radius: 24px; background: var(--snow); border: 1px solid var(--cloud); transition: background-color 180ms ease-out, transform 180ms ease-out, border-color 180ms ease-out; }
 .service-card:hover { transform: translateY(-4px); border-color: var(--ember); }
 .service-icon { position: absolute; top: 22px; right: 22px; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; background: rgba(255, 90, 0, 0.1); border: 1px solid rgba(255, 90, 0, 0.28); color: var(--ember); }
-.service-number { color: var(--ember); font-size: 12px; }
 .service-card h3 { color: var(--ink); font-size: 20px; font-weight: 500; margin: 24px 0 10px; padding-right: 40px; }
 .service-card p { color: var(--fog); max-width: 270px; font-size: 14px; }
 
@@ -233,7 +232,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .project-badge { position: relative; z-index: 2; align-self: flex-start; background: var(--ember); color: var(--snow); border-radius: 12px; padding: 4px 8px; font-size: 12px; font-weight: 500; }
 .project-info { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; }
 .project-tag { font-size: 12px; opacity: .65; text-transform: uppercase; letter-spacing: 0.02em; }
-.project-info h3 { font-size: 21px; font-weight: 600; line-height: 1.2; }
+.project-info h3 { font-size: 31.5px; font-weight: 600; line-height: 1.15; }
 .project-desc-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 420ms var(--ease-out); }
 .project-card:hover .project-desc-wrap { grid-template-rows: 1fr; }
 .project-desc-inner { overflow: hidden; }
@@ -284,7 +283,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .contact-form select option { color: var(--ink); }
 .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--ember); }
 .contact-form textarea { resize: vertical; }
-.form-submit { margin-top: 8px; align-self: start; }
+.form-submit { margin-top: 8px; align-self: end; }
 .form-message { font-size: 13px; }
 .success { color: #16a34a; }
 .error { color: #dc2626; }
@@ -339,7 +338,11 @@ h2 em { color: var(--ember); font-style: normal; }
   .hero-arrow { display: none; }
 }
 @media (max-width: 520px) {
-  h1 { font-size: clamp(30px, 8.4vw, 54px); height: auto; overflow: visible; }
+  h1 { font-size: clamp(38px, 10.5vw, 58px); font-weight: 700; height: auto; overflow: visible; }
+  .hero-portrait { height: 200px; }
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 28px; }
+  .hero-actions .button, .hero-actions .text-link { width: 100%; justify-content: center; }
+  .hero-actions .text-link { border: 1px solid var(--mist); border-radius: 9999px; padding: 13px 20px; }
   .hero-intro, .manifesto-body, .about-copy p { font-size: 16px; }
   .proof-inner { font-size: 15px; }
   .manifesto, .services { padding-block: 80px; }
@@ -350,7 +353,8 @@ h2 em { color: var(--ember); font-style: normal; }
   .projects-head p { font-size: 17px; }
   .form-row { grid-template-columns: 1fr; gap: 16px; }
   .footer-inner { flex-direction: column; align-items: flex-start; padding-block: 30px; }
-  .statement h2, .why-heading h2 { font-size: clamp(34px, 9vw, 48px); }
+  .statement h2 { font-size: clamp(38px, 10.5vw, 58px); }
+  .why-heading h2 { font-size: clamp(34px, 9vw, 48px); }
   .whatsapp-fab, .scroll-top { transform: scale(0.92); }
 }
 
