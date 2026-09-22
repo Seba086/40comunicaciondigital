@@ -320,7 +320,8 @@ h2 em { color: var(--ember); font-style: normal; }
   .main-nav a { padding: 12px; }
   .hero-inner, .manifesto-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
   .hero { padding-block: 50px 60px; }
-  .hero-portrait { height: 480px; }
+  .hero-portrait { display: none; }
+  .hero-loadbar { top: 0; bottom: auto; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .about-band { grid-template-columns: 1fr; }
   .about-image { min-height: 360px; }
@@ -339,7 +340,6 @@ h2 em { color: var(--ember); font-style: normal; }
 }
 @media (max-width: 520px) {
   h1 { font-size: clamp(38px, 10.5vw, 58px); font-weight: 700; height: auto; overflow: visible; }
-  .hero-portrait { height: 200px; }
   .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 28px; }
   .hero-actions .button, .hero-actions .text-link { width: 100%; justify-content: center; }
   .hero-actions .text-link { border: 1px solid var(--mist); border-radius: 9999px; padding: 13px 20px; }
