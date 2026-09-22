@@ -312,7 +312,18 @@ export default function Home() {
         <div className="project-info">
           <span className="project-tag">{client.tag}</span>
           <h3>{client.name}</h3>
-          <p>{client.description}</p>
+          <div className="project-desc-wrap">
+            <div className="project-desc-inner">
+              <p className="project-desc">
+                {client.description.split(" ").flatMap((word, wordIndex) => [
+                  <span key={`w-${wordIndex}`} className="word" style={{ animationDelay: `${wordIndex * 18}ms` }}>
+                    {word}
+                  </span>,
+                  " ",
+                ])}
+              </p>
+            </div>
+          </div>
         </div>
         <a className="project-link" href={client.url} target="_blank" rel="noreferrer" tabIndex={keySuffix === "b" ? -1 : undefined}>
           {client.urlLabel} <ArrowUpRight size={15} />
@@ -343,12 +354,6 @@ export default function Home() {
       <section className="hero" id="inicio" aria-roledescription="carousel" aria-label="Servicios destacados">
         <span className="hero-bg-gradient" aria-hidden="true" />
         <div className="hero-rings-clip" aria-hidden="true">
-          <div className="hero-rings hero-rings-right">
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
           <div className="hero-rings hero-rings-left">
             <span />
             <span />
@@ -460,9 +465,6 @@ export default function Home() {
         <div className="section-wrap proof-inner">
           <span>Una presencia digital</span>
           <strong key={proofPhrase} className="proof-phrase">{rotatingProof[proofPhrase]}</strong>
-          <span className="proof-mark" aria-hidden="true">
-            <Image src="/imagenes/40CD%20Logo%20W-transparente.avif" alt="" width={420} height={420} />
-          </span>
         </div>
       </section>
 

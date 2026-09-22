@@ -35,8 +35,8 @@ export const heroSlides: {
     eyebrow: "Servicio 02 · Contenido estratégico",
     titleLines: [
       [{ text: "Su historia" }],
-      [{ text: "tiene", accent: true }],
-      [{ text: "algo que decir" }],
+      [{ text: "tiene algo", accent: true }],
+      [{ text: "que decir", accent: true }],
     ],
     intro:
       "Texto, audio y video estratégico para encontrar el mensaje correcto, en el formato correcto.",
