@@ -340,7 +340,7 @@ h2 em { color: var(--ember); font-style: normal; }
   .hero-arrow { display: none; }
 }
 @media (max-width: 520px) {
-  h1 { font-size: clamp(38px, 10.5vw, 58px); font-weight: 700; height: auto; overflow: visible; }
+  h1 { font-size: clamp(51px, 14.2vw, 78px); font-weight: 700; height: auto; overflow: visible; }
   .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 28px; }
   .hero-actions .button, .hero-actions .text-link { width: 100%; justify-content: center; }
   .hero-actions .text-link { border: 1px solid var(--mist); border-radius: 9999px; padding: 13px 20px; }
@@ -354,8 +354,10 @@ h2 em { color: var(--ember); font-style: normal; }
   .projects-head p { font-size: 17px; }
   .form-row { grid-template-columns: 1fr; gap: 16px; }
   .footer-inner { flex-direction: column; align-items: flex-start; padding-block: 30px; }
-  .statement h2, .manifesto-title h2 { font-size: clamp(38px, 10.5vw, 58px); }
-  .why-heading h2 { font-size: clamp(34px, 9vw, 48px); }
+  .statement h2 { font-size: clamp(38px, 10.5vw, 58px); }
+  .manifesto-title h2 { font-size: clamp(51px, 14.2vw, 78px); }
+  .why-heading h2 { font-size: clamp(46px, 12.2vw, 65px); }
+  .services h2, .projects h2, .about-band h2 { font-size: clamp(54px, 7vw, 89px); }
   .whatsapp-fab, .scroll-top { transform: scale(0.92); }
 }
 
