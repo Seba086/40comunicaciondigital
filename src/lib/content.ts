@@ -16,8 +16,8 @@ export const heroSlides: {
     ],
     intro:
       "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos su página web, lo posicionamos en Google y gestionamos sus redes, para pymes e instituciones de Argentina y España.",
-    image: "/imagenes/NicoRielo.avif",
-    imageAlt: "Nico Rielo, CEO de 40 Comunicación Digital",
+    image: "/imagenes/hero-dashboard.webp",
+    imageAlt: "Monitor con paneles de analítica digital en una oficina",
   },
   {
     eyebrow: "Servicio 01 · Diseño y desarrollo web",

@@ -379,7 +379,14 @@ export default function Home() {
             onMouseLeave={resetPortraitMove}
           >
             <div className="hero-portrait-inner" ref={portraitInnerRef}>
-              <Image src={slide.image} alt={slide.imageAlt} fill priority sizes="(max-width: 900px) 90vw, 48vw" />
+              <Image
+                src={slide.image}
+                alt={slide.imageAlt}
+                fill
+                priority
+                sizes="(max-width: 900px) 90vw, 48vw"
+                className={heroSlide === 0 ? "hero-dashboard-image" : undefined}
+              />
             </div>
             <span className="hero-portrait-overlay" aria-hidden="true" />
             <span className="portrait-wipe" aria-hidden="true" />
@@ -582,7 +589,7 @@ export default function Home() {
 
       <section className="about-band" id="nosotros">
         <Reveal as="div" className="about-image">
-          <Image src="/imagenes/footer-img.avif" alt="Equipo de 40 Comunicación Digital en Tandil" fill sizes="(max-width: 800px) 100vw, 50vw" />
+          <Image src="/imagenes/team-about.avif" alt="Equipo de 40 Comunicación Digital en Tandil" fill sizes="(max-width: 800px) 100vw, 50vw" />
           <span className="about-image-overlay" aria-hidden="true" />
         </Reveal>
         <div className="section-wrap about-copy-wrap">

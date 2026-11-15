@@ -89,6 +89,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .hero-portrait { height: 540px; position: relative; overflow: hidden; border-radius: 36px; background: var(--slate); animation: portrait-fade 500ms var(--ease-out) both; }
 .hero-portrait-inner { position: absolute; inset: 0; transform: scale(1.06); transition: transform 400ms var(--ease-out); will-change: transform; animation: portrait-zoom-in 1500ms var(--ease-out) both; }
 .hero-portrait img { object-fit: cover; object-position: center top; filter: saturate(.85); }
+.hero-portrait img.hero-dashboard-image { object-position: center; }
 .hero-portrait-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(205deg, rgba(9, 9, 11, 0.32) 0%, transparent 32%, transparent 62%, rgba(9, 9, 11, 0.58) 100%); }
 .portrait-wipe {
   position: absolute; inset: 0; z-index: 1;
