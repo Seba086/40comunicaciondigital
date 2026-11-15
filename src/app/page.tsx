@@ -8,14 +8,12 @@ import {
   ChevronLeft,
   ChevronRight,
   Code2,
-  Compass,
   Mic,
   Megaphone,
   MessageCircle,
   Menu,
   Newspaper,
   Palette,
-  PenTool,
   Search,
   Smartphone,
   Target,
@@ -37,7 +35,7 @@ import {
   tickerItems,
 } from "@/lib/content";
 
-const serviceIcons = [Code2, PenTool, Search, Mic, Video, Newspaper, Palette, Megaphone, Terminal, Smartphone, BarChart3, Compass];
+const serviceIcons = [Code2, Smartphone, Search, Megaphone, Terminal, Newspaper, Video, Mic, Palette, Target, Wrench, BarChart3];
 const pillarIcons = [Target, Wrench, MessageCircle, BarChart3];
 const marqueeLogos = clients.filter((client) => client.logo);
 const pillarImages = [
@@ -64,7 +62,7 @@ const nodeGroups = [
 const socialLinks = [
   {
     name: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/40comunicaciondigital/",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -74,17 +72,8 @@ const socialLinks = [
     ),
   },
   {
-    name: "Facebook",
-    href: "#",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14.5 21v-7.8h2.6l.4-3h-3V8.2c0-.87.24-1.46 1.5-1.46h1.6V4.1c-.28-.04-1.23-.12-2.34-.12-2.3 0-3.88 1.4-3.88 3.98v2.24H9v3h2.38V21z" />
-      </svg>
-    ),
-  },
-  {
     name: "LinkedIn",
-    href: "#",
+    href: "https://ar.linkedin.com/in/nicol%C3%A1s-rielo-1a859848",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="18" height="18" rx="3" />
@@ -362,7 +351,9 @@ export default function Home() {
         </div>
         <div className="hero-inner section-wrap">
           <div className="hero-copy">
-            <h1 key={heroSlide} className="hero-title">
+            <h1 className="sr-only">Su negocio merece ser visto</h1>
+            <p key={`eyebrow-${heroSlide}`} className="hero-eyebrow hero-copy-enter">{slide.eyebrow}</p>
+            <p key={heroSlide} className="hero-title" aria-live="polite">
               {slide.titleLines.map((segments, index) => (
                 <span className="hero-line-mask" key={index}>
                   <span className="hero-line-inner" style={{ animationDelay: `${index * 110}ms` }}>
@@ -374,10 +365,10 @@ export default function Home() {
                   </span>
                 </span>
               ))}
-            </h1>
+            </p>
             <p key={`intro-${heroSlide}`} className="hero-intro hero-copy-enter">{slide.intro}</p>
             <div className="hero-actions hero-actions-enter">
-              <a className="button button-dark" href="#contacto">Cantar las 40 <ArrowUpRight size={17} /></a>
+              <a className="button button-dark" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">Cantar las 40 <ArrowUpRight size={17} /></a>
               <a className="text-link" href="#proyectos">Ver proyectos <ChevronRight size={16} /></a>
             </div>
           </div>
@@ -388,7 +379,14 @@ export default function Home() {
             onMouseLeave={resetPortraitMove}
           >
             <div className="hero-portrait-inner" ref={portraitInnerRef}>
-              <Image src={slide.image} alt={slide.imageAlt} fill priority sizes="(max-width: 900px) 90vw, 48vw" />
+              <Image
+                src={slide.image}
+                alt={slide.imageAlt}
+                fill
+                priority
+                sizes="(max-width: 900px) 90vw, 48vw"
+                className={heroSlide === 0 ? "hero-dashboard-image" : undefined}
+              />
             </div>
             <span className="hero-portrait-overlay" aria-hidden="true" />
             <span className="portrait-wipe" aria-hidden="true" />
@@ -470,11 +468,14 @@ export default function Home() {
 
       <section className="logos-marquee" aria-label="Marcas que confían en nosotros">
         <div className={reducedMotion ? "logos-track is-paused" : "logos-track"}>
-          {[...marqueeLogos, ...marqueeLogos, ...marqueeLogos, ...marqueeLogos].map((client, index) => (
-            <span className="logo-item" key={`${client.name}-${index}`} title={client.name}>
-              <Image src={client.logo!} alt={client.name} width={120} height={35} />
-            </span>
-          ))}
+          {[...marqueeLogos, ...marqueeLogos, ...marqueeLogos, ...marqueeLogos].map((client, index) => {
+            const isDuplicate = index >= marqueeLogos.length;
+            return (
+              <span className="logo-item" key={`${client.name}-${index}`} title={isDuplicate ? undefined : client.name} aria-hidden={isDuplicate ? true : undefined}>
+                <Image src={client.logo!} alt={isDuplicate ? "" : client.name} width={120} height={35} />
+              </span>
+            );
+          })}
         </div>
       </section>
 
@@ -487,8 +488,7 @@ export default function Home() {
           <div className="manifesto-grid">
             <Reveal as="div" className="manifesto-title"><h2><em>Si a usted<br />le va bien,</em><br />a nosotros<br />también</h2></Reveal>
             <Reveal as="div" delay={80} className="manifesto-body">
-              <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes. Jugamos a largo plazo con el fin de potenciar los proyectos de quienes confían en nosotros.</p>
-              <p>El conocimiento técnico y del negocio lo tiene usted. Nosotros lo ayudamos a desarrollarlo y potenciarlo con las últimas herramientas digitales.</p>
+              <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes y jugamos a largo plazo. El conocimiento de su industria lo tiene usted; nosotros sumamos estrategia, diseño, contenidos y las herramientas digitales —incluida la inteligencia artificial— para que ese valor se vea, se entienda y se venda.</p>
               <a className="circle-link" href="#contacto" aria-label="Conocer más sobre 40 Comunicación Digital">
                 <span className="circle-link-ping" aria-hidden="true" />
                 <ArrowUpRight size={21} />
@@ -501,8 +501,8 @@ export default function Home() {
       <section className="services section-wrap" id="servicios">
         <span className="services-collage" aria-hidden="true" />
         <Reveal as="div" delay={60} className="services-heading">
-          <h2>Todo lo que su marca<br /><em>necesita para avanzar</em></h2>
-          <p>Una mirada integral: estrategia, creatividad y tecnología en el mismo equipo.</p>
+          <h2>Servicios de comunicación digital<br /><em>para su negocio</em></h2>
+          <p>Estrategia, creatividad y tecnología en un mismo equipo: desde el diseño de su página web hasta la inteligencia artificial aplicada a sus ventas.</p>
         </Reveal>
         <div className="services-grid">
           {services.map((service, index) => {
@@ -566,7 +566,7 @@ export default function Home() {
         <div className="section-wrap projects-head">
           <Reveal as="div" delay={60}>
             <h2>Trabajo que<br /><em>habla por sí solo</em></h2>
-            <p>Marcas, instituciones y productos digitales reales que acompañamos en el camino.</p>
+            <p>Instituciones de Tandil y empresas de Argentina y España que acompañamos en su crecimiento digital.</p>
           </Reveal>
         </div>
         <div className="project-window">
@@ -589,13 +589,14 @@ export default function Home() {
 
       <section className="about-band" id="nosotros">
         <Reveal as="div" className="about-image">
-          <Image src="/imagenes/footer-img.avif" alt="Detrás de cada buena idea: el equipo de 40 Comunicación Digital planificando una estrategia" fill sizes="(max-width: 800px) 100vw, 50vw" />
+          <Image src="/imagenes/team-about.avif" alt="Equipo de 40 Comunicación Digital en Tandil" fill sizes="(max-width: 800px) 100vw, 50vw" />
           <span className="about-image-overlay" aria-hidden="true" />
         </Reveal>
         <div className="section-wrap about-copy-wrap">
           <Reveal as="div" delay={80} className="about-copy">
             <h2>Detrás de cada<br /><em>buena idea</em></h2>
-            <p>Nicolás Rielo fundó 40CD para hacer algo simple y difícil: entender de verdad qué hace valioso a un negocio, y encontrar la forma más clara de contarlo.</p>
+            <p>Somos un equipo de comunicación digital nacido en Tandil. Nos dedicamos a algo simple y difícil a la vez: entender de verdad qué hace valioso a un negocio y encontrar la forma más clara de contarlo. Reunimos estrategia, diseño, tecnología y producción de contenidos en un mismo equipo, y trabajamos con pymes e instituciones de Argentina y España con la cercanía de quien conoce su proyecto de punta a punta.</p>
+            <p className="about-highlight">Desde el interior, con casos de éxito en Argentina y España.</p>
             <a className="text-link" href="#contacto">Conversemos sobre su proyecto <ArrowUpRight size={16} /></a>
           </Reveal>
         </div>
@@ -615,12 +616,15 @@ export default function Home() {
         <div className="section-wrap contact-grid">
           <Reveal as="div">
             <h2>Hablemos<br /><em>de su proyecto</em></h2>
-            <p>Cuéntenos su proyecto. Sin compromiso, sin vueltas. Si podemos ayudarlo a crecer, lo vamos a decir con claridad.</p>
+            <p>Cuéntenos su proyecto. Sin compromiso, sin vueltas. Si podemos ayudarlo a crecer, se lo vamos a decir con claridad. Trabajamos en forma presencial en Tandil y a distancia con toda Argentina y España.</p>
             <div className="contact-details">
               <a href="mailto:nicolas.rielo@40comunicaciondigital.com">nicolas.rielo@40comunicaciondigital.com</a>
               <a href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">+54 9 249 467-3903</a>
               <span>Tandil · Buenos Aires · Argentina</span>
             </div>
+            <a className="button button-dark contact-whatsapp" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">
+              <MessageCircle size={18} /> Escribinos por WhatsApp
+            </a>
           </Reveal>
           <Reveal as="div" delay={100}>
             <form className="contact-form" onSubmit={submitContact}>
@@ -656,6 +660,10 @@ export default function Home() {
           <div>
             <p>© 2026 40 Comunicación Digital</p>
             <p>Diseñamos presencia. Construimos futuro.</p>
+            <div className="footer-links">
+              <a href={socialLinks[0].href} target="_blank" rel="noreferrer">Instagram</a>
+              <a href={socialLinks[1].href} target="_blank" rel="noreferrer">LinkedIn</a>
+            </div>
           </div>
         </div>
       </footer>
@@ -686,7 +694,7 @@ export default function Home() {
 
       <div className="social-rail" aria-label="Redes sociales">
         {socialLinks.map((social) => (
-          <a key={social.name} className="social-icon" href={social.href} aria-label={social.name}>
+          <a key={social.name} className="social-icon" href={social.href} aria-label={social.name} target="_blank" rel="noreferrer">
             {social.icon}
           </a>
         ))}

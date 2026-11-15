@@ -15,9 +15,9 @@ export const heroSlides: {
       [{ text: "ser visto", accent: true }],
     ],
     intro:
-      "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.",
-    image: "/imagenes/NicoRielo.avif",
-    imageAlt: "Nico Rielo, CEO de 40 Comunicación Digital",
+      "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos su página web, lo posicionamos en Google y gestionamos sus redes, para pymes e instituciones de Argentina y España.",
+    image: "/imagenes/hero-dashboard.webp",
+    imageAlt: "Monitor con paneles de analítica digital en una oficina",
   },
   {
     eyebrow: "Servicio 01 · Diseño y desarrollo web",
@@ -67,89 +67,91 @@ export const rotatingProof = [
 export const services = [
   {
     number: "01",
-    title: "Diseño y desarrollo web",
+    title: "Diseño de páginas web",
     description:
-      "Sitios que representan su negocio con la seriedad que merece. Desde la arquitectura de información hasta el código: experiencias digitales que convierten visitantes en clientes.",
+      "Diseño web profesional para empresas e instituciones. Desde la arquitectura de la información hasta el código: sitios rápidos, claros y pensados para convertir visitas en consultas.",
   },
   {
     number: "02",
-    title: "Contenido estratégico",
+    title: "Tiendas online",
     description:
-      "Texto, audio y video estratégico para todas las plataformas. Notas, guiones, reels, newsletters y posteos: el mensaje correcto, en el formato correcto, en el lugar correcto.",
+      "Creamos su tienda online a medida, con Mercado Pago, envíos y catálogo fácil de administrar. Ideal para quienes ya probaron una plataforma genérica y necesitan crecer.",
   },
   {
     number: "03",
     title: "SEO y posicionamiento",
     description:
-      "Google, Instagram, YouTube. Trabajamos para que quienes lo buscan, y quienes todavía no saben que lo necesitan, lo encuentren a usted primero.",
+      "Posicionamiento SEO en Google y en las respuestas de la inteligencia artificial (ChatGPT, Gemini). Auditoría, SEO técnico, contenidos y SEO local para que lo encuentren quienes ya lo están buscando.",
   },
   {
     number: "04",
-    title: "Podcasting y YouTube",
+    title: "Gestión de redes sociales",
     description:
-      "Gestión integral de canales: producción, edición, publicación y crecimiento de audiencia. Su voz, con alcance real y comunidad que crece.",
+      "Gestión de redes con estrategia: planificación, diseño, redacción y publicación. Instagram, Facebook y LinkedIn trabajando para su negocio, con métricas claras cada mes.",
   },
   {
     number: "05",
-    title: "Producción audiovisual",
+    title: "IA para ventas y CRM",
     description:
-      "Filmación, edición y postproducción profesional. Corporativo, publicitario o editorial: traducimos su identidad en imágenes que impactan y quedan.",
+      "Ordenamos su proceso comercial con un CRM y sumamos inteligencia artificial donde de verdad ahorra tiempo: chatbots de WhatsApp, respuestas automáticas y seguimiento de clientes. Empezamos por lo que su negocio puede medir.",
   },
   {
     number: "06",
-    title: "Prensa y comunicación",
+    title: "Contenido y prensa",
     description:
-      "Gacetillas, gestión de medios y relaciones institucionales. Lo ponemos en los lugares donde su industria presta atención.",
+      "Notas, guiones, newsletters, gacetillas y gestión de medios. El mensaje correcto, en el formato correcto y en los lugares donde su industria presta atención.",
   },
   {
     number: "07",
-    title: "Branding y marketing digital",
+    title: "Producción audiovisual",
     description:
-      "Identidad visual, tono de marca, estrategia y gestión de redes. Construimos marcas que se recuerdan y comunidades que convierten.",
+      "Filmación, edición y postproducción. Videos corporativos, publicitarios e institucionales que traducen su identidad en imágenes.",
   },
   {
     number: "08",
-    title: "Campañas ADS",
+    title: "Podcast y YouTube",
     description:
-      "Meta Ads, Google Ads, YouTube Ads. Cada peso invertido tiene que trabajar. Campañas con objetivo claro y medición real.",
+      "Producción de podcast para empresas y gestión integral de canales: grabación, edición, publicación y crecimiento de audiencia.",
   },
   {
     number: "09",
-    title: "Software web",
+    title: "Branding e identidad",
     description:
-      "Plataformas e-learning, e-commerce, intranets y sistemas a medida. La infraestructura digital que su negocio necesita para escalar sin límites.",
+      "Identidad visual y tono de marca para que su negocio se reconozca y se recuerde en cada punto de contacto.",
   },
   {
     number: "10",
-    title: "Aplicaciones mobile",
+    title: "Campañas Ads",
     description:
-      "Apps iOS y Android pensadas desde el usuario. Diseño, desarrollo y lanzamiento: su negocio en el bolsillo de sus clientes.",
+      "Meta Ads, Google Ads y YouTube Ads con objetivo claro y medición real. Cada peso invertido tiene que trabajar.",
   },
   {
     number: "11",
-    title: "Analítica y estrategia",
+    title: "Software y apps a medida",
     description:
-      "No alcanza con estar: hay que medir. Configuramos dashboards, analizamos datos y tomamos decisiones basadas en resultados reales.",
+      "Plataformas e-learning, intranets, sistemas y apps iOS/Android. La infraestructura digital que su negocio necesita para escalar.",
   },
   {
     number: "12",
-    title: "Consultoría digital",
+    title: "Consultoría y analítica",
     description:
-      "Para quienes necesitan un diagnóstico antes de actuar. Auditamos su presencia digital y trazamos la hoja de ruta más eficiente para crecer.",
+      "Auditamos su presencia digital, configuramos tableros de medición y trazamos la hoja de ruta más eficiente para crecer.",
   },
 ] as const;
 
 export const tickerItems = [
-  "Diseño Web",
+  "Diseño de páginas web",
+  "Tiendas online",
   "SEO & Posicionamiento",
+  "Gestión de redes sociales",
+  "IA para ventas y CRM",
   "Producción Audiovisual",
   "Branding",
   "Campañas ADS",
   "Podcasting",
-  "Desarrollo de Software",
-  "Apps Mobile",
-  "Prensa Digital",
-  "Consultoría Digital",
+  "Software y apps a medida",
+  "Contenido y prensa",
+  "Consultoría y analítica",
 ] as const;
 
 export const pillars = [
@@ -161,7 +163,7 @@ export const pillars = [
   {
     title: "Conocimiento técnico real",
     description:
-      "Cada servicio está respaldado por profesionales especializados. Sin intermediarios ni promesas vacías.",
+      "Cada servicio lo trabaja un especialista de nuestro equipo, sin intermediarios ni promesas vacías.",
   },
   {
     title: "Comunicación como responsabilidad",
@@ -171,7 +173,7 @@ export const pillars = [
   {
     title: "Resultados medibles",
     description:
-      "Visibilidad, autoridad, conversiones. Cada acción tiene un objetivo claro y métricas para evaluarlo.",
+      "Visibilidad, consultas y ventas. Cada acción tiene un objetivo claro y un informe mensual para evaluarlo.",
   },
 ] as const;
 
@@ -182,7 +184,7 @@ export const clients = [
     url: "https://www.econ.unicen.edu.ar/",
     urlLabel: "econ.unicen.edu.ar",
     description:
-      "La Facultad de Ciencias Económicas de la Universidad Nacional del Centro de la Provincia de Buenos Aires es una institución de referencia en Tandil y la región. Para 40CD, generamos el contenido de prensa y comunicación institucional de su blog, traduciendo la actividad universitaria en información clara y relevante.",
+      "Económicas UNICEN es una institución de referencia en Tandil y la región. Producimos los contenidos de prensa y comunicación institucional de su blog, y traducimos la actividad universitaria en información clara y relevante.",
     featured: true,
     image: "/imagenes/economicas-bg.avif",
     logo: "/imagenes/carousel/economicas.webp",
@@ -193,7 +195,7 @@ export const clients = [
     url: "https://www.colescba.org.ar/portal/",
     urlLabel: "colescba.org.ar",
     description:
-      "El organismo que nuclea, regula y representa a los escribanos bonaerenses. 40CD gestiona su comunicación institucional en redes sociales, acercando la actividad notarial a la comunidad con claridad y profesionalismo.",
+      "El organismo que nuclea, regula y representa a los escribanos bonaerenses. Gestionamos su comunicación institucional en redes sociales y acercamos la actividad notarial a la comunidad con claridad y profesionalismo.",
     featured: false,
     image: "/imagenes/client-colegio-escribanos.avif",
     logo: "/imagenes/carousel/colegio-escribanos.webp",
@@ -204,7 +206,7 @@ export const clients = [
     url: "https://patinreparage.com/",
     urlLabel: "patinreparage.com",
     description:
-      "Taller especializado en reparación profesional de patinetes eléctricos y venta de repuestos, referencia en movilidad urbana en España. 40CD trabaja su posicionamiento SEO para que quienes buscan una solución lo encuentren primero.",
+      "Taller de reparación de patinetes eléctricos y venta de repuestos en Madrid, España. Trabajamos su posicionamiento SEO para que quienes buscan una solución lo encuentren primero.",
     featured: false,
     image: "/imagenes/client-patin.avif",
     logo: "/imagenes/carousel/patin-reparage.webp",
@@ -215,7 +217,7 @@ export const clients = [
     url: "https://editeca.com/",
     urlLabel: "editeca.com",
     description:
-      "Plataforma de formación especializada en BIM y transformación digital para arquitectura y construcción, con presencia en más de 20 países. 40CD gestiona su estrategia de posicionamiento SEO a escala internacional.",
+      "Plataforma de formación especializada en BIM y transformación digital para arquitectura y construcción, con presencia en más de 20 países. Gestionamos su estrategia de posicionamiento SEO a escala internacional.",
     featured: false,
     image: "/imagenes/client-editeca.avif",
     logo: "/imagenes/carousel/editeca.webp",
@@ -226,7 +228,7 @@ export const clients = [
     url: "https://sofise.es/",
     urlLabel: "sofise.es",
     description:
-      "Correduría de seguros especializada en coberturas para arquitectos y el sector de la construcción. 40CD trabaja su posicionamiento SEO para conectar a Sofise con los profesionales que necesitan exactamente lo que ofrecen.",
+      "Correduría de seguros especializada en coberturas para arquitectos y el sector de la construcción. Trabajamos su posicionamiento SEO para conectarla con los profesionales que necesitan exactamente lo que ofrece.",
     featured: false,
     image: "/imagenes/client-sofise.avif",
     logo: "/imagenes/carousel/sofise.webp",
@@ -237,7 +239,7 @@ export const clients = [
     url: "https://www.calpech.com/",
     urlLabel: "calpech.com",
     description:
-      "Soluciones avanzadas para la optimización de biogás, con tecnología orientada a la eliminación de H2S. 40CD acompaña su presencia digital con una estrategia SEO orientada a un mercado de alta especialización.",
+      "Soluciones avanzadas para la optimización de biogás, con tecnología orientada a la eliminación de H2S. Acompañamos su presencia digital con una estrategia SEO orientada a un mercado de alta especialización.",
     featured: false,
     image: "/imagenes/client-calpech.avif",
     logo: "/imagenes/carousel/calpech.webp",
@@ -248,7 +250,7 @@ export const clients = [
     url: "https://www.controlatushoras.com/",
     urlLabel: "controlatushoras.com",
     description:
-      "Software de control horario para empresas, que permite gestionar el registro de jornada laboral en cumplimiento con la normativa vigente. 40CD trabaja su estrategia SEO frente a empresas que buscan este tipo de solución.",
+      "Software de control horario para empresas, que permite gestionar el registro de jornada laboral en cumplimiento con la normativa vigente. Trabajamos su estrategia SEO frente a empresas que buscan este tipo de solución.",
     featured: false,
     image: "/imagenes/client-controla-horas.avif",
     logo: "/imagenes/carousel/controlatushoras.webp",
@@ -259,7 +261,7 @@ export const clients = [
     url: "https://www.youtube.com/@davidcaseroventashighticket",
     urlLabel: "YouTube — David Casero",
     description:
-      "Consultor de ventas y creador de contenido especializado en escalar negocios digitales de infoproductores y agencias. 40CD trabaja su posicionamiento en plataformas, la creación de contenido y la edición de sus videos.",
+      "Consultor de ventas y creador de contenido especializado en escalar negocios digitales de infoproductores y agencias. Trabajamos su posicionamiento en plataformas, la creación de contenido y la edición de sus videos.",
     featured: false,
     image: "/imagenes/client-davidcasero.avif",
     logo: null,
@@ -270,7 +272,7 @@ export const clients = [
     url: "https://alertacomunidad.com/",
     urlLabel: "alertacomunidad.com",
     description:
-      "Plataforma colaborativa que conecta vecinos para mejorar la seguridad del barrio, con alertas en tiempo real. 40CD acompaña su crecimiento con posicionamiento en plataformas, contenido y edición de videos.",
+      "Plataforma colaborativa que conecta vecinos para mejorar la seguridad del barrio, con alertas en tiempo real. Acompañamos su crecimiento con posicionamiento en plataformas, contenido y edición de videos.",
     featured: false,
     image: "/imagenes/client-alerta-comunidad.avif",
     logo: "/imagenes/carousel/alerta-comunidad.webp",
