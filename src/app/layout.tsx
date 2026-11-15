@@ -12,9 +12,9 @@ const siteUrl = "https://40comunicaciondigital.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "40 Comunicación Digital | Presencia digital que se hace ver",
+  title: "Diseño web, SEO y marketing digital en Tandil | 40CD",
   description:
-    "40 Comunicación Digital: diseño web, contenido, SEO, branding, producción audiovisual, podcasting, campañas ADS y desarrollo de software. Construimos su presencia digital en Tandil y Argentina.",
+    "Agencia de comunicación digital en Tandil: diseño de páginas web, tiendas online, SEO, redes sociales e IA para ventas. Pymes de Argentina y España.",
   keywords: [
     "agencia comunicación digital",
     "diseño web Tandil",
@@ -24,6 +24,9 @@ export const metadata: Metadata = {
     "podcasting",
     "campañas ADS",
     "desarrollo web",
+    "tiendas online",
+    "gestión de redes sociales",
+    "IA para ventas",
     "apps mobile",
     "Tandil",
     "Buenos Aires",
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
   authors: [{ name: "40 Comunicación Digital" }],
   alternates: { canonical: siteUrl },
   openGraph: {
-    title: "40 Comunicación Digital",
+    title: "40 Comunicación Digital · Diseño web, SEO y contenidos desde Tandil",
     description:
       "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.",
     type: "website",
@@ -39,15 +42,21 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "40 Comunicación Digital",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "40 Comunicación Digital · Diseño web, SEO y contenidos desde Tandil",
+    description:
+      "Si usted es bueno en lo que hace, nosotros lo ayudamos a mostrarlo. Diseñamos y desarrollamos la presencia digital de su negocio.",
+  },
   robots: { index: true, follow: true },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "ProfessionalService",
   name: "40 Comunicación Digital",
   description:
-    "Agencia de comunicación digital especializada en diseño web, SEO, branding, producción audiovisual, podcasting, campañas ADS y desarrollo de software.",
+    "Agencia de comunicación digital en Tandil especializada en diseño de páginas web, tiendas online, SEO, redes sociales e inteligencia artificial para ventas.",
   telephone: "+5492494673903",
   email: "nicolas.rielo@40comunicaciondigital.com",
   address: {
@@ -57,19 +66,24 @@ const jsonLd = {
     addressCountry: "AR",
   },
   url: siteUrl,
+  areaServed: [
+    { "@type": "Country", name: "Argentina" },
+    { "@type": "Country", name: "España" },
+  ],
   serviceType: [
-    "Diseño Web",
-    "SEO",
-    "Branding",
+    "Diseño de páginas web",
+    "Tiendas online",
+    "SEO y posicionamiento",
+    "Gestión de redes sociales",
+    "IA para ventas y CRM",
     "Producción Audiovisual",
-    "Campañas ADS",
-    "Desarrollo de Software",
+    "Software y apps a medida",
   ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={dmSans.variable}>
+    <html lang="es" className={dmSans.variable} suppressHydrationWarning>
       <body>
         <script
           type="application/ld+json"

@@ -30,6 +30,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 h1, h2, h3, p { margin: 0; font-family: var(--font-sans); }
 h1, h2 { color: var(--ink); font-weight: 600; letter-spacing: -0.04em; }
 .section-wrap { width: min(1200px, calc(100% - 64px)); margin-inline: auto; position: relative; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 /* ── Reveal on scroll ── */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 640ms var(--ease-out), transform 640ms var(--ease-out); }
@@ -62,7 +63,8 @@ h1, h2 { color: var(--ink); font-weight: 600; letter-spacing: -0.04em; }
 .hero-rings span:nth-child(3) { width: 78%; height: 78%; animation-delay: 2.4s; border-color: rgba(9, 9, 11, 0.11); }
 .hero-rings span:nth-child(4) { width: 100%; height: 100%; animation-delay: 3.6s; border-color: rgba(9, 9, 11, 0.09); }
 .hero-copy { padding-left: 8px; position: relative; z-index: 1; }
-h1 { font-size: clamp(40px, 6.2vw, 82px); line-height: 1.1; margin: 28px 0; height: 3.3em; overflow: hidden; }
+.hero-eyebrow { color: var(--iron); font-size: 13px; font-weight: 500; }
+.hero-title { color: var(--ink); font-size: clamp(40px, 6.2vw, 82px); font-weight: 600; letter-spacing: -0.04em; line-height: 1.1; margin: 28px 0; height: 3.3em; overflow: hidden; }
 h2 em { color: var(--ember); font-style: normal; }
 .hero-title-accent { color: var(--ember); }
 .hero-line-mask { display: block; overflow: hidden; }
@@ -251,6 +253,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .about-copy { max-width: 500px; }
 .about-copy h2 { margin: 0 0 24px; }
 .about-copy p { color: var(--steel); font-size: 18px; line-height: 1.6; max-width: 430px; margin-bottom: 30px; }
+.about-copy .about-highlight { color: var(--ink); background: var(--subtle); border: 1px solid var(--cloud); border-radius: 14px; padding: 16px; font-size: 15px; font-weight: 600; margin-top: -6px; margin-bottom: 30px; }
 .about-copy .text-link { border: 1px solid var(--mist); border-radius: 9999px; padding: 12px 20px; transition: color 180ms ease-out, gap 180ms ease-out, border-color 180ms ease-out; }
 .about-copy .text-link:hover { border-color: var(--ember); }
 
@@ -276,6 +279,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .contact-details { display: flex; flex-direction: column; gap: 10px; margin-top: 38px; font-size: 14px; color: var(--iron); }
 .contact-details a { transition: color 180ms ease-out; }
 .contact-details a:hover { color: var(--ember); }
+.contact-whatsapp { margin-top: 24px; }
 .contact-form { display: flex; flex-direction: column; gap: 16px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .contact-form label { display: flex; flex-direction: column; gap: 8px; color: var(--iron); font-size: 12px; }
@@ -292,6 +296,9 @@ h2 em { color: var(--ember); font-style: normal; }
 .footer { background: var(--ink); color: var(--mist-on-dark); }
 .footer-inner { min-height: 120px; display: flex; justify-content: flex-start; align-items: center; gap: 20px; font-size: 12px; padding-block: 36px; }
 .footer p + p { margin-top: 5px; }
+.footer-links { display: flex; gap: 16px; margin-top: 12px; }
+.footer-links a { color: var(--snow); transition: color 180ms ease-out; }
+.footer-links a:hover { color: var(--ember); }
 
 /* ── Scroll to top ── */
 .scroll-top { position: fixed; right: 29px; bottom: 96px; z-index: 40; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); border: 1px solid var(--iron); color: var(--snow); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), background-color 180ms ease-out, border-color 180ms ease-out; }
@@ -340,7 +347,7 @@ h2 em { color: var(--ember); font-style: normal; }
   .hero-arrow { display: none; }
 }
 @media (max-width: 520px) {
-  h1 { font-size: clamp(51px, 14.2vw, 78px); font-weight: 700; height: auto; overflow: visible; }
+  .hero-title { font-size: clamp(51px, 14.2vw, 78px); font-weight: 700; height: auto; overflow: visible; }
   .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; margin-top: 28px; }
   .hero-actions .button, .hero-actions .text-link { width: 100%; justify-content: center; }
   .hero-actions .text-link { border: 1px solid var(--mist); border-radius: 9999px; padding: 13px 20px; }
