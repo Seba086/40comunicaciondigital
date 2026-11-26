@@ -201,7 +201,7 @@ export const clients = [
     logo: "/imagenes/carousel/colegio-escribanos.webp",
   },
   {
-    name: "Patín Reparage",
+    name: "Patin Reparage",
     tag: "SEO · Posicionamiento en buscadores",
     url: "https://patinreparage.com/",
     urlLabel: "patinreparage.com",
@@ -258,7 +258,7 @@ export const clients = [
   {
     name: "David Casero",
     tag: "YouTube y contenido",
-    url: "https://www.youtube.com/@davidcaseroventashighticket",
+    url: "https://www.youtube.com/@davidcaseroventas",
     urlLabel: "YouTube — David Casero",
     description:
       "Consultor de ventas y creador de contenido especializado en escalar negocios digitales de infoproductores y agencias. Trabajamos su posicionamiento en plataformas, la creación de contenido y la edición de sus videos.",

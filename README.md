@@ -38,6 +38,8 @@ Abrir http://localhost:3000.
 
 Para producción en Hostinger Node.js, usar el mismo conjunto de variables de entorno y ejecutar `npm run build` seguido de `npm run start`.
 
+Para enviar las consultas por correo, configurar `CONTACT_SMTP_PASSWORD` en las variables de entorno de la app en Hostinger con una contraseña de aplicación de la cuenta de Google Workspace `nicolas.rielo@40comunicaciondigital.com`. Las consultas se guardan primero en MySQL. Los errores de notificación quedan registrados en los logs de la app.
+
 ## Calidad
 
 ```bash

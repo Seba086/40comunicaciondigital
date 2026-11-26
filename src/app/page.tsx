@@ -102,7 +102,10 @@ export default function Home() {
   const statementGhostRef = useRef<HTMLSpanElement>(null);
   const projectTrackRef = useRef<HTMLDivElement>(null);
   const projectOffsetRef = useRef(0);
+  const projectStepRef = useRef(0);
+  const projectMoveRef = useRef<{ start: number; distance: number; startedAt: number } | null>(null);
   const projectPausedRef = useRef(false);
+  const projectKeyboardFocusRef = useRef(false);
   const projectDragRef = useRef({ dragging: false, startX: 0, startOffset: 0, moved: 0, pointerId: -1 });
 
   function handlePortraitMove(event: MouseEvent<HTMLDivElement>) {
@@ -197,28 +200,57 @@ export default function Home() {
   useEffect(() => {
     const track = projectTrackRef.current;
     if (!track) return;
+    const first = track.children[0];
+    const second = track.children[1];
+    const duplicate = track.children[clients.length];
+    if (!first || !second || !duplicate) return;
+    let cycleWidth = 0;
+    const measure = () => {
+      const start = first.getBoundingClientRect().left;
+      projectStepRef.current = second.getBoundingClientRect().left - start;
+      cycleWidth = duplicate.getBoundingClientRect().left - start;
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
     let frame = 0;
     let last = performance.now();
     const speed = 42;
-    function loop(now: number) {
-      const dt = now - last;
+    const loop = (now: number) => {
+      const dt = Math.min(now - last, 50);
       last = now;
-      if (!reducedMotion && !projectDragRef.current.dragging && !projectPausedRef.current) {
+      const move = projectMoveRef.current;
+      if (move) {
+        const progress = reducedMotion ? 1 : Math.min(Math.max(now - move.startedAt, 0) / 240, 1);
+        projectOffsetRef.current = move.start + move.distance * (1 - (1 - progress) ** 3);
+        if (progress === 1) projectMoveRef.current = null;
+      } else if (!reducedMotion && !projectDragRef.current.dragging && !projectPausedRef.current && !projectKeyboardFocusRef.current) {
         projectOffsetRef.current -= (speed * dt) / 1000;
       }
-      const halfWidth = track!.scrollWidth / 2;
-      if (halfWidth > 0) {
-        if (projectOffsetRef.current <= -halfWidth) projectOffsetRef.current += halfWidth;
-        if (projectOffsetRef.current > 0) projectOffsetRef.current -= halfWidth;
+      if (cycleWidth > 0) {
+        projectOffsetRef.current = -(((-projectOffsetRef.current % cycleWidth) + cycleWidth) % cycleWidth);
       }
-      track!.style.transform = `translateX(${projectOffsetRef.current}px)`;
+      track.style.transform = `translateX(${projectOffsetRef.current}px)`;
       frame = requestAnimationFrame(loop);
-    }
+    };
     frame = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(frame);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
   }, [reducedMotion]);
 
+  function moveProjects(direction: -1 | 1) {
+    if (projectDragRef.current.dragging) return;
+    projectMoveRef.current = {
+      start: projectOffsetRef.current,
+      distance: -direction * projectStepRef.current,
+      startedAt: performance.now(),
+    };
+  }
+
   function handleProjectPointerDown(event: PointerEvent<HTMLDivElement>) {
+    projectMoveRef.current = null;
     projectDragRef.current = { dragging: true, startX: event.clientX, startOffset: projectOffsetRef.current, moved: 0, pointerId: event.pointerId };
   }
 
@@ -569,7 +601,7 @@ export default function Home() {
             <p>Instituciones de Tandil y empresas de Argentina y España que acompañamos en su crecimiento digital.</p>
           </Reveal>
         </div>
-        <div className="project-window">
+        <div className="project-window" id="portfolio-clientes">
           <div
             className="project-track"
             ref={projectTrackRef}
@@ -580,10 +612,31 @@ export default function Home() {
             onClickCapture={handleProjectClickCapture}
             onMouseEnter={() => (projectPausedRef.current = true)}
             onMouseLeave={() => (projectPausedRef.current = false)}
+            onFocusCapture={(event) => {
+              if (!event.target.matches(":focus-visible")) return;
+              const card = event.target.closest(".project-card");
+              const track = event.currentTarget;
+              if (!card) return;
+              projectKeyboardFocusRef.current = true;
+              projectMoveRef.current = null;
+              projectOffsetRef.current = track.getBoundingClientRect().left - card.getBoundingClientRect().left;
+              track.style.transform = `translateX(${projectOffsetRef.current}px)`;
+            }}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) projectKeyboardFocusRef.current = false;
+            }}
           >
             {clients.map((client, index) => renderProjectCard(client, index, "a"))}
             {clients.map((client, index) => renderProjectCard(client, index, "b"))}
           </div>
+        </div>
+        <div className="project-controls">
+          <button type="button" aria-label="Cliente anterior" aria-controls="portfolio-clientes" onClick={() => moveProjects(-1)}>
+            <ChevronLeft size={20} aria-hidden="true" />
+          </button>
+          <button type="button" aria-label="Cliente siguiente" aria-controls="portfolio-clientes" onClick={() => moveProjects(1)}>
+            <ChevronRight size={20} aria-hidden="true" />
+          </button>
         </div>
       </section>
 
@@ -647,7 +700,7 @@ export default function Home() {
               <button className="button button-dark form-submit" disabled={status === "loading"}>
                 {status === "loading" ? "Enviando..." : "Enviar mensaje"} <ArrowUpRight size={17} />
               </button>
-              {status === "success" && <p className="form-message success">Mensaje recibido. Nos ponemos en contacto pronto.</p>}
+              {status === "success" && <p className="form-message success" role="status">Gracias por comunicarte con nosotros, te contestaremos a la brevedad.</p>}
               {status === "error" && <p className="form-message error">No pudimos enviar el mensaje. Escríbanos por WhatsApp.</p>}
             </form>
           </Reveal>
