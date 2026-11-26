@@ -263,9 +263,9 @@ export default function Home() {
 
   async function submitContact(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
     setStatus("loading");
-    const form = new FormData(event.currentTarget);
-    const payload = Object.fromEntries(form.entries());
+    const payload = Object.fromEntries(new FormData(form));
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -273,7 +273,7 @@ export default function Home() {
         body: JSON.stringify(payload),
       });
       if (!response.ok) throw new Error("Request failed");
-      event.currentTarget.reset();
+      form.reset();
       setStatus("success");
     } catch {
       setStatus("error");
