@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { FormEvent, MouseEvent, PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { SectionTitle } from "@/components/SectionTitle";
+import { contactPhoneDisplay, whatsappUrl } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 import { placeholderLogos } from "@/components/PlaceholderLogos";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -410,7 +411,7 @@ export default function Home() {
             </p>
             <p key={`intro-${heroSlide}`} className="hero-intro hero-copy-enter">{slide.intro}</p>
             <div className="hero-actions hero-actions-enter">
-              <a className="button button-dark" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">Cantar las 40 <ArrowUpRight size={17} /></a>
+              <a className="button button-dark" href={whatsappUrl} target="_blank" rel="noreferrer">Cantar las 40 <ArrowUpRight size={17} /></a>
               <a className="button button-outline" href="#proyectos">Ver proyectos <ChevronRight size={16} aria-hidden="true" /></a>
             </div>
           </div>
@@ -680,10 +681,10 @@ export default function Home() {
             <p>Cuéntenos su proyecto. Sin compromiso, sin vueltas. Si podemos ayudarlo a crecer, se lo vamos a decir con claridad. Trabajamos en forma presencial en Tandil y a distancia con toda Argentina y España.</p>
             <div className="contact-details">
               <a href="mailto:nicolas.rielo@40comunicaciondigital.com">nicolas.rielo@40comunicaciondigital.com</a>
-              <a href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">+54 9 249 467-3903</a>
+              <a href={whatsappUrl} target="_blank" rel="noreferrer">{contactPhoneDisplay}</a>
               <span>Tandil · Buenos Aires · Argentina</span>
             </div>
-            <a className="button button-dark contact-whatsapp" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">
+            <a className="button button-dark contact-whatsapp" href={whatsappUrl} target="_blank" rel="noreferrer">
               <MessageCircle size={18} aria-hidden="true" /> Escribinos por WhatsApp
             </a>
           </Reveal>
@@ -743,7 +744,7 @@ export default function Home() {
         <span className={showWhatsappTip ? "whatsapp-tip is-visible" : "whatsapp-tip"}>¿Hablamos?</span>
         <a
           className="whatsapp-button"
-          href="https://wa.link/lridg0"
+          href={whatsappUrl}
           target="_blank"
           rel="noreferrer"
           aria-label="Hablar por WhatsApp"

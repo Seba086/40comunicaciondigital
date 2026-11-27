@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
-import { siteUrl } from "@/lib/site";
+import { contactPhone, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -55,7 +55,7 @@ const jsonLd = {
   name: "40 Comunicación Digital",
   description:
     "Agencia de comunicación digital en Tandil especializada en diseño de páginas web, tiendas online, SEO, redes sociales e inteligencia artificial para ventas.",
-  telephone: "+5492494673903",
+  telephone: contactPhone,
   email: "nicolas.rielo@40comunicaciondigital.com",
   address: {
     "@type": "PostalAddress",
