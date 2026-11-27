@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -7,8 +8,6 @@ const dmSans = DM_Sans({
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-dm-sans",
 });
-
-const siteUrl = "https://40comunicaciondigital.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -32,7 +31,6 @@ export const metadata: Metadata = {
     "Buenos Aires",
   ],
   authors: [{ name: "40 Comunicación Digital" }],
-  alternates: { canonical: siteUrl },
   openGraph: {
     title: "40 Comunicación Digital · Diseño web, SEO y contenidos desde Tandil",
     description:
@@ -97,6 +95,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             `,
           }}
         />
+        {/* Next's metadata resolver normalizes away the slash on the homepage URL. */}
+        <link rel="canonical" href={siteUrl} />
       </head>
       <body>
         <script
