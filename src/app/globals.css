@@ -397,7 +397,7 @@ h2 em { color: var(--ember); font-style: normal; }
   .manifesto-title h2 { font-size: clamp(40px, 5.2vw, 66px); }
   .hero-arrow { display: none; }
 }
-@media (max-width: 640px) {
+@media (max-width: 700px) {
   .services-heading .full-copy { display: none; }
   .services-heading .compact-copy { display: inline; }
   .services-heading p { max-width: 30ch; }
