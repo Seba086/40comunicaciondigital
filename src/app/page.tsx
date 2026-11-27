@@ -25,6 +25,7 @@ import {
   X,
 } from "lucide-react";
 import { FormEvent, MouseEvent, PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import { SectionTitle } from "@/components/SectionTitle";
 import { Reveal } from "@/components/Reveal";
 import { placeholderLogos } from "@/components/PlaceholderLogos";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -101,7 +102,6 @@ export default function Home() {
   const [showWhatsappTip, setShowWhatsappTip] = useState(false);
   const [headerShrunk, setHeaderShrunk] = useState(false);
 
-  const portraitInnerRef = useRef<HTMLDivElement>(null);
   const proofRef = useRef<HTMLElement>(null);
   const statementGhostRef = useRef<HTMLSpanElement>(null);
   const projectTrackRef = useRef<HTMLDivElement>(null);
@@ -111,20 +111,6 @@ export default function Home() {
   const projectPausedRef = useRef(false);
   const projectKeyboardFocusRef = useRef(false);
   const projectDragRef = useRef({ dragging: false, startX: 0, startOffset: 0, moved: 0, pointerId: -1 });
-
-  function handlePortraitMove(event: MouseEvent<HTMLDivElement>) {
-    if (reducedMotion) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-    const el = portraitInnerRef.current;
-    if (el) el.style.transform = `translate3d(${(x * 12).toFixed(1)}px, ${(y * 10).toFixed(1)}px, 0) scale(1.06)`;
-  }
-
-  function resetPortraitMove() {
-    const el = portraitInnerRef.current;
-    if (el) el.style.transform = "translate3d(0, 0, 0) scale(1.06)";
-  }
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -370,7 +356,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <a className="project-link" href={client.url} target="_blank" rel="noreferrer" tabIndex={keySuffix === "b" ? -1 : undefined}>
+        <a className="button button-outline project-link" href={client.url} target="_blank" rel="noreferrer" tabIndex={keySuffix === "b" ? -1 : undefined}>
           {client.urlLabel} <ArrowUpRight size={15} />
         </a>
       </article>
@@ -388,7 +374,7 @@ export default function Home() {
             <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
             <a href="#proyectos" onClick={() => setMenuOpen(false)}>Proyectos</a>
             <a href="#nosotros" onClick={() => setMenuOpen(false)}>Nosotros</a>
-            <a className="nav-cta" href="#contacto" onClick={() => setMenuOpen(false)}>Hablemos <ArrowUpRight size={15} /></a>
+            <a className="button button-dark nav-cta" href="#contacto" onClick={() => setMenuOpen(false)}>Hablemos <ArrowUpRight size={15} /></a>
           </nav>
           <button className="menu-toggle" aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -431,10 +417,8 @@ export default function Home() {
           <div
             key={`portrait-${heroSlide}`}
             className="hero-portrait"
-            onMouseMove={handlePortraitMove}
-            onMouseLeave={resetPortraitMove}
           >
-            <div className="hero-portrait-inner" ref={portraitInnerRef}>
+            <div className="hero-portrait-inner" data-motion={["zoom-in", "pan-left", "zoom-out", "pan-right"][heroSlide]}>
               <Image
                 src={slide.image}
                 alt={slide.imageAlt}
@@ -542,7 +526,7 @@ export default function Home() {
         </div>
         <div className="section-wrap manifesto-inner">
           <div className="manifesto-grid">
-            <Reveal as="div" className="manifesto-title"><h2><em>Si a usted<br />le va bien,</em><br />a nosotros<br />también</h2></Reveal>
+            <Reveal as="div" className="manifesto-title"><SectionTitle lines={["Si a usted", "le va bien,", "a nosotros", "también"]} accentLines={[0, 1]} /></Reveal>
             <Reveal as="div" delay={80} className="manifesto-body">
               <p>En <strong>40 Comunicación Digital</strong> apostamos por el negocio de nuestros clientes y jugamos a largo plazo. El conocimiento de su industria lo tiene usted; nosotros sumamos estrategia, diseño, contenidos y las herramientas digitales —incluida la inteligencia artificial— para que ese valor se vea, se entienda y se venda.</p>
               <a className="circle-link" href="#contacto" aria-label="Conocer más sobre 40 Comunicación Digital">
@@ -557,8 +541,8 @@ export default function Home() {
       <section className="services section-wrap" id="servicios">
         <span className="services-collage" aria-hidden="true" />
         <Reveal as="div" delay={60} className="services-heading">
-          <h2>Servicios de comunicación digital<br /><em>para su negocio</em></h2>
-          <p>Estrategia, creatividad y tecnología en un mismo equipo: desde el diseño de su página web hasta la inteligencia artificial aplicada a sus ventas.</p>
+          <SectionTitle lines={["Servicios de comunicación digital", "para su negocio"]} accentLines={[1]} />
+          <p><span className="full-copy">Estrategia, creatividad y tecnología en un mismo equipo: desde el diseño de su página web hasta la inteligencia artificial aplicada a sus ventas.</span><span className="compact-copy">Diseño web, contenidos e IA para potenciar sus ventas.</span></p>
         </Reveal>
         <div className="services-grid">
           {services.map((service, index) => {
@@ -592,7 +576,7 @@ export default function Home() {
         <div className="section-wrap why-inner">
           <div className="why-grid">
             <Reveal as="div" delay={40} className="why-heading">
-              <h2 id="why-heading">Jugamos<br /><em>a largo plazo</em></h2>
+              <SectionTitle id="why-heading" lines={["Jugamos", "a largo plazo"]} accentLines={[1]} />
             </Reveal>
             <div className="pillars-grid">
               {pillars.map((pillar, index) => {
@@ -621,7 +605,7 @@ export default function Home() {
       <section className="projects" id="proyectos">
         <div className="section-wrap projects-head">
           <Reveal as="div" delay={60}>
-            <h2>Trabajo que<br /><em>habla por sí solo</em></h2>
+            <SectionTitle lines={["Trabajo que", "habla por sí solo"]} accentLines={[1]} />
             <p>Instituciones de Tandil y empresas de Argentina y España que acompañamos en su crecimiento digital.</p>
           </Reveal>
         </div>
@@ -671,10 +655,10 @@ export default function Home() {
         </Reveal>
         <div className="section-wrap about-copy-wrap">
           <Reveal as="div" delay={80} className="about-copy">
-            <h2>Detrás de cada<br /><em>buena idea</em></h2>
+            <SectionTitle lines={["Detrás de cada", "buena idea"]} accentLines={[1]} />
             <p>Somos un equipo de comunicación digital nacido en Tandil. Nos dedicamos a algo simple y difícil a la vez: entender de verdad qué hace valioso a un negocio y encontrar la forma más clara de contarlo. Reunimos estrategia, diseño, tecnología y producción de contenidos en un mismo equipo, y trabajamos con pymes e instituciones de Argentina y España con la cercanía de quien conoce su proyecto de punta a punta.</p>
-            <p className="about-highlight">Desde el interior, con casos de éxito en Argentina y España.</p>
-            <a className="text-link" href="#contacto">Conversemos sobre su proyecto <ArrowUpRight size={16} /></a>
+            <p className="about-highlight"><span className="full-copy">Desde el interior, con casos de éxito en Argentina y España.</span><span className="compact-copy">Casos de éxito en Argentina y España.</span></p>
+            <a className="button button-outline" href="#contacto">Conversemos sobre su proyecto <ArrowUpRight size={16} /></a>
           </Reveal>
         </div>
       </section>
@@ -683,23 +667,23 @@ export default function Home() {
         <span className="statement-overlay" aria-hidden="true" />
         <span className="statement-ghost" ref={statementGhostRef} aria-hidden="true">40</span>
         <Reveal className="statement-inner">
-          <h2>Es hora de<br /><em>golpear la mesa</em></h2>
+          <SectionTitle lines={["Es hora de", "golpear la mesa"]} accentLines={[1]} />
           <p>Hoy la batalla es en la web y en las redes. Si usted es bueno en lo que hace, le falta una sola cosa: que lo vean.</p>
-          <a className="button button-light" href="#contacto">Cantar las 40 <ArrowUpRight size={17} /></a>
+          <a className="button button-dark button-inverse" href="#contacto">Cantar las 40 <ArrowUpRight size={17} /></a>
         </Reveal>
       </section>
 
       <section className="contact-section" id="contacto">
         <div className="section-wrap contact-grid">
           <Reveal as="div">
-            <h2>Hablemos<br /><em>de su proyecto</em></h2>
+            <SectionTitle lines={["Hablemos", "de su proyecto"]} accentLines={[1]} />
             <p>Cuéntenos su proyecto. Sin compromiso, sin vueltas. Si podemos ayudarlo a crecer, se lo vamos a decir con claridad. Trabajamos en forma presencial en Tandil y a distancia con toda Argentina y España.</p>
             <div className="contact-details">
               <a href="mailto:nicolas.rielo@40comunicaciondigital.com">nicolas.rielo@40comunicaciondigital.com</a>
               <a href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">+54 9 249 467-3903</a>
               <span>Tandil · Buenos Aires · Argentina</span>
             </div>
-            <a className="button contact-whatsapp" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">
+            <a className="button button-dark contact-whatsapp" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">
               <MessageCircle size={18} aria-hidden="true" /> Escribinos por WhatsApp
             </a>
           </Reveal>

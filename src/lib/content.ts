@@ -20,7 +20,7 @@ export const heroSlides: {
     imageAlt: "Monitor con paneles de analítica digital en una oficina",
   },
   {
-    eyebrow: "Servicio 01 · Diseño y desarrollo web",
+    eyebrow: "Diseño y desarrollo web",
     titleLines: [
       [{ text: "Su " }, { text: "negocio", accent: true }],
       [{ text: "empieza" }],
@@ -32,7 +32,7 @@ export const heroSlides: {
     imageAlt: "Diseño y desarrollo web",
   },
   {
-    eyebrow: "Servicio 02 · Contenido estratégico",
+    eyebrow: "Contenido estratégico",
     titleLines: [
       [{ text: "Su historia" }],
       [{ text: "tiene algo", accent: true }],
@@ -44,7 +44,7 @@ export const heroSlides: {
     imageAlt: "Contenido estratégico",
   },
   {
-    eyebrow: "Servicio 03 · SEO y posicionamiento",
+    eyebrow: "SEO y posicionamiento",
     titleLines: [
       [{ text: "Hacerlo " }, { text: "bien", accent: true }],
       [{ text: "también es" }],

@@ -1,3 +1,5 @@
+import { siteUrl } from "./site";
+
 const htmlEntities: Record<string, string> = {
   "&": "&amp;",
   "<": "&lt;",
@@ -48,9 +50,11 @@ export function formatContactEmail(contact: {
       <td align="center" style="padding:24px 12px">
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;border:1px solid #ececee;border-radius:24px;background-color:#ffffff">
           <tr>
-            <td style="padding:28px;background-color:#09090b;border-radius:24px 24px 0 0;color:#ffffff;border-bottom:4px solid #ff5a00">
-              <p style="margin:0 0 12px;color:#d4d4d8;font-size:13px;font-weight:700">40 Comunicación Digital</p>
-              <h1 style="margin:0;font-size:32px;line-height:1.2">Nueva consulta web</h1>
+            <td bgcolor="#09090b" style="padding:6px 20px;background-color:#09090b;border-radius:24px 24px 0 0;color:#ffffff;border-bottom:2px solid #ff5a00">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0"><tr>
+                <td align="left" valign="middle"><h1 style="margin:0;font-size:20px;line-height:1.2;color:#ffffff">Nueva consulta web</h1></td>
+                <td align="right" valign="middle" width="52"><img src="${siteUrl}imagenes/40CD%20Logo%20W-transparente.png" alt="40 Comunicación Digital" width="48" height="48" style="display:block;color:#ffffff"></td>
+              </tr></table>
             </td>
           </tr>
           <tr>
