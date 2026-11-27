@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { z } from "zod";
+import { formatContactEmail } from "@/lib/contact-email";
 import { getDb } from "@/lib/db";
 
 const contactSchema = z.object({ nombre: z.string().trim().min(2).max(120), email: z.string().trim().email().max(180), empresa: z.string().trim().max(180).optional().default(""), servicio: z.string().trim().max(120).optional().default(""), mensaje: z.string().trim().max(3000).optional().default("") });
@@ -31,15 +32,8 @@ async function notifyContact(contact: z.infer<typeof contactSchema>) {
     cc: contactCopy,
     replyTo: contact.email,
     subject: "Nueva consulta desde el sitio de 40 Comunicación Digital",
-    text: [
-      `Nombre: ${contact.nombre}`,
-      `Email: ${contact.email}`,
-      `Empresa o proyecto: ${contact.empresa || "Sin indicar"}`,
-      `Servicio: ${contact.servicio || "Sin indicar"}`,
-      "",
-      "Mensaje:",
-      contact.mensaje || "Sin mensaje",
-    ].join("\n"),
+    textEncoding: "base64",
+    ...formatContactEmail(contact),
   });
   if (result.rejected.length) {
     console.error("Contact saved; SMTP rejected a notification recipient");
