@@ -15,6 +15,7 @@ import {
   Newspaper,
   Palette,
   Search,
+  SendHorizontal,
   Smartphone,
   Target,
   Terminal,
@@ -401,7 +402,7 @@ export default function Home() {
             <p key={`intro-${heroSlide}`} className="hero-intro hero-copy-enter">{slide.intro}</p>
             <div className="hero-actions hero-actions-enter">
               <a className="button button-dark" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">Cantar las 40 <ArrowUpRight size={17} /></a>
-              <a className="text-link" href="#proyectos">Ver proyectos <ChevronRight size={16} /></a>
+              <a className="button button-outline" href="#proyectos">Ver proyectos <ChevronRight size={16} aria-hidden="true" /></a>
             </div>
           </div>
           <div
@@ -675,20 +676,20 @@ export default function Home() {
               <a href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">+54 9 249 467-3903</a>
               <span>Tandil · Buenos Aires · Argentina</span>
             </div>
-            <a className="button button-dark contact-whatsapp" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">
-              <MessageCircle size={18} /> Escribinos por WhatsApp
+            <a className="button contact-whatsapp" href="https://wa.me/5492494673903" target="_blank" rel="noreferrer">
+              <MessageCircle size={18} aria-hidden="true" /> Escribinos por WhatsApp
             </a>
           </Reveal>
           <Reveal as="div" delay={100}>
             <form className="contact-form" onSubmit={submitContact}>
               <div className="form-row">
-                <label>Nombre<input name="nombre" required placeholder="Su nombre" /></label>
-                <label>Email<input name="email" type="email" required placeholder="su@email.com" /></label>
+                <label>Nombre<input name="nombre" required minLength={2} maxLength={120} placeholder="Su nombre" /></label>
+                <label>Email<input name="email" type="email" required maxLength={180} placeholder="su@email.com" /></label>
               </div>
-              <label>Empresa o proyecto<input name="empresa" placeholder="¿En qué está trabajando?" /></label>
+              <label>Empresa o proyecto<input name="empresa" required maxLength={180} placeholder="¿En qué está trabajando?" /></label>
               <label>
                 ¿Qué necesita?
-                <select name="servicio" defaultValue="">
+                <select name="servicio" required defaultValue="">
                   <option value="" disabled>Seleccione una opción</option>
                   {services.map((service) => (
                     <option key={service.number}>{service.title}</option>
@@ -696,9 +697,9 @@ export default function Home() {
                   <option>Más de uno / No sé por dónde empezar</option>
                 </select>
               </label>
-              <label>Mensaje<textarea name="mensaje" placeholder="Cuéntenos brevemente su proyecto..." rows={4} /></label>
-              <button className="button button-dark form-submit" disabled={status === "loading"}>
-                {status === "loading" ? "Enviando..." : "Enviar mensaje"} <ArrowUpRight size={17} />
+              <label>Mensaje (opcional)<textarea name="mensaje" maxLength={3000} placeholder="Cuéntenos brevemente su proyecto..." rows={4} /></label>
+              <button type="submit" className="button button-dark form-submit" disabled={status === "loading"}>
+                {status === "loading" ? "Enviando..." : "Enviar"} <SendHorizontal size={17} aria-hidden="true" />
               </button>
               {status === "success" && <p className="form-message success" role="status">Gracias por comunicarte con nosotros, te contestaremos a la brevedad.</p>}
               {status === "error" && <p className="form-message error">No pudimos enviar el mensaje. Escríbanos por WhatsApp.</p>}

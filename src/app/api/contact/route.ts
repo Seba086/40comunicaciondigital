@@ -4,7 +4,13 @@ import { z } from "zod";
 import { formatContactEmail } from "@/lib/contact-email";
 import { getDb } from "@/lib/db";
 
-const contactSchema = z.object({ nombre: z.string().trim().min(2).max(120), email: z.string().trim().email().max(180), empresa: z.string().trim().max(180).optional().default(""), servicio: z.string().trim().max(120).optional().default(""), mensaje: z.string().trim().max(3000).optional().default("") });
+const contactSchema = z.object({
+  nombre: z.string().trim().min(2).max(120),
+  email: z.string().trim().email().max(180),
+  empresa: z.string().trim().min(1).max(180),
+  servicio: z.string().trim().min(1).max(120),
+  mensaje: z.string().trim().max(3000).optional().default(""),
+});
 
 const contactInbox = "nicolas.rielo@40comunicaciondigital.com";
 const contactCopy = "nfseba@gmail.com";
