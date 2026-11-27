@@ -5,6 +5,7 @@ import {
   ArrowUp,
   ArrowUpRight,
   BarChart3,
+  Check,
   ChevronLeft,
   ChevronRight,
   Code2,
@@ -23,10 +24,11 @@ import {
   Wrench,
   X,
 } from "lucide-react";
-import { FormEvent, MouseEvent, PointerEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, MouseEvent, PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/Reveal";
 import { placeholderLogos } from "@/components/PlaceholderLogos";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { isContactFieldValid, type ContactFieldName } from "@/lib/contact-schema";
 import {
   clients,
   heroSlides,
@@ -94,6 +96,7 @@ export default function Home() {
   const [heroSlide, setHeroSlide] = useState(0);
   const [proofPhrase, setProofPhrase] = useState(0);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [validContactFields, setValidContactFields] = useState<Partial<Record<ContactFieldName, boolean>>>({});
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showWhatsappTip, setShowWhatsappTip] = useState(false);
   const [headerShrunk, setHeaderShrunk] = useState(false);
@@ -294,6 +297,25 @@ export default function Home() {
     projectDragRef.current.moved = 0;
   }
 
+  function updateContactField(event: FormEvent<HTMLFormElement>) {
+    const field = event.target;
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return;
+    const valid = field.validity.valid && isContactFieldValid(field.name, field.value);
+    setValidContactFields((current) => {
+      const name = field.name as ContactFieldName;
+      return Boolean(current[name]) === valid ? current : { ...current, [name]: valid };
+    });
+  }
+
+  function contactField(name: ContactFieldName, control: ReactNode) {
+    return (
+      <span className="contact-field" data-valid={validContactFields[name] === true}>
+        {control}
+        <Check className="contact-field-check" size={20} strokeWidth={2.5} aria-hidden="true" />
+      </span>
+    );
+  }
+
   async function submitContact(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -307,6 +329,7 @@ export default function Home() {
       });
       if (!response.ok) throw new Error("Request failed");
       form.reset();
+      setValidContactFields({});
       setStatus("success");
     } catch {
       setStatus("error");
@@ -681,23 +704,23 @@ export default function Home() {
             </a>
           </Reveal>
           <Reveal as="div" delay={100}>
-            <form className="contact-form" onSubmit={submitContact}>
+            <form className="contact-form" onChange={updateContactField} onSubmit={submitContact}>
               <div className="form-row">
-                <label>Nombre<input name="nombre" required minLength={2} maxLength={120} placeholder="Su nombre" /></label>
-                <label>Email<input name="email" type="email" required maxLength={180} placeholder="su@email.com" /></label>
+                <label>Nombre{contactField("nombre", <input name="nombre" required minLength={2} maxLength={120} placeholder="Su nombre" />)}</label>
+                <label>Email{contactField("email", <input name="email" type="email" required maxLength={180} placeholder="su@email.com" />)}</label>
               </div>
-              <label>Empresa o proyecto<input name="empresa" required maxLength={180} placeholder="¿En qué está trabajando?" /></label>
+              <label>Empresa o proyecto{contactField("empresa", <input name="empresa" required maxLength={180} placeholder="¿En qué está trabajando?" />)}</label>
               <label>
                 ¿Qué necesita?
-                <select name="servicio" required defaultValue="">
+                {contactField("servicio", <select name="servicio" required defaultValue="">
                   <option value="" disabled>Seleccione una opción</option>
                   {services.map((service) => (
                     <option key={service.number}>{service.title}</option>
                   ))}
                   <option>Más de uno / No sé por dónde empezar</option>
-                </select>
+                </select>)}
               </label>
-              <label>Mensaje (opcional)<textarea name="mensaje" maxLength={3000} placeholder="Cuéntenos brevemente su proyecto..." rows={4} /></label>
+              <label>Mensaje (opcional){contactField("mensaje", <textarea name="mensaje" maxLength={3000} placeholder="Cuéntenos brevemente su proyecto..." rows={4} />)}</label>
               <button type="submit" className="button button-dark form-submit" disabled={status === "loading"}>
                 {status === "loading" ? "Enviando..." : "Enviar"} <SendHorizontal size={17} aria-hidden="true" />
               </button>

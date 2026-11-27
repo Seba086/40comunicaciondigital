@@ -1,21 +1,13 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import { z } from "zod";
 import { formatContactEmail } from "@/lib/contact-email";
+import { contactSchema, type ContactSubmission } from "@/lib/contact-schema";
 import { getDb } from "@/lib/db";
-
-const contactSchema = z.object({
-  nombre: z.string().trim().min(2).max(120),
-  email: z.string().trim().email().max(180),
-  empresa: z.string().trim().min(1).max(180),
-  servicio: z.string().trim().min(1).max(120),
-  mensaje: z.string().trim().max(3000).optional().default(""),
-});
 
 const contactInbox = "nicolas.rielo@40comunicaciondigital.com";
 const contactCopy = "nfseba@gmail.com";
 
-async function notifyContact(contact: z.infer<typeof contactSchema>) {
+async function notifyContact(contact: ContactSubmission) {
   const password = process.env.CONTACT_SMTP_PASSWORD;
   if (!password) {
     console.warn("Contact saved; email notification is not configured");

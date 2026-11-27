@@ -15,6 +15,8 @@
   --mist: #d4d4d8;
   --cloud: #ececee;
   --ember: #ff5a00;
+  --whatsapp-green: #25d366;
+  --whatsapp-dark: #1a994a;
   --sky: #38bdf8;
   --mist-on-dark: rgba(244, 244, 245, 0.62);
   --border-on-dark: rgba(244, 244, 245, 0.14);
@@ -75,9 +77,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .hero-actions { display: flex; align-items: center; gap: 25px; margin-top: 36px; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 11px; border-radius: 9999px; padding: 13px 20px; border: 1px solid transparent; cursor: pointer; transition: transform 160ms ease-out, background-color 180ms ease-out, color 180ms ease-out; position: relative; isolation: isolate; overflow: hidden; }
 .button::before { content: ""; position: absolute; inset: 0; z-index: 0; background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .28) 50%, transparent 70%); transform: translateX(-120%); transition: transform 520ms var(--ease-out); }
-.button:hover::before { transform: translateX(120%); }
-.button svg { position: relative; z-index: 1; transition: transform 180ms var(--ease-out); }
-.button:hover svg { transform: translate(3px, -3px); }
+.button svg { position: relative; z-index: 1; }
 .button:active { transform: scale(.97); }
 .button:disabled { opacity: .6; cursor: wait; }
 .button-dark { background: var(--ink); border-color: var(--iron); color: var(--snow); }
@@ -86,13 +86,12 @@ h2 em { color: var(--ember); font-style: normal; }
 .button-light:hover { background: var(--ember); border-color: var(--ember); color: var(--snow); }
 .button-outline { background: transparent; border-color: var(--iron); color: var(--iron); transition: border-color 180ms ease-out, color 180ms ease-out; }
 .button-outline::before { display: none; }
-.button-outline:hover svg { transform: none; }
 .button-outline:focus-visible { outline: 2px solid var(--iron); outline-offset: 3px; }
 @media (hover: hover) and (pointer: fine) {
   .button-outline:hover { border-color: var(--ember); color: color-mix(in srgb, var(--ember) 72%, var(--ink)); }
 }
-.text-link { display: inline-flex; align-items: center; gap: 8px; color: var(--iron); font-size: 14px; transition: color 180ms ease-out, gap 180ms ease-out; }
-.text-link:hover { color: var(--ember); gap: 12px; }
+.text-link { display: inline-flex; align-items: center; gap: 8px; color: var(--iron); font-size: 14px; transition: color 180ms ease-out; }
+.text-link:hover { color: var(--ember); }
 .hero-portrait { height: 540px; position: relative; overflow: hidden; border-radius: 36px; background: var(--slate); animation: portrait-fade 500ms var(--ease-out) both; }
 .hero-portrait-inner { position: absolute; inset: 0; transform: scale(1.06); transition: transform 400ms var(--ease-out); will-change: transform; animation: portrait-zoom-in 1500ms var(--ease-out) both; }
 .hero-portrait img { object-fit: cover; object-position: center top; filter: saturate(.85); }
@@ -165,7 +164,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .manifesto-body { max-width: 100%; display: flex; flex-direction: column; gap: 25px; padding-top: 12px; color: var(--steel); font-size: 18px; line-height: 1.6; }
 .manifesto-body strong { color: var(--ink); font-weight: 500; }
 .circle-link { position: relative; display: flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: var(--ember); border-radius: 50%; color: var(--snow); margin-top: 10px; transition: transform 180ms var(--ease-out), background-color 180ms ease-out; }
-.circle-link:hover { transform: rotate(45deg); background: var(--ink); }
+.circle-link:hover { background: var(--ink); }
 .circle-link-ping { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--ember); opacity: 0; pointer-events: none; animation: circle-ping 2.8s var(--ease-out) infinite; }
 @keyframes circle-ping { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.9); opacity: 0; } }
 
@@ -218,7 +217,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .pillar-card h3 { color: var(--snow); font-size: 20px; font-weight: 600; margin-bottom: 8px; padding-right: 36px; }
 .pillar-card p { color: var(--mist-on-dark); font-size: 13.5px; line-height: 1.6; }
 .pillar-arrow { position: absolute; z-index: 2; right: 22px; bottom: 22px; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(244, 244, 245, 0.1); border: 1px solid var(--border-on-dark); color: var(--snow); transition: transform 220ms var(--ease-out), background-color 220ms var(--ease-out), color 220ms var(--ease-out); }
-.pillar-card:hover .pillar-arrow { transform: translate(3px, -3px); background: var(--ember); border-color: var(--ember); }
+.pillar-card:hover .pillar-arrow { background: var(--ember); border-color: var(--ember); }
 
 /* ── Projects / Clients carousel ── */
 .projects { background: var(--snow); padding-block: 120px 90px; }
@@ -268,7 +267,7 @@ h2 em { color: var(--ember); font-style: normal; }
 .about-copy h2 { margin: 0 0 24px; }
 .about-copy p { color: var(--steel); font-size: 18px; line-height: 1.6; max-width: 430px; margin-bottom: 30px; }
 .about-copy .about-highlight { color: var(--ink); background: var(--subtle); border: 1px solid var(--cloud); border-radius: 14px; padding: 16px; font-size: 15px; font-weight: 600; margin-top: -6px; margin-bottom: 30px; }
-.about-copy .text-link { border: 1px solid var(--mist); border-radius: 9999px; padding: 12px 20px; transition: color 180ms ease-out, gap 180ms ease-out, border-color 180ms ease-out; }
+.about-copy .text-link { border: 1px solid var(--mist); border-radius: 9999px; padding: 12px 20px; transition: color 180ms ease-out, border-color 180ms ease-out; }
 .about-copy .text-link:hover { border-color: var(--ember); }
 
 /* ── Statement break ── */
@@ -293,12 +292,26 @@ h2 em { color: var(--ember); font-style: normal; }
 .contact-details { display: flex; flex-direction: column; gap: 10px; margin-top: 38px; font-size: 14px; color: var(--iron); }
 .contact-details a { transition: color 180ms ease-out; }
 .contact-details a:hover { color: var(--ember); }
-.contact-whatsapp { margin-top: 24px; background: #1a994a; color: var(--snow); font-size: 1.1875rem; font-weight: 700; }
+.contact-whatsapp { margin-top: 24px; background: var(--whatsapp-green); border-color: var(--whatsapp-dark); color: var(--ink); }
 .contact-whatsapp::before { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .contact-whatsapp:hover { background: var(--whatsapp-dark); color: var(--snow); }
+}
 .contact-form { display: flex; flex-direction: column; gap: 16px; font-size: 1rem; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .contact-form label { display: flex; flex-direction: column; gap: 8px; color: var(--iron); }
+.contact-field { position: relative; display: block; min-width: 0; }
 .contact-form input, .contact-form textarea, .contact-form select { width: 100%; background: var(--snow); border: 1px solid var(--cloud); border-radius: 14px; color: var(--ink); padding: 12px 16px; outline: 0; transition: border-color 180ms ease-out; }
+.contact-form .contact-field :is(input, textarea) { padding-right: 44px; }
+.contact-form .contact-field select { padding-right: 52px; }
+.contact-field-check { position: absolute; top: 50%; right: 14px; margin-top: -10px; opacity: 0; color: var(--whatsapp-dark); pointer-events: none; }
+.contact-field:has(select) .contact-field-check { right: 28px; }
+.contact-field:has(textarea) .contact-field-check { top: 14px; margin-top: 0; }
+.contact-field[data-valid="true"] .contact-field-check { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .contact-field-check { transform: scale(.9); transition: opacity 150ms ease-out, transform 150ms var(--ease-out); }
+  .contact-field[data-valid="true"] .contact-field-check { transform: scale(1); }
+}
 .contact-form select option { color: var(--ink); }
 .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--ember); }
 .contact-form textarea { resize: vertical; }
@@ -323,14 +336,28 @@ h2 em { color: var(--ember); font-style: normal; }
 .whatsapp-fab { position: fixed; right: 24px; bottom: 24px; z-index: 40; display: flex; align-items: center; gap: 12px; }
 .whatsapp-tip { background: var(--ink); color: var(--snow); font-size: 14px; padding: 10px 16px; border-radius: 12px; opacity: 0; transform: translateY(8px) scale(0.96); transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out); pointer-events: none; white-space: nowrap; }
 .whatsapp-tip.is-visible { opacity: 1; transform: translateY(0) scale(1); }
-.whatsapp-button { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: #25d366; color: var(--snow); box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4); transition: transform 180ms var(--ease-out), background-color 180ms ease-out; }
-.whatsapp-button:hover { transform: translateY(-2px) scale(1.04); background: var(--ink); }
+.whatsapp-button { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: var(--whatsapp-green); color: var(--snow); box-shadow: 0 10px 24px rgba(37, 211, 102, 0.4); transition: transform 180ms var(--ease-out), background-color 180ms ease-out; }
+.whatsapp-button:hover { background: var(--ink); }
 
 /* ── Social rail ── */
 .social-rail { position: fixed; top: 50%; right: 24px; transform: translateY(-50%); z-index: 35; display: flex; flex-direction: column; gap: 12px; }
 .social-icon { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); transition: transform 200ms var(--ease-out), background-color 200ms ease-out, color 200ms ease-out, border-color 200ms ease-out; }
 .social-icon svg { width: 17px; height: 17px; }
-.social-icon:hover { background: var(--snow); color: var(--ember); border-color: var(--ember); transform: scale(1.025); }
+.social-icon:hover { background: var(--snow); color: var(--ember); border-color: var(--ember); }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :is(.button, .nav-cta, .text-link, .project-link, .hero-arrow, .project-controls button, .scroll-top, .menu-toggle) svg { transition: transform 180ms var(--ease-out); }
+  .button:not(:disabled):hover::before { transform: translateX(120%); }
+  :is(.button-dark:not(.form-submit), .button-light, .nav-cta, .text-link, .project-link):hover svg,
+  .pillar-card:hover .pillar-arrow { transform: translate(3px, -3px); }
+  :is(.button-outline, .form-submit:not(:disabled), .hero-arrow-next, .project-controls button:last-child):hover svg { transform: translateX(4px); }
+  :is(.hero-arrow-prev, .project-controls button:first-child):hover svg { transform: translateX(-4px); }
+  :is(.contact-whatsapp, .scroll-top):hover svg { transform: translateY(-3px); }
+  .menu-toggle:hover svg { transform: scale(1.08); }
+  .circle-link:hover { transform: rotate(45deg); }
+  .whatsapp-button:hover { transform: translateY(-2px) scale(1.04); }
+  .social-icon:hover { transform: scale(1.025); }
+}
 
 /* ── Responsive ── */
 @media (max-width: 800px) {
